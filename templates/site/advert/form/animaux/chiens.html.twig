@@ -1,0 +1,11 @@
+{% extends 'site/advert/baseForm.html.twig' %}
+
+{% import 'site/advert/form/macro/radio.html.twig' as radio %}
+
+{% block app_advert_detail %}
+<div class="form-row mb-2">
+    <div class="col-12">
+        {{ radio.item(form.sex, advert.sex) }}
+    </div>
+</div>
+{% endblock %}

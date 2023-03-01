@@ -1,0 +1,86 @@
+{% set settings = config.settings %}
+{% set photo_principale = app_advert_image_principale(advert.images) %}
+
+{% if advert.subCategory|length > 0 %}
+    {% set route = path('app_advert_show_s', {'category_slug': advert.category.slug, 'sub_category_slug': advert.subCategory.slug, 'city': advert.location.city, 'reference': advert.reference, 'slug': advert.slug}) %}
+{% else %}
+    {% set route = path('app_advert_show', {'category_slug': advert.category.slug, 'city': advert.location.city, 'reference': advert.reference, 'slug': advert.slug}) %}
+{% endif %}
+
+<div id="advert_{{ advert.id }}" class="card advert-bulk mb-md-4 mb-3">
+    <div class="row no-gutters">
+        <div class="col-4 col-md-4 image-bulk pr-0 mr-0">
+            <a href="{{ route }}" class="d-block">
+                {% if photo_principale %}
+                    <img src="{{ asset(photo_principale.webPath) }}" class="img-fluid advert-image" alt="{{ photo_principale.name }}" />
+                {% else %}
+                    <img src="{{ asset('assets/img/no_image.png') }}" class="img-fluid advert-image" alt="" />
+                {% endif %}
+
+                {% if settings.activeAdFavorite and (not is_granted('created', advert)) %}
+                    {% set has_favoris = app_has_favoris(advert) %}
+                    <div data-id="{{ advert.id }}" class="advert-favorite-btn
+                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}connected{% endif %}
+                         {% if has_favoris %}activated{% endif %}">
+                        <i class="{% if has_favoris %}fas{% else %}far{% endif %} fa-heart"></i>
+                    </div>
+                {% endif %}
+
+                <div class="nbr-photo">
+                    <i class="fas fa-camera-retro"></i> {{ advert.images|length }}
+                </div>
+            </a>
+        </div>
+        <div class="col-8 col-md-8 data-bulk">
+            <a href="{{ route }}" class="d-block">
+                <div class="card-body pl-2 py-2 pr-2 p-md-2">
+                    <div class="header">
+                        <div class="d-flex justify-content-between align-content-center">
+                            <h4 class="h4-responsive font-weight-bold text-dark d-none d-lg-block">{{ advert.title|u.truncate(25, '...') }}</h4>
+                            <h4 class="h4-responsive font-weight-bold text-dark d-block d-lg-none">{{ advert.title|u.truncate(20, '...') }}</h4>
+                            <div class="font-weight-stone-500 ad-type">
+                                <span>{{ advert.type|app_advert_type }}</span>
+                            </div>
+                        </div>
+                        <div class="d-lg-flex flex-wrap mt-lg-1">
+                            <div class="location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ advert.location.city }}
+                                {% if advert.location.town %}({{ advert.location.town|u.truncate(15, '...') }}){% endif %}
+                            </div>
+                            <div class="icon d-none d-lg-block">
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </div>
+                            <div class="validate-at">
+                                <i class="fas fa-clock"></i> {{ advert.validatedAt|ago }}
+                            </div>
+                        </div>
+
+                        {{ include('site/advert/index/_data_info.html.twig') }}
+                    </div>
+                    <div class="footer d-flex align-items-start justify-content-between">
+                        <div class="d-block p-0 m-0">
+                            <div class="advertiser">
+                                <div class="advertiser-data"><span>Particulier</span></div>
+                            </div>
+                        </div>
+                        <div class="advert-price text-right">
+                            {% if advert.price %}
+                                {% if advert.priceState %}
+                                    <div class="detail">
+                                        <div>à débattre</div>
+                                    </div>
+                                {% endif %}
+                                <div class="price">
+                                    {{ advert.price|format_currency('XOF') }}
+                                </div>
+                            {% else %}
+                                <div class="price">Sur demande</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

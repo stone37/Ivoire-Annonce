@@ -1,0 +1,264 @@
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Annonces</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12 col-md-4">
+                {{ form_row(form.numberAdvertPerPage) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.numberUserAdvertPerPage) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.numberUserAdvertFavoritePerPage) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Parrainages</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="form-row d-flex justify-content-center justify-content-md-start">
+                    <div class="col-12">
+                        <div class="mb-2 mt-1 title font-weight-stone-500">{{ form.activeParrainage.vars.label }}</div>
+                        {% for item in form.activeParrainage.vars.choices %}
+                            {% set state = settings.activeParrainage == form.activeParrainage.vars.choices[loop.index0].value %}
+                            <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                                <input class="form-check-input with-gap" value="{{ form.activeParrainage.vars.choices[loop.index0].value }}" type="radio"
+                                       name="{{ form.activeParrainage.vars.full_name }}" id="{{ form.activeParrainage.vars.id }}_{{ loop.index0 }}"
+                                       {% if state %}checked{% endif %} />
+                                <label class="form-check-label" for="{{ form.activeParrainage.vars.id }}_{{ loop.index0 }}">{{ form.activeParrainage.vars.choices[loop.index0].label }}</label>
+                            </div>
+                        {% endfor %}
+                        <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeParrainage) }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.parrainCreditOffer) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.fioleCreditOffer) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.parrainageNumberAdvertRequired) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Recompense pour création d'un compte</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="form-row d-flex justify-content-center justify-content-md-start">
+                    <div class="col-12">
+                        <div class="mb-2 mt-1 title font-weight-stone-500">{{ form.activeRegisterDrift.vars.label }}</div>
+                        {% for item in form.activeRegisterDrift.vars.choices %}
+                            {% set state = settings.activeRegisterDrift == form.activeRegisterDrift.vars.choices[loop.index0].value %}
+                            <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                                <input class="form-check-input with-gap" value="{{ form.activeRegisterDrift.vars.choices[loop.index0].value }}" type="radio"
+                                       name="{{ form.activeRegisterDrift.vars.full_name }}" id="{{ form.activeRegisterDrift.vars.id }}_{{ loop.index0 }}"
+                                       {% if state %}checked{% endif %} />
+                                <label class="form-check-label" for="{{ form.activeRegisterDrift.vars.id }}_{{ loop.index0 }}">{{ form.activeRegisterDrift.vars.choices[loop.index0].label }}</label>
+                            </div>
+                        {% endfor %}
+                        <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeRegisterDrift) }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.registerDriftCreditOffer) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.registerDriftNumberAdvertRequired) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Messagerie</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeThread.vars.label }}</div>
+                {% for item in form.activeThread.vars.choices %}
+                    {% set state = settings.activeThread == form.activeThread.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeThread.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeThread.vars.full_name }}" id="{{ form.activeThread.vars.id }}_{{ loop.index0 }}" {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeThread.vars.id }}_{{ loop.index0 }}">{{ form.activeThread.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeThread) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Favoris</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeAdFavorite.vars.label }}</div>
+                {% for item in form.activeAdFavorite.vars.choices %}
+                    {% set state = settings.activeAdFavorite == form.activeAdFavorite.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeAdFavorite.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeAdFavorite.vars.full_name }}" id="{{ form.activeAdFavorite.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeAdFavorite.vars.id }}_{{ loop.index0 }}">{{ form.activeAdFavorite.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeAdFavorite) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Alerte</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeAlert.vars.label }}</div>
+                {% for item in form.activeAlert.vars.choices %}
+                    {% set state = settings.activeAlert == form.activeAlert.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeAlert.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeAlert.vars.full_name }}" id="{{ form.activeAlert.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeAlert.vars.id }}_{{ loop.index0 }}">{{ form.activeAlert.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeAlert) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Annonces similaires</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeAdvertSimilar.vars.label }}</div>
+                {% for item in form.activeAdvertSimilar.vars.choices %}
+                    {% set state = settings.activeAdvertSimilar == form.activeAdvertSimilar.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeAdvertSimilar.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeAdvertSimilar.vars.full_name }}" id="{{ form.activeAdvertSimilar.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeAdvertSimilar.vars.id }}_{{ loop.index0 }}">{{ form.activeAdvertSimilar.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeAdvertSimilar) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Paiement par crédit</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeCredit.vars.label }}</div>
+                {% for item in form.activeCredit.vars.choices %}
+                    {% set state = settings.activeCredit == form.activeCredit.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeCredit.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeCredit.vars.full_name }}" id="{{ form.activeCredit.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeCredit.vars.id }}_{{ loop.index0 }}">{{ form.activeCredit.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeCredit) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Paiement par carte ou mobile money</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeCardPayment.vars.label }}</div>
+                {% for item in form.activeCardPayment.vars.choices %}
+                    {% set state = settings.activeCardPayment == form.activeCardPayment.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeCardPayment.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeCardPayment.vars.full_name }}" id="{{ form.activeCardPayment.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeCardPayment.vars.id }}_{{ loop.index0 }}">{{ form.activeCardPayment.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeCardPayment) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Pack d'abonnement</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activePack.vars.label }}</div>
+                {% for item in form.activePack.vars.choices %}
+                    {% set state = settings.activePack == form.activePack.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activePack.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activePack.vars.full_name }}" id="{{ form.activePack.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activePack.vars.id }}_{{ loop.index0 }}">{{ form.activePack.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activePack) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+

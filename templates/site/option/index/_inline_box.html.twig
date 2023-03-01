@@ -1,0 +1,54 @@
+{% import 'ui/Macro/money.html.twig' as money %}
+
+{% set option = products[0].options %}
+{% set id = products[0].id %}
+{% set price = products[0].price %}
+{% set data = app_advert_option_data(option) %}
+
+<div class="row d-flex justify-content-start justify-content-md-between mt-md-4 mt-4 mb-3 option-data-bulk">
+    <div class="col-12 col-md-6 col-lg-7">
+        <div class="option-data d-flex justify-content-start">
+            <div class="form-check pl-0">
+                <input type="checkbox" class="form-check-input filled-in"
+                       id="option_{{ option }}" value="{{ id }}" data-option="{{ option }}">
+                <label class="form-check-label" for="option_{{ option }}"></label>
+            </div>
+            <div class="image-bulk d-none d-md-block">
+                <img src="{{ asset('assets/img/option/' ~ option ~ '.png') }}" class="img-fluid z-depth-3" alt="" >
+            </div>
+            <div class="content text-dark">{{ data.name }}</div>
+            <div class="icon">
+                <i class="fas fa-question-circle" data-toggle="modal" data-target="#advert-option-data-{{ option }}" data-id="{{ option }}"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3 col-lg-2">
+        <div class="option-durante">
+            {% if products|length == 1 %}
+                {% for product in products %}
+                    <div class="data">{{ product.days > 1 ? product.days ~ ' Jours' : product.days ~ ' Jour' }}</div>
+                {% endfor %}
+            {% else %}
+                <div class="d-flex flex-wrap">
+                    <div class="select-outline position-relative w-100">
+                        <label for="select_option_{{ option }}"></label>
+                        <select id="select_option_{{ option }}" data-option="{{ option }}" name=""
+                                class="mdb-select md-outline md-form dropdown-primary option-select">
+                            {% for product in products %}
+                                <option value="{{ product.id }}" data-option="{{ product.options }}" data-price="{{ money.convertAndFormat(product.price) }}" {% if loop.first %}selected="selected"{% endif %}>
+                                    {{ product.days }} Jours
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-6 col-md-3 col-lg-3">
+        <div class="font-weight-bold price text-right {% if products|length > 1 %}multi{% endif %}">
+            {{ money.convertAndFormat(price) }}
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,25 @@
+{% form_theme form 'Ui/Form/theme.html.twig' %}
+
+<div class="container-fluid my-5">
+    <div class="card card-cascade narrower">
+        <div class="view view-cascade bg-primary text-white z-depth-1">
+            <h3 class="h3-responsive font-weight-bold px-3 px-lg-4 pt-3 pb-2">
+                Editer une annonce {{ advert.category.name }}
+                {% if advert.subCategory|length > 0 %}- {{ advert.subCategory.name}}{% endif %}
+            </h3>
+        </div>
+        <div class="card-body card-body-cascade p-3">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'advert-form', 'class': 'advert-form'}}) }}
+
+            {{ include('site/advert/form/' ~ view) }}
+
+            {{ form_widget(form._token) }}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary font-weight-stone-500 z-depth-0 mb-2">
+                    Editer votre annonce <i class="fas fa-pen ml-2"></i>
+                </button>
+            </div>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Édition d'une catégorie premium | Catégories premium | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/categoryPremium/edit/_header.html.twig' %}
+
+    {% include 'admin/categoryPremium/edit/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/admin/create.js'} %}
+{% endblock %}

@@ -1,0 +1,54 @@
+<button type="button" class="btn btn-block btn-outline-primary z-depth-0 d-flex"
+        data-toggle="modal" data-target="#advert-filter-modal">
+    Filter <i class="fas fa-filter text-primary ml-auto"></i>
+</button>
+<div id="advert-filter-modal" class="modal fade advert-filter-modal right" tabindex="-1" role="dialog" aria-labelledby="AdvertFilterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-primary modal-xl modal-full-height modal-right">
+        <div class="modal-content">
+            <div class="modal-header text-white z-depth-0">
+                <h5 class="modal-title font-weight-bold">Filter</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body grey lighten-5 p-3">
+                {% if category.parent|length > 0 %}
+                    <div class="text-right">
+                        <a href="{{ path('app_advert_index', {'category_slug': category.parent.slug}) }}"
+                           class="btn btn-sm btn-primary z-depth-0 py-1 px-2" style="position: absolute; right: 15px; z-index: 2;"
+                           data-toggle="tooltip" title="Toutes les catégories" data-placement="top">
+                            <i class="fas fa-level-up-alt"></i>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if category.children|length > 0 %}
+                    <div>
+                        <h5 class="h5-responsive font-weight-bold text-dark mb-2">Catégorie</h5>
+                        <div class="text-left">
+                            {% for children in category.children %}
+                                <a href="{{ path('app_advert_index_s', {'category_slug': category.slug, 'sub_category_slug': children.slug}) }}"
+                                   class="link small-9 font-weight-stone-500 mr-3">
+                                    {{ children.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                {% endif %}
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'advert-filter-form'}}) }}
+
+                    {{ include('site/advert/index/filter/' ~ view) }}
+
+                    <div class="text-center d-flex justify-content-around mt-3 mb-lg-5">
+                        <a class="btn btn-outline-default btn-md z-depth-0" href="{{ app.request.pathInfo }}">Réinitialiser</a>
+                        <button class="btn btn-primary btn-md z-depth-0 btn-app-search" type="submit">Mettre à jour</button>
+                    </div>
+                {{ form_end(form, {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+

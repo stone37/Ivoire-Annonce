@@ -1,0 +1,88 @@
+{% extends 'site/layout.html.twig' %}
+
+{% set settings = config.settings %}
+
+{% set dashboard = isActive('app_user_index') %}
+{% set advert_index = isActive('app_user_advert_index') %}
+{% set advert_validate = isActive('app_user_advert_validated_index') %}
+{% set thread_index = isActive('app_user_thread_index') %}
+{% set thread_show = isActive('app_user_thread_show') %}
+{% set alert_index = isActive('app_user_alert_index') %}
+{% set alert_enabled = isActive('app_user_alert_enabled_index') %}
+{% set favoris_index  = isActive('app_user_favorite_index') %}
+{% set invoice = isActive('app_user_invoice_index') %}
+{% set profil_edit = isActive('app_user_profil_edit') %}
+{% set profil_pw = isActive('app_user_change_password') %}
+{% set profil_delete = isActive('app_user_delete') %}
+
+{% block app_intro %}
+    <nav class="navbar navbar-expand navbar-light dashboard-navbar d-none d-lg-block py-0">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if dashboard %}active{% endif %}">
+                    <a href="{{ path('app_user_index') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                        Tableau de bord
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item {% if advert_index or advert_validate  %}active{% endif %}">
+                    <a  href="{{ path('app_user_advert_validated_index') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                        Mes annonces
+                    </a>
+                </li>
+
+                {% if settings.activeThread %}
+                    <li class="nav-item {% if thread_index or thread_show %}active{% endif %}" >
+                        <a href="{{ path('app_user_thread_index') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                            Mes messages
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if settings.activeAlert %}
+                    <li class="nav-item {% if alert_index or alert_enabled %}active{% endif %}" >
+                        <a href="{{ path('app_user_alert_enabled_index') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                            Mes alertes
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if settings.activeAdFavorite %}
+                    <li class="nav-item {% if favoris_index %}active{% endif %}">
+                        <a  href="{{ path('app_user_favorite_index') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                            Mes favoris
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item {% if invoice %}active{% endif %}" >
+                    <a href="{{ path('app_user_invoice_index') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                        Mes factures
+                    </a>
+                </li>
+
+                <li class="nav-item {% if profil_edit or profil_pw or profil_delete %}active{% endif %}">
+                    <a href="{{ path('app_user_profil_edit') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                        Modifier mon profil
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include 'Ui/_stylesheets.html.twig' with {'path': 'assets/css/user/user.css'} %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/fecha.min.js'} %}
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/user/user.js'} %}
+{% endblock %}
+
+
+

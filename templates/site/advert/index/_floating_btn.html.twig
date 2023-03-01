@@ -1,0 +1,22 @@
+<div>
+    <div id="btn-floating-filter" class="btn-floating-filter d-none">
+        <a href="" class="btn btn-green" data-toggle="modal" data-target="#advert-filter-modal">
+            <i class="fas fa-filter"></i>
+        </a>
+    </div>
+
+    {% if settings.activeAlert and app.request.attributes.has('category_slug') %}
+        {% set category_slug = app.request.attributes.get('category_slug') %}
+        {% set sub_category_slug = app.request.attributes.get('sub_category_slug') %}
+        {% set has_alert = app_has_alert(category_slug, sub_category_slug) %}
+
+        <div id="btn-floating-alert" class="btn-floating-alert d-none">
+            <a href="" class="btn btn-purple z-depth-0 advert-alert-btn
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}connected{% endif %}
+                {% if has_alert %}activated disabled{% endif %}"
+                data-category="{{ category_slug }}" data-sub-category="{{ sub_category_slug }}">
+                <i class="far fa-bell"></i>
+            </a>
+        </div>
+    {% endif %}
+</div>

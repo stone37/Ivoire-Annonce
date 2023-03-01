@@ -1,0 +1,64 @@
+<section class="advert-view-image">
+    {% if advert.images|length > 0 %}
+        <div id="mdb-lightbox-ui"></div>
+
+        {% set photo_principale = app_advert_image_principale(advert.images) %}
+
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div class="mdb-lightbox">
+                    <div class="row">
+                        <figure class="col-12 principale">
+                            <a href="{{ asset(photo_principale.webPath) }}" data-size="1400x1067">
+                                <img id="principale" src="{{ asset(photo_principale.webPath) }}" class="img-fluid z-depth-1" alt="{{ photo_principale.name }}" >
+                            </a>
+                        </figure>
+                        {% for picture in advert.images %}
+                            {% if picture != photo_principale %}
+                                <figure class="col-12 col-md-6 d-none">
+                                    <a href="{{ asset(picture.webPath) }}" data-size="1400x1067">
+                                        <img {% if loop.index == 7 %} id="advert-img-plus"{% endif %} src="{{ asset(picture.webPath) }}" class="img-fluid" alt="{{ picture.name }}" >
+                                    </a>
+                                </figure>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% if advert.images|length > 8 %}
+                        <div class="lightbox-plus z-depth-1">
+                            <div>
+                                <i class="fas fa-th-large mr-2"></i>
+                                <span>Afficher tous les photos</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="mdb-lightbox">
+                    <div class="row">
+                        {% for picture in advert.images %}
+                            {% if loop.index <= 6 %}
+                                <figure class="col-6 children">
+                                    <a href="{{ asset(picture.webPath) }}" data-size="1400x1067">
+                                        <img src="{{ asset(picture.webPath) }}" class="img-fluid z-depth-2" alt="{{ picture.name }}" >
+                                    </a>
+                                </figure>
+                            {% else %}
+                                <figure class="col-6 d-none">
+                                    <a href="{{ asset(picture.webPath) }}" data-size="1400x1067">
+                                        <img src="{{ asset(picture.webPath) }}" class="img-fluid" alt="{{ picture.name }}" >
+                                    </a>
+                                </figure>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="card card-image d-flex justify-content-center align-items-center mt-4 mb-2 no-image">
+            <img src="{{ asset('assets/img/no_image.png') }}" alt="advert no image" class="img-fluid">
+        </div>
+    {% endif %}
+</section>
+

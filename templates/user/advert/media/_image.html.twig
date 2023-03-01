@@ -1,0 +1,42 @@
+<div id="advert-image" class="form-row mb-4">
+    <div class="col-12">
+        <div class="text-dark font-weight-bold mb-3">Ajoutez des photos pour rendre votre annonce encore plus visible.</div>
+    </div>
+    <div class="col-12">
+        <div id="img-upload-drop" class="row img-upload-drop">
+            <div class="col-12">
+                <div class="content text-center">
+                    <label id="img-upload-drop-label" class="dm-uploader d-block">
+                        <div class="text-right">
+                            <div id="no-image" class="text-primary small font-weight-stone-600 no-image">
+                                <i class="far fa-question-circle"></i> Pas de photos sous la main
+                            </div>
+                        </div>
+                        <button type="button" id="btn-photos" class="btn btn-primary btn-md z-depth-0 mt-2 px-4 btn-photos">
+                            <i class="fas fa-camera-retro mr-md-2 mr-1"></i> Télécharger des photos
+                        </button>
+                        <h5 class="h5-responsive mt-3 text-dark">ou Glisser directement vos photos ici</h5>
+                        <input type="file" accept="image/*" title="Cliquer pour ajouter des images" multiple class="d-none input-photo">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="img-upload-list" class="row img-upload-list">
+            {% if advert.images|length > 0 %}
+                {% for image in advert.images %}
+                    <div data-id="{{ image.id }}" class="advert-image col-lg-2 col-md-4 col-6 scale-up-ver-top my-3 {% if image.principale %}principale{% endif %}">
+                        <img src="{{ asset(image.webPath) }}" alt="Image">
+                        <div class="info small font-weight-stone-500">
+                            <span>{{ image.name }}</span>
+                            <span>{{ image.name|length }} ko</span>
+                        </div>
+                        <div class="action">
+                            <button class="remove show" data-id="{{ image.id }}" title="Supprimer"><svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><path d="M11.586 13l-2.293 2.293a1 1 0 0 0 1.414 1.414L13 14.414l2.293 2.293a1 1 0 0 0 1.414-1.414L14.414 13l2.293-2.293a1 1 0 0 0-1.414-1.414L13 11.586l-2.293-2.293a1 1 0 0 0-1.414 1.414L11.586 13z" fill="currentColor" fill-rule="nonzero"></path></svg></button>
+                        </div>
+                        <div class="img-principale" data-id="{{ image.id }}" data-state="{{ image.principale }}">Photo principale</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

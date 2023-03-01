@@ -1,0 +1,20 @@
+{% macro item(element, data) %}
+    <div class="font-weight-stone-600 text-dark mb-2">{{ element.vars.label }}</div>
+    <div class="radio-bulk-parent d-flex justify-content-start flex-wrap">
+        {% for choices in element.vars.choices %}
+            {% set choice_state = (data == choices.value) or (element.vars.value == choices.value) %}
+
+            <div class="radio-bulk text-center mb-lg-0 mb-3 {% if choice_state %}active{% endif %}">
+                <div class="label">{{ choices.label }}</div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input with-gap"
+                           id="{{ element.vars.id }}_{{ loop.index0 }}"
+                           value="{{ choices.value }}" name="{{ element.vars.full_name }}"
+                           {% if choice_state %}checked{% endif %} >
+                    <label class="form-check-label" for="{{ element.vars.id }}_{{ loop.index0 }}"></label>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(element) }}</div>
+{% endmacro %}

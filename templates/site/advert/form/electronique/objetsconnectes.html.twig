@@ -1,0 +1,22 @@
+{% extends 'site/advert/baseForm.html.twig' %}
+
+{% import 'site/advert/form/macro/radio.html.twig' as radio %}
+
+{% block app_advert_detail %}
+    <div class="form-row mt-2">
+        <div class="col-12">
+            {{ radio.item(form.state, advert.state) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block app_advert_processing %}
+    <div class="form-row">
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.processing.vars.label }}</div>
+                {{ form_widget(form.processing) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

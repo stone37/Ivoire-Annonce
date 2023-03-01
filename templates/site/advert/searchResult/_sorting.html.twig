@@ -1,0 +1,16 @@
+{% set route = app.request.attributes.get('_route') %}
+{% set param = app.request.attributes.get('_route_params') %}
+{% set queryParameters = app.request.query.all|unset_elements(['order_by', 'sort', 'page']) %}
+
+<div class="dropdown sorting">
+    <button type="button" class="btn btn-block btn-outline-primary d-flex z-depth-0 dropdown-toggle"
+            id="advert-sort-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Trier <i class="fas fa-sort text-primary ml-auto"></i>
+    </button>
+    <div class="dropdown-menu dropdown-primary">
+        <a class="dropdown-item" href="{{ path(route, {'order_by': 'validatedAt', 'sort_by': 'asc'}|merge(param)|merge(queryParameters)) }}">Du - récent + récent</a>
+        <a class="dropdown-item" href="{{ path(route, {'order_by': 'validatedAt', 'sort_by': 'desc'}|merge(param)|merge(queryParameters)) }}">Du + récent - récent</a>
+        <a class="dropdown-item" href="{{ path(route, {'order_by': 'price', 'sort_by': 'asc'}|merge(param)|merge(queryParameters)) }}">Du - cher au + cher</a>
+        <a class="dropdown-item" href="{{ path(route, {'order_by': 'price', 'sort_by': 'desc'}|merge(param)|merge(queryParameters)) }}">Du + cher au - cher</a>
+    </div>
+</div>

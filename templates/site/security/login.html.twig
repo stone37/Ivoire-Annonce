@@ -1,0 +1,20 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Se connecter' %}
+
+{% block app_flashes %}{% endblock %}
+{% block app_newsletter %}{% endblock %}
+
+{% block app_intro %}
+    <section class="bc container">
+        <div>
+            {{ breadcrumb('Connexion') }}
+            {{ wo_render_breadcrumbs({ viewTemplate: '_breadcrumb.html.twig', listClass: 'breadcrumb',
+                itemClass: 'breadcrumb-item', separator: '>', separatorClass: 'fas fa-long-arrow-alt-right'}) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/security/login_content.html.twig') }}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% import 'Ui/Macro/buttons.html.twig' as buttons %}
+
+<div class="row app-user mt-5">
+    <div class="col-12">
+        <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+            <tbody>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Id</td>
+                    <td class="text-center font-weight-normal">{{ review.id }}</td>
+                    <td class="table-dark text-center font-weight-normal">Clients</td>
+                    <td class="text-center font-weight-normal">{{ review.name }}</td>
+                    <td class="table-dark text-center font-weight-normal">Email</td>
+                    <td class="text-center font-weight-normal">{{ review.email }}</td>
+                    <td class="table-dark text-center font-weight-normal">Note</td>
+                    <td class="text-center font-weight-normal">{{ review.rating }}/10</td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Status</td>
+                    <td colspan="3" class="text-center font-weight-normal">
+                        {% if review.enabled %}
+                            <span class="badge badge-success"><i class="fas fa-check mr-1"></i> Actif</span>
+                        {% else %}
+                            <span class="badge badge-danger"><i class="fas fa-times mr-1"></i> Inactif</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Date de création</td>
+                    <td colspan="3" class="text-center font-weight-normal">{{ review.createdAt|date('d/m/Y à H:i') }}</td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Commentaire</td>
+                    <td colspan="7" class="text-center font-weight-normal">{{ review.comment|raw }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-end mt-4 mb-5">
+            <div class="text-center mr-3">{{ buttons.default(path('app_admin_review_index'), 'Retour à la liste', 'app-entity-list-btn', 'fas fa-angle-left', 'btn-outline-primary') }}</div>
+        </div>
+    </div>
+</div>
+
+
+

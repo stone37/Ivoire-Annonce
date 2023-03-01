@@ -1,0 +1,24 @@
+{% form_theme payment_form 'Ui/Form/theme.html.twig' %}
+{% form_theme discount_form 'Ui/Form/theme.html.twig' %}
+
+<section class="container">
+    {{ include('ui/_flashes_message.html.twig') }}
+</section>
+<section class="container-fluid mb-5 payment-bulk">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive text-dark font-weight-bold text-center mb-4">Paiement</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {{ include('site/cart/validate/_info.html.twig') }}
+        </div>
+        <div class="col-12 col-md-4">
+            {{ include('site/cart/validate/_discount.html.twig') }}
+        </div>
+        <div class="col-12 col-md-8">
+            {{ include('site/cart/validate/_payment_method.html.twig') }}
+        </div>
+    </div>
+</section>

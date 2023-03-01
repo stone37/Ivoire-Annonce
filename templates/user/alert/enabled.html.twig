@@ -1,0 +1,32 @@
+{% extends "user/layout.html.twig" %}
+
+{% block title 'Alertes active' %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    <section class="container my-lg-4 mb-4 mt-2 d-lg-flex justify-content-lg-between align-items-center">
+        <h3 class="h3-responsive font-weight-stone-600 text-dark">Alertes active</h3>
+        <div>
+            <div class="btn-group title" role="group">
+                <a href="{{ path('app_user_alert_enabled_index') }}"
+                   class="btn btn-sm btn-dark waves-effect z-depth-0 px-3 px-lg-4">
+                    <span class="d-none d-md-inline">Alertes active</span>
+                    <span class="d-inline d-md-none">Alertes active</span>
+                </a>
+                <a href="{{ path('app_user_alert_index') }}"
+                   class="btn btn-sm btn-grey waves-effect z-depth-0 px-3 px-lg-4">
+                    <span class="d-none d-md-inline">Alertes inactive</span>
+                    <span class="d-inline d-md-none">Alertes inactive</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{ include('user/alert/enabled/content.html.twig') }}
+{% endblock %}
+

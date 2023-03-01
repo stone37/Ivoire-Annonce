@@ -8,6 +8,7 @@ use App\Repository\WalletRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: WalletRepository::class)]
 class Wallet
@@ -34,7 +35,7 @@ class Wallet
     #[ORM\OneToOne(mappedBy: 'wallet')]
     private ?User $owner = null;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->histories = new ArrayCollection();
     }
@@ -106,6 +107,7 @@ class Wallet
     public function getAvailableAmount(): int
     {
         $amount = $this->getTotalAmount() - $this->getFreezeAmount();
+
         if ($amount > 0) {
             return $amount;
         }
@@ -113,7 +115,10 @@ class Wallet
         return 0;
     }
 
-    public function isAvailableMoney($amount, $type = self::AVAILABLE_MONEY)
+    /**
+     * @throws MoneyTypeNotExistException
+     */
+    public function isAvailableMoney($amount, $type = self::AVAILABLE_MONEY): bool
     {
         switch ($type) {
             case self::AVAILABLE_MONEY:

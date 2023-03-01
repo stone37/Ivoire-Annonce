@@ -1,0 +1,28 @@
+{% if premiums|length > 0 %}
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-lg-9">
+                <section class="category-premium">
+                    {% for premium in premiums %}
+                        {% if loop.index > 1 and not app.user %}
+                            {{ include('site/layout/_security.html.twig') }}
+                        {% endif %}
+                        {{ include('site/categoryPremium/_box.html.twig') }}
+                    {% endfor %}
+                </section>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                {# Espace pub #}
+                {{ include('site/layout/_advert_type.html.twig') }}
+
+                {% if app.user %}
+                    {{ include('site/layout/_parrainage.html.twig') }}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+
+
+

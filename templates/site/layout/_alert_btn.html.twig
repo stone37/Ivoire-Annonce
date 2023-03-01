@@ -1,0 +1,10 @@
+{% set category_slug = app.request.attributes.get('category_slug') %}
+{% set sub_category_slug = app.request.attributes.get('sub_category_slug') %}
+{% set has_alert = app_has_alert(category_slug, sub_category_slug) %}
+
+<a href="" class="btn btn-block btn-purple d-flex z-depth-0 advert-alert-btn
+     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}connected{% endif %}
+     {% if has_alert %}activated disabled{% endif %}"
+     data-category="{{ category_slug }}" data-sub-category="{{ sub_category_slug }}">
+    Créer une alerte <i class="far fa-bell ml-auto"></i>
+</a>

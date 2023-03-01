@@ -1,0 +1,58 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Achat d\'option galerie de la page d\'accueil' %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+{% block app_newsletter %}{% endblock %}
+
+{% block app_intro %}
+    <section class="bc container-fluid px-5 d-flex">
+        <div>
+            <a href="{{ path('app_user_advert_validated_index') }}" class="btn btn-default btn-sm z-depth-0 mt-lg-3">
+                <i class="fas fa-long-arrow-alt-left mr-2"></i>
+                Retour
+            </a>
+        </div>
+        <div>
+            {{ breadcrumb('Achat d\'option galerie de la page d\'accueil') }}
+            {{ wo_render_breadcrumbs({viewTemplate: '_breadcrumb.html.twig', listClass: 'breadcrumb pl-md-3 pt-md-4 mb-0',
+                itemClass: 'breadcrumb-item', separator: '>', separatorClass: 'fas fa-long-arrow-alt-right'}) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/option/home/content.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            // Gestion des options
+            let $option_item = $('.advert-option-open .option-item'),
+                $input_option = $('input#form_option'),
+                $submit_btn = $('button.option-submit');
+
+            $option_item.click(function () {
+                let $this = $(this), $input = $this.find('input.with-gap');
+                $option_item.removeClass('active');
+
+                $input.prop('checked', true);
+
+                $this.addClass('active');
+                $input_option.val($input.val());
+                $submit_btn.removeAttr('disabled');
+            });
+        });
+    </script>
+{% endblock %}
+

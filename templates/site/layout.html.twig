@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block app_navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light py-2 py-md-3">
+        <div class="container-fluid">
+            {{ include('site/layout/_logo.html.twig', {'config': config}) }}
+            {% block app_search %}{{ include('site/layout/_searchForm.html.twig') }}{% endblock %}
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="button-icon"><i class="fas fa-bars"></i></div>
+            </button>
+            <div class="collapse navbar-collapse {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}connect{% endif %}" id="navbarToggle">
+                <ul class="navbar-nav ml-lg-auto align-items-lg-center">
+
+                    {{ include('site/layout/mobile/_security.html.twig') }}
+
+                    {#{{ render(controller('App\\Controller\\LocaleSwitchController::show')) }}#}
+
+                    {#{{ render(controller('App\\Controller\\CurrencySwitchController::show')) }}#}
+
+                    {{ render(controller('App\\Controller\\SecurityWidgetController::show')) }}
+
+                    {{ include('site/layout/_advert.html.twig') }}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block app_intro %}
+    {{ render(controller('App\\Controller\\MenuController::navbar', {'request': app.request})) }}
+    {{ render(controller('App\\Controller\\MenuController::navbarSm', {'request': app.request})) }}
+{% endblock %}
+
+
+
+

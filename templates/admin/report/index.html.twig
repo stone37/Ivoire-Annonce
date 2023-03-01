@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Signalements | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/report/index/_header.html.twig' %}
+
+    {% include 'admin/report/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

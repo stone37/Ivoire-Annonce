@@ -1,0 +1,33 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Acheter et vendre sur le site de petites annonces pour particuliers et pros' %}
+
+{% block meta %}
+    {% set content = config.settings.name ~ ": petites annonces en Côte d'Ivoire. Achetez un véhicule, trouvez un emploi, une maison ou un appartement, des meubles, appareils électroménagers et plus !" %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('site/home/_intro.html.twig') }}
+
+    {#{{ render(controller('App\\Controller\\OptionController::home')) }}#}
+
+    {{ render(controller('App\\Controller\\CategoryPremiumController::index')) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/site/navbar.js'} %}
+{% endblock %}
+
+

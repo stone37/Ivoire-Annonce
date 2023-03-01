@@ -1,0 +1,14 @@
+<div class="form-row mb-3">
+    <div class="col-12 urgent-field">
+        <div class="form-check pl-0 mt-4">
+            <input type="checkbox" class="form-check-input filled-in" id="{{ form.urgent.vars.id }}"
+                   value="{{ form.urgent.vars.value }}" name="{{ form.urgent.vars.full_name }}"
+                    {% if app.request.query.has('urgent') %}
+                        {% if app.request.query.get('urgent') %}checked{% endif %}
+                    {% endif %} />
+            <label class="form-check-label font-weight-stone-500 text-dark" for="{{ form.urgent.vars.id }}">{{ form.urgent.vars.label|raw }}
+                <i class="fas fa-question-circle ml-1 dark-grey-text material-tooltip-main" data-placement="right" data-toggle="tooltip" title="Rechercher les annonces urgente"></i>
+            </label>
+        </div>
+    </div>
+</div>

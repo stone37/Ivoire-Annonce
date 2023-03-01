@@ -4,7 +4,48 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    locale: fr_CI
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+    app.path.image_orphanage: '%kernel.cache_dir%/uploader/orphanage'
+    image_resize_key: '%env(resolve:IMAGE_RESIZE_KEY)%'
+    dkim_key: '%env(resolve:default::MAILER_DKIM)%'
+    maintenance_dir: '%env(resolve:MAINTENANCE_DIR)%'
+    app.path.user: /uploads/images/user
+    app.path.category: /uploads/images/categories
+    app.path.settings: /uploads/images/logo
+
+    app_name_property_prefix: name
+    app_room_property_prefix: rooms
+
+    app_category_property_prefix: category
+    app_sub_category_property_prefix: subCategory
+    app_type_property_prefix: type
+    app_city_property_prefix: city
+    app_urgent_property_prefix: urgent
+    app_position_property_prefix: position
+    app_validated_at_property_prefix: validatedAt
+    app_auto_year_property_prefix: autoYear
+    app_price_property_prefix: price
+    app_year_property_prefix: year
+    app_kilo_property_prefix: kilo
+    app_marque_property_prefix: marque
+    app_model_property_prefix: model
+    app_type_carburant_property_prefix: typeCarburant
+    app_auto_state_property_prefix: autoState
+    app_surface_property_prefix: surface
+    app_nombre_piece_property_prefix: nombrePiece
+    app_nombre_chambre_property_prefix: nombreChambre
+    app_nombre_salle_bain_property_prefix: nombreSalleBain
+    app_immobilier_state_property_prefix: immobilierState
+    app_proximite_property_prefix: proximite
+    app_exterior_property_prefix: exterior
+    app_interior_property_prefix: interior
+    app_access_property_prefix: access
+    app_brand_property_prefix: brand
+    app_state_property_prefix: state
+    app_processing_property_prefix: processing
+    app_data_property_prefix: data
+
 
 services:
     # default configuration for services in *this* file
@@ -21,5 +62,34 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Mailing\Mailer:
+        arguments:
+            $dkimKey: '%dkim_key%'
+
+    App\Manager\ConfigurationFileManager:
+        arguments:
+            $maintenanceDirectory: '%maintenance_dir%'
+
+    App\PropertyNameResolver\NameResolver:
+        arguments:
+            $propertyPrefix: '%app_name_property_prefix%'
+
+    App\PropertyNameResolver\PriceNameResolver:
+        arguments:
+            $pricePropertyPrefix: '%app_price_property_prefix%'
+
+    App\PropertyNameResolver\YearNameResolver:
+        arguments:
+            $yearPropertyPrefix: '%app_year_property_prefix%'
+
+    App\PropertyNameResolver\KiloNameResolver:
+        arguments:
+            $kiloPropertyPrefix: '%app_kilo_property_prefix%'
+
+    App\PropertyNameResolver\SurfaceNameResolver:
+        arguments:
+            $surfacePropertyPrefix: '%app_surface_property_prefix%'
+
+    App\PropertyNameResolver\ConcatedPriceNameResolver:
+        arguments:
+            $propertyPrefix: '%app_room_property_prefix%'

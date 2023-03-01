@@ -1,0 +1,61 @@
+<section class="container-fluid mb-5 choose-category">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <h1 class="h1-responsive text-dark font-weight-bold text-center mb-4">Sélectionner une catégorie</h1>
+        </div>
+        <div class="col-12 category-list">
+            <div class="row category-content-parent-bulk">
+                {% for category in categories %}
+                    {% set has_child = category.children|length > 0 %}
+
+                    {% if category.filename %}
+                        {% set image_url = vich_uploader_asset(category, 'file') %}
+                    {% else %}
+                        {% set image_url = asset('assets/img/no_image.png') %}
+                    {% endif %}
+
+                    <div data-id="{{ category.id }}" class="col-12 col-md-4 col-lg-3 mb-lg-4 mb-3 category-content-parent {% if has_child %}child{% endif %}">
+                        <div class="list-group">
+                            <a {% if not has_child %}href="{{ path('app_advert_create', {'category_slug': category.slug}) }}"{% endif %} class="list-group-item d-flex align-items-center">
+                                <div class="advert-image">
+                                    {% if category.filename %}
+                                        <img src="{{ image_url }}" class="img-fluid" alt="Category image">
+                                    {% else %}
+                                        <img src="{{ image_url }}" class="img-fluid" alt="Category image">
+                                    {% endif %}
+                                </div>
+                                <div class="title">{{ category.name }}</div>
+                                {% if not has_child %}<i class="fas fa-long-arrow-alt-right ml-auto"></i>{% endif %}
+                            </a>
+                        </div>
+                        {% if has_child %}
+                            {% set ids = [] %}
+                            {% set names = [] %}
+                            {% set slugs = [] %}
+
+                            {% for children in category.children %}
+                                {% set ids = ids|merge([children.id]) %}
+                                {% set names = names|merge([children.name]) %}
+                                {% set slugs = slugs|merge([children.slug]) %}
+                            {% endfor %}
+
+                            <div class="category-parent"
+                                 data-id="{{ category.id }}"
+                                 data-name="{{ category.name }}"
+                                 data-slug="{{ category.slug }}"
+                                 data-url="{{ image_url }}">
+                            </div>
+                            <div class="category-children"
+                                 data-id="{{ ids|join('|') }}"
+                                 data-name="{{ names|join('|') }}"
+                                 data-slug="{{ slugs|join('|') }}">
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row category-content-parent-children-bulk d-none justify-content-center"></div>
+            <div class="row category-content-children-bulk d-none"></div>
+        </div>
+    </div>
+</section>

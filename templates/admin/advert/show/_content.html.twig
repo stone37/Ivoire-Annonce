@@ -1,0 +1,137 @@
+{% import 'Ui/Macro/buttons.html.twig' as buttons %}
+
+<div class="row app-user mb-4">
+    <div class="col-12">
+        <div class="h5-responsive title">
+            <div class="text-primary d-inline-block font-weight-stone-600">Information de générale</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+            <tbody>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Id</td>
+                    <td class="text-center font-weight-normal">{{ advert.id }}</td>
+                    <td class="table-dark text-center font-weight-normal">Position</td>
+                    <td class="text-center font-weight-normal">{{ advert.position }}</td>
+                    <td class="table-dark text-center font-weight-normal">Reference</td>
+                    <td class="text-center font-weight-normal">{{ advert.reference }}</td>
+                    <td class="table-dark text-center font-weight-normal">Catégorie</td>
+                    <td class="text-center font-weight-normal">{{ advert.category.name }}</td>
+                    <td class="table-dark text-center font-weight-normal">Sous catégorie</td>
+                    <td class="text-center font-weight-normal">{{ advert.subCategory.name }}</td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Type</td>
+                    <td class="text-center font-weight-normal">{{ advert.type|app_advert_type }}</td>
+                    <td class="table-dark text-center font-weight-normal">Prix</td>
+                    <td class="text-center font-weight-normal">{{ advert.price|format_currency('XOF') }}</td>
+                    <td class="table-dark text-center font-weight-normal">Prix status</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.priceState %}
+                            <span class="badge badge-primary">A débattre</span>
+                        {% else %}
+                            <span class="badge badge-grey">NC</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Ville</td>
+                    <td class="text-center font-weight-normal">{{ advert.location.city }}</td>
+                    <td class="table-dark text-center font-weight-normal">Zone</td>
+                    <td class="text-center font-weight-normal">{{ advert.location.town }}</td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Annonceur</td>
+                    <td class="text-center font-weight-normal">
+                        <a href="{{ path('app_admin_user_show', {'id': advert.owner.id, 'type': 1}) }}" class="card-link">
+                            {{ advert.owner.firstname ~' '~ advert.owner.lastname }}
+                        </a>
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Création</td>
+                    <td class="text-center font-weight-normal">{{ advert.createdAt|date('d/m/Y H:i') }}</td>
+                    <td class="table-dark text-center font-weight-normal">Modification</td>
+                    <td class="text-center font-weight-normal">{{ advert.updatedAt|date('d/m/Y H:i') }}</td>
+                    <td class="table-dark text-center font-weight-normal">Validation</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.validatedAt %}
+                            {{ advert.validatedAt|date('d/m/Y H:i') }}
+                        {% else %}
+                            <span class="badge badge-grey">Non valider</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Refus</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.deniedAt %}
+                            {{ advert.deniedAt|date('d/m/Y H:i') }}
+                        {% else %}
+                            <span class="badge badge-grey">Non refuser</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Retrait</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.deletedAt %}
+                            {{ advert.deletedAt|date('d/m/Y H:i') }}
+                        {% else %}
+                            <span class="badge badge-grey">Non retirer</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Titre</td>
+                    <td colspan="7" class="text-left font-weight-normal">{{ advert.title }}</td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Description</td>
+                    <td colspan="9" class="text-left font-weight-normal">{{ advert.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{ include('admin/advert/show/_data.html.twig') }}
+
+{{ include('admin/advert/show/_image.html.twig') }}
+
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="d-flex justify-content-end mb-5 mt-4">
+            <div class="text-center mr-3">
+                {{ buttons.default(path('app_admin_advert_index', {'type': type}),
+                    'Retour à la liste', 'app-entity-list-btn', 'fas fa-angle-left', 'btn-outline-primary') }}
+            </div>
+
+            {% if type == '1' or type == '3' %}
+                <div class="text-center mr-3">
+                    <a class="btn btn-success entity-advert-validate z-depth-0" data-id="{{ advert.id }}">
+                        <i class="fas fa-reply mr-1"></i> Valider
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if type == '1' or type == '2' %}
+                <div class="text-center mr-3">
+                    <a class="btn btn-amber entity-advert-denied z-depth-0" data-id="{{ advert.id }}">
+                        <i class="fas fa-share mr-1"></i> Refuser
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="text-center mr-3">
+                {{ buttons.default(path('app_admin_commande_advert', {'id': advert.id}), 'Commandes',
+                    'app-entity-list-order-btn', 'fas fa-shopping-cart', 'btn-grey z-depth-0') }}
+            </div>
+
+            {% if type == '3' or type == '4' or type == '5' %}
+                <div class="text-center mr-3">
+                    <a class="btn btn-danger entity-advert-delete z-depth-0" data-id="{{ advert.id }}">
+                        <i class="fas fa-times mr-1"></i> Supprimer
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+

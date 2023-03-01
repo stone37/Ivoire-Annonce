@@ -1,0 +1,70 @@
+{% set photo_principale = app_advert_image_principale(advert.images) %}
+
+<div id="advert_{{ advert.id }}" class="card advert-bulk dashboard mb-4">
+    <div class="row no-gutters">
+        <div class="col-md-4 image-bulk pr-0 mr-0">
+            {% if photo_principale %}
+                <img src="{{ asset(photo_principale.webPath) }}" class="img-fluid advert-image" alt="{{ photo_principale.name }}" />
+            {% else %}
+                <img src="{{ asset('assets/img/no_image.png') }}" class="img-fluid advert-image" alt="" />
+            {% endif %}
+
+            <div class="nbr-photo">
+                <i class="fas fa-camera-retro"></i> {{ advert.images|length }}
+            </div>
+        </div>
+        <div class="col-md-8 data-bulk">
+            <div class="card-body py-2 pr-2">
+                <div class="header">
+                    <div class="d-flex justify-content-between align-content-center">
+                        <h4 class="h4-responsive font-weight-bold text-dark">{{ advert.title|u.truncate(25, '...') }}</h4>
+                        <div class="font-weight-stone-500 ad-type">
+                            <span>{{ advert.type|app_advert_type }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap mt-1">
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ advert.location.city }}
+                            {% if advert.location.town %}({{ advert.location.town|u.truncate(15, '...') }}){% endif %}
+                        </div>
+                        {% if advert.validatedAt %}
+                            <div class="icon">
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </div>
+                            <div class="validate-at">
+                                <i class="fas fa-clock"></i> {{ advert.validatedAt|ago }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {{ include('site/advert/index/_data_info.html.twig') }}
+                </div>
+                <div class="footer d-md-flex align-items-start justify-content-md-between">
+                    <div class="advert-price text-right">
+                        {% if advert.price %}
+                            <div class="price">
+                                {{ advert.price|format_currency('XOF') }}
+                            </div>
+                        {% else %}
+                            <div class="price">Sur demande</div>
+                        {% endif %}
+                    </div>
+                    <div class="advert-option-bulk">
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-sm dropdown-toggle px-3 z-depth-0" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gestion
+                            </button>
+                            <div class="dropdown-menu menu dropdown-primary">
+                                <a data-id="{{ advert.id }}" class="dropdown-item user-advert-delete">
+                                    <i class="fas fa-trash mr-1"></i> Supprimer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

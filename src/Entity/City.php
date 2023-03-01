@@ -9,6 +9,7 @@ use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -39,7 +40,7 @@ class City
     #[ORM\OneToMany(mappedBy: 'city', targetEntity: Zone::class, orphanRemoval: true)]
     private Collection $zones;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->zones = new ArrayCollection();
     }

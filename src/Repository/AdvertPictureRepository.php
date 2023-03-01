@@ -39,5 +39,8 @@ class AdvertPictureRepository extends ServiceEntityRepository
         }
     }
 
-
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 }

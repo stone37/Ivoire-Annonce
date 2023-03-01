@@ -14,8 +14,24 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            entry_point: App\Security\AuthenticationEntryPoint
             lazy: true
+            user_checker: App\Security\UserChecker
             provider: app_user_provider
+            switch_user: { role: CAN_SWITCH_USER, parameter: _ninja }
+            custom_authenticator:
+                - App\Auth\Authenticator
+                - App\Authenticator\GoogleAuthenticator
+                - App\Authenticator\FacebookAuthenticator
+            logout:
+                path: app_logout
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+                samesite: strict
+            access_denied_handler: App\Security\AccessDeniedHandler
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

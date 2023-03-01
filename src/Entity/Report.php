@@ -22,11 +22,11 @@ class Report
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $email = null;
 
-    #[Assert\NotBlank(normalizer: 'trim', message: 'Veuillez renseigne la raison')]
+    #[Assert\NotBlank(message: 'Veuillez renseigne la raison', normalizer: 'trim')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reason = null;
 
-    #[Assert\NotBlank(message: "Merci de nous préciser les détails de l'annonce vous amenant à signaler cette annonce")]
+    #[Assert\NotBlank(message: "Merci de nous préciser les détails de l'annonce vous amenant à la signaler")]
     #[Assert\Length(min: 10, minMessage: "Votre message doit contenir au moin {{ limit }} caractères")]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;

@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Paramètres régionaux | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/locale/index/_header.html.twig' %}
+
+    {% include 'admin/locale/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

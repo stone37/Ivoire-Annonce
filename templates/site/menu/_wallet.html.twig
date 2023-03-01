@@ -1,0 +1,7 @@
+{% if settings.activeCredit %}
+    <li class="nav-item dropdown wallet d-none d-lg-block">
+        <a href="{{ path('app_user_credit_index') }}" title="Votre porte-feuille" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-wallet"></i> {{ app.user.wallet.availableAmount|format_currency('XOF') }}
+        </a>
+    </li>
+{% endif %}

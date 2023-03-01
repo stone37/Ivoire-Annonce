@@ -1,0 +1,36 @@
+<div class="card mb-4">
+    <div class="card-body py-2 px-3">
+        <div class="text-right small font-weight-bold created">
+            <i class="fas fa-calendar mr-1"></i>
+            Débuté le {{ thread.createdAt|format_datetime(pattern="EEEE dd MMM yyyy") }} . {{ thread.createdAt|date('H:i') }}
+        </div>
+        <div class="text-right small font-weight-bold user">
+            Par
+            <span>
+                {% if app.user.id == thread.createdBy.id %}
+                    Moi
+                {% else %}
+                    <a href="{{ path('app_user_profil_index', {'id': thread.createdBy.id}) }}" class="">{{ thread.createdBy.firstname|capitalize }} {{ thread.createdBy.lastname|capitalize }}</a>
+                {% endif %}
+            </span>
+        </div>
+        <div class="text-left message-nbr d-flex align-items-end">
+            {% set message_nbr = thread.messages|length %}
+            <div class="nbr">{{ message_nbr }}</div>
+            <div class="title">{{ message_nbr > 1 ? 'messages' : 'message'  }}</div>
+        </div>
+        <div class="footer text-right">
+            {% if app_message_can_delete_thread(thread) %}
+                <a href="" class="btn btn-sm btn-danger advert-thread-delete px-3 z-depth-0" data-id="{{ thread.id }}">
+                    Supprimer <i class="fas fa-trash ml-1"></i>
+                </a>
+            {% endif %}
+            {% if thread.lastMessage %}
+                <a href="{{ path('app_user_thread_show', {'id': thread.id, 'index': loop.index}) }}#message_{{ thread.lastMessage.id }}"
+                   class="btn btn-sm btn-primary z-depth-0">
+                    Voir <i class="fas fa-eye ml-1"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

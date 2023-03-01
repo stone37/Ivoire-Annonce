@@ -1,0 +1,63 @@
+{% import 'ui/Macro/money.html.twig' as money %}
+
+<section class="container mb-5">
+    {% if payments|length > 0 %}
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-responsive-sm">
+                    <thead class="text-primary">
+                        <tr>
+                            <th scope="col" class="text-center font-weight-normal">#</th>
+                            <th scope="col" class="text-center font-weight-normal">Date</th>
+                            <th scope="col" class="text-center font-weight-normal">Établissements</th>
+                            <th scope="col" class="text-center font-weight-normal">Hébergement</th>
+                            <th scope="col" class="text-center font-weight-normal">Durée du séjour</th>
+                            <th scope="col" class="text-center font-weight-normal">Montant</th>
+                            <th scope="col" class="text-center font-weight-normal"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                            <tr>
+                                <td class="text-center font-weight-normal">{{ loop.index }}</td>
+                                <td class="text-center font-weight-normal">{{ payment.createdAt|date('d/m/Y H:i:s') }}</td>
+                                <td class="text-center font-weight-normal">{{ payment.commande.hostel.name }}</td>
+                                <td class="text-center font-weight-normal">
+                                    {{ payment.commande.booking.roomNumber }}
+                                    <span class="small">X</span>
+                                    {{ payment.commande.booking.room.name }}
+                                </td>
+                                <td class="text-center font-weight-normal">{{ payment.commande.booking.days }} nuits</td>
+                                <td class="text-center font-weight-normal">{{ money.convertAndFormat(payment.price) }}</td>
+                                <td class="text-center py-2">
+                                   <a target="_blank" href="{{ path('app_user_invoice_show', {id: payment.id}) }}"
+                                      class="btn btn-blue btn-sm z-depth-0">
+                                       <i class="fas fa-download mr-1"></i> Télécharger
+                                   </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 d-flex justify-content-start mt-2">
+                <div class="font-weight-stone-500 text-primary">{{ payments.totalItemCount }} resultats</div>
+            </div>
+            <div class="col-12 d-flex justify-content-center mt-2">
+                {{ knp_pagination_render(payments, 'ui/_pagination.html.twig') }}
+            </div>
+        </div>
+    {% else %}
+        <div class="row app-user d-flex justify-content-center">
+            <div class="col-12 col-md-8 text-center mt-5 mt-md-5 mb-5">
+                <h4 class="h4-responsive font-weight-bold text-dark">
+                    Vous n'avez aucune facture.
+                </h4>
+                <p>
+                    C'est ici que vous verrez toutes vos achat sur le site ou l'application mobile, ainsi que vos
+                    factures.
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</section>

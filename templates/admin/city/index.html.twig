@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Villes | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/city/index/_header.html.twig' %}
+
+    {% include 'admin/city/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

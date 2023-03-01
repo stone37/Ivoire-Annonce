@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ThreadMessageRepository::class)]
@@ -27,13 +29,14 @@ class ThreadMessage
     #[ORM\ManyToOne]
     private ?User $sender = null;
 
-    #[ORM\OneToMany(mappedBy: 'message', targetEntity: ThreadMessageMetadata::class, orphanRemoval: true, cascade: ['ALL'])]
+    #[ORM\OneToMany(mappedBy: 'message', targetEntity: ThreadMessageMetadata::class, cascade: ['persist', 'remove'])]
     private Collection $metadata;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Thread $thread = null;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->metadata = new ArrayCollection();
     }
@@ -107,5 +110,39 @@ class ThreadMessage
         $this->thread = $thread;
 
         return $this;
+    }
+
+    public function getMetadataForParticipant(User $participant)
+    {
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $participant->getId()) {
+                return $meta;
+            }
+        }
+
+        return null;
+    }
+
+    public function isReadByParticipant(User $user): bool
+    {
+        if ($meta = $this->getMetadataForParticipant($user)) {
+            return $meta->isIsRead();
+        }
+
+        return false;
+    }
+
+    public function setIsReadByParticipant(User $user, $isRead)
+    {
+        if (!$meta = $this->getMetadataForParticipant($user)) {
+            throw new InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $user->getId()));
+        }
+
+        $meta->setIsRead($isRead);
+    }
+
+    public function getTimestamp(): ?int
+    {
+        return $this->getCreatedAt() ? $this->getCreatedAt()->getTimestamp() : null;
     }
 }

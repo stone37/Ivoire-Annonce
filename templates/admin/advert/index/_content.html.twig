@@ -1,0 +1,125 @@
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-center justify-content-md-between">
+        {% if type == '1' or type == '3' %}
+            <div class="mr-3 d-none entity-advert-validate-bulk-btn entity-list-delete-bulk-btn">
+                {% include 'Ui/Grid/Action/validate.html.twig' with {'action': {'label': 'Valider'}} %}
+            </div>
+        {% endif %}
+
+        {% if type == '1' or type == '2' %}
+            <div class="mr-3 d-none entity-advert-denied-bulk-btn entity-list-delete-bulk-btn">
+                {% include 'Ui/Grid/Action/denied.html.twig' with {'action': {'label': 'Refuser'}} %}
+            </div>
+        {% endif %}
+
+        {% if type == '3' or type == '4' or type == '5' %}
+            <div class="mr-3 d-none entity-advert-delete-bulk-btn entity-list-delete-bulk-btn">
+                {% include 'Ui/Grid/Action/delete.html.twig' with {'action': {'label': 'Supprimer'}} %}
+            </div>
+        {% endif %}
+        <div class="d-flex ml-auto">
+            <div class="">
+                {% include 'admin/advert/filter.html.twig' with {'form': searchForm}  %}
+            </div>
+            <div class="mr-3">
+                <a href="" class="btn btn-grey" data-toggle="modal" data-target="#entity-search">
+                    <i class="fas fa-filter mr-1" aria-hidden="true"></i> Filtres
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if adverts|length > 0 %}
+    <div class="row app-user mb-5">
+        <div class="col-12">
+            <table class="table table-responsive-sm">
+                <thead class="text-primary">
+                <tr>
+                    <th scope="col" class="text-center">
+                        <div class="" style="position: relative; right: 10px; top: 2px">
+                            <input type="checkbox" name="principal" class="form-check-input filled-in" id="principal-checkbox" value="" style="margin: 0 !important;" />
+                            <label class="form-check-label" for="principal-checkbox"
+                                   style="padding-left: 0!important; "></label>
+                        </div>
+                    </th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Reference</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Catégorie</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Sous catégorie</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Type</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Ville</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Annonceur</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Prix</th>
+                    <th scope="col" class="font-weight-stone-500 text-center"></th>
+                </tr>
+                </thead>
+                <tbody id="list-checkbook-container">
+                {% for advert in adverts %}
+                    <tr>
+                        <td class="text-center">
+                            <div class="" style="position: relative; right: 10px; top: 2px">
+                                <input type="checkbox" name="checkbox{{ loop.index }}" class="form-check-input filled-in list-checkbook"
+                                       id="checkbox{{ loop.index }}" value="{{ advert.id }}" style="margin: 0 !important;" />
+                                <label class="form-check-label" for="checkbox{{ loop.index }}" style="padding-left: 0!important; "></label>
+                            </div>
+                        </td>
+                        <td class="text-center">{{ advert.reference }}</td>
+                        <td class="text-center">{{ advert.category.name }}</td>
+                        <td class="text-center">{{ advert.subcategory.name }}</td>
+                        <td class="text-center">{{ advert.type|app_advert_type }}</td>
+                        <td class="text-center">{{ advert.location.city }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('app_admin_user_show', {'id': advert.owner.id, 'type': 1}) }}" class="card-link">
+                                {{ advert.owner.firstname ~' '~ advert.owner.lastname }}
+                            </a>
+                        </td>
+                        <td class="text-center">{{ advert.price|format_currency('XOF') }}</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-ellipsis-h text-primary"></i></a>
+                                <div class="dropdown-menu dropdown-primary dropdown-menu-right mt-0">
+                                    <a href="{{ path('app_admin_advert_show', {'id': advert.id, 'type': type}) }}" class="dropdown-item">
+                                        <i class="fas fa-eye mr-1"></i> Voir
+                                    </a>
+
+                                    {% if type == '1' or type == '3' %}
+                                        <a class="dropdown-item entity-advert-validate" data-id="{{ advert.id }}">
+                                            <i class="fas fa-reply mr-1 text-success"></i> Valider
+                                        </a>
+                                    {% endif %}
+
+                                    {% if type == '1' or type == '2' %}
+                                        <a class="dropdown-item entity-advert-denied" data-id="{{ advert.id }}">
+                                            <i class="fas fa-share mr-1 amber-text"></i> Refuser
+                                        </a>
+                                    {% endif %}
+
+                                    {% if type == '3' or type == '4' or type == '5' %}
+                                        <a class="dropdown-item entity-advert-delete" data-id="{{ advert.id }}">
+                                            <i class="fas fa-trash mr-1 text-danger"></i> Supprimer
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 d-flex justify-content-start mt-2">
+            <div class="font-weight-stone-500 text-secondary">{{ adverts.totalItemCount }} resultats</div>
+        </div>
+        <div class="col-12 d-flex justify-content-center mt-2 mb-5">
+            {{ knp_pagination_render(adverts, 'Ui/_pagination.html.twig') }}
+        </div>
+    </div>
+{% else %}
+    <div class="row app-user d-flex justify-content-center">
+        <div class="col-12 col-md-8 text-center mt-3 mt-md-5">
+            <h3 class="h3-responsive font-weight-stone-600 text-dark">
+                Vous n'avez aucune annonce.
+            </h3>
+        </div>
+    </div>
+{% endif %}

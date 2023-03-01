@@ -1,0 +1,18 @@
+<section class="row mt-3 mb-4">
+    <div class="col-12">
+        <h5 class="h5-responsive font-weight-bold text-dark mb-2">Description</h5>
+        <p class="small-9 mb-2">{{ advert.description|raw }}</p>
+        <div class="small-8 font-weight-bold text-secondary">
+            Référence: {{ advert.reference}} <i class="fas fa-long-arrow-alt-right"></i>
+            Dernière mise à jour: {{ advert.updatedAt|date('d/m/Y à h:i')}}
+        </div>
+
+        {% if not is_granted('created', advert) %}
+            <div>
+                <a href="" class="small font-weight-stone-600 report" data-toggle="modal" data-target="#advert-report-modal">
+                    <i class="fas fa-flag"></i> Signalez cette annonce
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>

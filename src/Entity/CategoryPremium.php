@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\EnabledTrait;
+use App\Entity\Traits\PositionTrait;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CategoryPremiumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CategoryPremiumRepository::class)]
 class CategoryPremium
 {
+    use PositionTrait;
+    use TimestampableTrait;
+    use EnabledTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

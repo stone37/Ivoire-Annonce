@@ -1,0 +1,54 @@
+{% extends layout %}
+
+{% import "mails/macros.twig" as e %}
+
+{% set settings = config.settings %}
+
+{% block body %}
+    {% apply markdown_email %}
+
+        Cher {{ booking.firstname }},
+        ===========================
+
+        Nous vous remercions pour votre commande sur **{{ settings.name|upper }}**. Nous sommes heureux
+        de vous informer que votre commande a été validée et votre réservation est en cours de confirmation.
+
+        Détails de votre commande
+        -------------------------
+
+        Numéro de commande: **#{{ booking.commande.reference }}**
+        Date de commande: **{{ booking.commande.createdAt|date('d/m/Y') }}**
+
+        Détails de votre réservation
+        ----------------------------
+
+        Date de réservation: **{{ booking.createdAt|date('d/m/Y') }}**
+
+        Nom de l'établissement: **{{ booking.hostel.name }}**
+        Type de chambre: **{{ booking.room.name }}**
+        Nombre de nuits: **{{ booking.days }}**
+        Nombre de personnes: **{{ booking.adult + booking.children }}**
+
+        Arrivée prévue: **{{ booking.checkin|format_datetime(pattern="EE dd MMM yyyy") }}**
+        Départ prévu: **{{ booking.checkout|format_datetime(pattern="EE dd MMM yyyy") }}**
+
+        Vous recevrez un courriel de confirmation avec votre **numéro réservation** dès que votre
+        réservation sera confirmée.
+
+        Nous nous excusons pour tout désagrément causé par le délai de traitement et nous vous remercions pour votre patience.
+
+        Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter. Nous sommes là pour vous aider.
+
+        {% if app.user %}
+            Vous pouvez accéder à votre facture en cliquant sur le bouton ci dessous ou dans votre espace client.
+        {% else %}
+            Vous pouvez accéder à votre facture en cliquant sur le bouton ci dessous.
+        {% endif %}
+    {% endapply %}
+
+    {% if app.user %}
+        {{ e.button('Mes factures', url('app_user_invoice_index')) }}
+    {% else %}
+        {{ e.button('Ma facture', url('app_user_invoice_show', {'id': booking.commande.payment.id})) }}
+    {% endif %}
+{% endblock %}

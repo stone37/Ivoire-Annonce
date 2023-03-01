@@ -1,0 +1,192 @@
+{% form_theme form 'Ui/Form/theme.html.twig' %}
+
+<section class="container">
+    <div class="row mb-5">
+        <div class="col-12 col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <section>
+                        {% for label, messages in app.flashes %}
+                            {% if label == 'error' %}{% set label = 'danger' %}{% endif %}
+
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show mb-3" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+
+                        <h1 class="h1-responsive display-3 mb-3 text-center font-weight-bold text-dark">
+                            {% if oauth_type %}Se connecter avec {{ oauth_type }}{% else %}S'inscrire{% endif %}
+                        </h1>
+
+                        {% if oauth_registration %}
+                            <div class="alert alert-info" role="alert">
+                                Vous y êtes presque, il ne vous reste plus qu'à choisir votre numéro de telephone
+                            </div>
+                        {% endif %}
+
+                        {% if errors|length > 0 %}
+                            {% for error in errors %}
+                                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                    {{ error.message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {{ form_start(form) }}
+                        <div class="form-row">
+                            {% if form.lastname is defined %}
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    {{ form_row(form.lastname) }}
+                                </div>
+                            {% endif %}
+
+                            {% if form.firstname is defined %}
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    {{ form_row(form.firstname) }}
+                                </div>
+                            {% endif %}
+
+                            {% if form.email is defined %}
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    {{ form_row(form.email) }}
+                                </div>
+                            {% endif %}
+
+                            <div class="col-12 col-md-6 col-lg-4 phone-field">
+                                {{ form_row(form.phone) }}
+                            </div>
+
+                            {% if form.plainPassword is defined %}
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    {{ form_widget(form.plainPassword.first) }}
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    {{ form_widget(form.plainPassword.second) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="small-9 mt-3 mb-4">
+                            En créant un compte, j'accepte les <a href="{{ path('app_cgu') }}" class="link font-weight-stone-500">conditions d'utilisation</a>
+                            et la <a href="{{ path('app_confidentialite') }}" class="link font-weight-stone-500">politique de confidentialité</a> de {{ config.settings.name }}.
+                        </div>
+
+                        {{ form_widget(form._token) }}
+
+                        <div class="text-center my-3">
+                            <button type="submit" class="btn btn-primary" >S'inscrire</button>
+                        </div>
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </section>
+
+                    <section class="d-flex align-content-center mt-lg-4 mb-lg-3 mx-md-5 px-lg-5">
+                        <hr class="w-100" style="border-color: #f5f5f5; border-width: 2px;">
+                        <div class="h5-responsive font-weight-stone-500 text-center grey-text px-2 text-dark">Ou</div>
+                        <hr class="w-100" style="border-color: #f5f5f5; border-width: 2px;">
+                    </section>
+
+                    <section class="mb-3">
+                        <h4 class="h4-responsive text-dark font-weight-stone-600 text-center mb-4">Utiliser les réseaux sociaux</h4>
+                        <div class="mx-md-5 px-lg-5">
+                            <a class="btn btn-outline-grey btn-google btn-block mb-4 d-none d-md-inline-block" href="{{ path('oauth_connect', {service: 'google'}) }}">
+                                <img src='https://developers.google.com/identity/images/g-logo.png' class="img-fluid mr-1 my-0" alt="Google icon">
+                                S'inscrire avec Google
+                            </a>
+                            <a class="btn btn-outline-grey btn-sm btn-google btn-block mb-4 d-inline-block d-md-none" href="{{ path('oauth_connect', {service: 'google'}) }}">
+                                <img src='https://developers.google.com/identity/images/g-logo.png' class="img-fluid mr-1 my-0" alt="Google icon">
+                                S'inscrire avec Google
+                            </a>
+
+                            <a href="{{ path('oauth_connect', {service: 'facebook'}) }}" class="btn btn-primary btn-facebook btn-block mb-1 d-none d-md-inline-block">
+                                <i class="fab fa-facebook-square mr-1"></i>
+                                S'inscrire avec Facebook
+                            </a>
+
+                            <a href="{{ path('oauth_connect', {service: 'facebook'}) }}" class="btn btn-primary btn-sm btn-facebook btn-block mb-1 d-inline-block d-md-none">
+                                <i class="fab fa-facebook-square mr-1"></i>
+                                S'inscrire avec Facebook
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="h5-responsive text-dark pb-2 font-weight-stone-600">
+                        Vous avez déja un compte ?
+                    </h5>
+                    <div>
+                        Connectez-vous pour publier une annonce.
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body pb-0">
+                    <h4 class="h4-responsive text-dark font-weight-bold text-center pb-2">
+                        Pourquoi vous inscrire ?
+                    </h4>
+                    <div class="small-9">
+                        Pour améliorer votre expérience sur <strong class="text-dark font-weight-stone-600">{{ config.name|lower }}</strong>
+                        et assurer un environnement sécuritaire, vous devez désormais vous inscrire avant de pouvoir :
+                    </div>
+
+                    <div>
+                        <ul class="list-group security small-9 mb-4">
+                            <li class="list-group-item align-items-start d-flex border-0">
+                                <div><i class="fas fa-check mr-2"></i></div>
+                                <div>
+                                    Créer, modifier et gérer des annonces.
+                                </div>
+                            </li>
+                            <li class="list-group-item align-items-start d-flex border-0">
+                                <div><i class="fas fa-check mr-2"></i></div>
+                                <div>
+                                    Accéder à vos annonces enregistrées dans votre liste des favoris
+                                    sur tous vos appareils.
+                                </div>
+                            </li>
+                            <li class="list-group-item align-items-start d-flex border-0">
+                                <div><i class="fas fa-check mr-2"></i></div>
+                                <div>
+                                    Accéder à votre messagerie.
+                                </div>
+                            </li>
+                            <li class="list-group-item align-items-start d-flex border-0">
+                                <div><i class="fas fa-check mr-2"></i></div>
+                                <div>
+                                    Promouvoir facilement vos annonces et consulter votre historique de commande.
+                                </div>
+                            </li>
+                            <li class="list-group-item align-items-start d-flex border-0">
+                                <div><i class="fas fa-check mr-2"></i></div>
+                                <div>
+                                    Choisir votre nom d'utilisateur.
+                                </div>
+                            </li>
+
+                            <li class="list-group-item align-items-start d-flex border-0">
+                                <div><i class="fas fa-check mr-2"></i></div>
+                                <div>
+                                    Et bien plus encore !
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

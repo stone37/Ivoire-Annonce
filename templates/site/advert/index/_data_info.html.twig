@@ -1,0 +1,62 @@
+<div class="data-info">
+    <ul class="list-inline px-0 mb-0">
+        {% if advert.marque %}
+            <li class="list-inline-item" title="Marque" data-toggle="tooltip">
+                <i class="fab fa-product-hunt"></i> {{ advert.marque }}
+            </li>
+        {% endif %}
+        {% if advert.model %}
+            <li class="list-inline-item" title="Modèle" data-toggle="tooltip">
+                <i class="fas fa-campground"></i> {{ advert.model }}
+            </li>
+        {% endif %}
+        {% if advert.autoYear %}
+            <li class="list-inline-item" title="Année" data-toggle="tooltip">
+                <i class="fas fa-calendar"></i> {{ advert.autoYear }}
+            </li>
+        {% endif %}
+        {% if advert.typeCarburant %}
+            <li class="list-inline-item" title="Carburant" data-toggle="tooltip">
+                <i class="fas fa-gas-pump"></i> {{ advert.typeCarburant }}
+            </li>
+        {% endif %}
+        {% if advert.boiteVitesse %}
+            <li class="list-inline-item" title="Boite à vitesse" data-toggle="tooltip">
+                <i class="fab fa-rev"></i> {{ advert.boiteVitesse }}
+            </li>
+        {% endif %}
+        {% if advert.surface %}
+            <li class="list-inline-item" title="Surface" data-toggle="tooltip">
+                <i class="fas fa-border-style"></i> {{ advert.surface }}
+                {% if advert.subCategory.slug == 'terrains' or advert.subCategory.slug == 'terrains-agricoles' %}ha{% else %}m²{% endif %}
+            </li>
+        {% endif %}
+        {% if advert.nombrePiece %}
+            <li class="list-inline-item" title="Nombre de pièces" data-toggle="tooltip">
+                <i class="fas fa-door-closed"></i> {{ advert.nombrePiece > 1 ? advert.nombrePiece ~ ' pièces' : advert.nombrePiece ~ ' pièce' }}
+            </li>
+        {% endif %}
+        {% if advert.dateConstruction %}
+            <li class="list-inline-item" title="Date de construction" data-toggle="tooltip">
+                <i class="fas fa-calendar"></i> {{ advert.dateConstruction }}
+            </li>
+        {% endif %}
+        {% if advert.brand %}
+            <li class="list-inline-item" title="Marque" data-toggle="tooltip">
+                <i class="fab fa-product-hunt"></i> {{ advert.brand }}
+            </li>
+        {% endif %}
+        {% if advert.state %}
+            <li class="list-inline-item" title="État" data-toggle="tooltip">
+                <i class="fas fa-screwdriver"></i> {{ advert.state }}
+            </li>
+        {% endif %}
+    </ul>
+    {% if advert.processing|length > 0 %}
+        <div class="processing">
+            {% for processing in advert.processing %}
+                <span>{{ processing|app_advert_processing }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

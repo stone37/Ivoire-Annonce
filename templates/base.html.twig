@@ -1,19 +1,83 @@
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="fr">
+    <head id="top-section">
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+        <title>{% block title '' %} | {{ config.name }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        {% block meta '' %}
+        <meta property="og:title" content="{{ block('title') }}"/>
+        <meta property="og:site_name" content="hotelparticulier.com"/>
+        <meta property="og:language" content="fr"/>
+        <meta name="twitter:author" content="@hotel_particulier_com"/>
+        <meta property="og:country-name" content="Côte d'Ivoire"/>
+        <link rel="shortcut icon" href="{{ app.request.relativeUriForPath(asset('assets/img/favicon.ico')) }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        {% block stylesheets %}
+            {% include 'Ui/_stylesheets.html.twig' with {'path': 'assets/css/bootstrap.min.css'} %}
+            {% include 'Ui/_stylesheets.html.twig' with {'path': 'assets/css/mdb.min.css'} %}
+            {% include 'Ui/_stylesheets.html.twig' with {'path': 'assets/css/style.css'} %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="fixed-sn skin-light">
+        {% block app_flashes %}{% include 'ui/_flashes.html.twig' %}{% endblock %}
+        {% include 'ui/_loading.html.twig' %}
+
+        <header>
+            {% block app_navbar %}{% endblock %}
+            {% block app_intro %}{% endblock %}
+        </header>
+
+        <main class="px-0">
+            {% block app_body %}{% endblock %}
+        </main>
+
+        {% include 'ui/_top_scroll.html.twig' %}
+        {% include 'ui/_confirmation.html.twig' %}
+       {# {% include 'ui/_cookieconsent.html.twig' %}#}
+        {% block app_newsletter %}
+            {{ include('site/newsletter/_subscribe.html.twig') }}
+        {% endblock %}
+        {% block app_footer %}{% include 'ui/_footer.html.twig' %}{% endblock %}
+
+        <script>
+            window.advert = {
+                ...(window.advert || {}),
+                ADMIN: {{ is_granted('ROLE_SUPER_ADMIN') ? 'true' : 'false' }},
+                USER: {{ app.user ? app.user.id : 'null' }},
+                APP_NAME: '{{ config.name ? config.name : 'null' }}',
+                BASE_CURRENCY_CODE: '{{ config.defaultCurrencyCode ? config.defaultCurrencyCode : 'null' }}',
+                CURRENCY_CODE: '{{ config.currencyCode ? config.currencyCode : 'null' }}',
+                CURRENCY_SYMBOL: '{{ config.currencyCode ? config.currencyCode|currency_symbol : 'null' }}',
+                DEFAULT_LOCALE_CODE: '{{ config.defaultLocaleCode ? config.defaultLocaleCode : 'null' }}',
+                LOCALE_CODE: '{{ config.localeCode ? config.localeCode : 'null' }}',
+            }
+        </script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        {% block javascripts %}
+            {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/jquery.min.js'} %}
+            {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/popper.min.js'} %}
+            {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/bootstrap.min.js'} %}
+            {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/mdb.min.js'} %}
+            {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/function.js'} %}
+            {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/script.js'} %}
+        {% endblock %}
+
+        {#<script src="https://cdn.jsdelivr.net/npm/jquery.cookie-consent/dist/jquery.cookie-consent.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#cookieConsent').cookieConsent({
+                    testing: true,
+                    consentStyle: 'font-weight:bold'
+                });
+            });
+        </script>#}
     </body>
 </html>
+
+
+
+

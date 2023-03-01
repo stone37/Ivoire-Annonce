@@ -1,0 +1,21 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Configuration des modules | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/settings/module/_header.html.twig' %}
+
+    {% include 'admin/settings/module/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/admin/create.js'} %}
+{% endblock %}
+
+

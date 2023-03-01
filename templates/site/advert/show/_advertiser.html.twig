@@ -1,0 +1,171 @@
+{% if is_granted('created', advert) %}
+<section class="row advertiser-advert-data">
+    <div class="col-12">
+        <div class="card card-cascade narrower mb-4">
+            <div class="view view-cascade gradient-card-header bg-primary z-depth-0">
+                <h5 class="mb-0 h5-responsive font-weight-normal">
+                    Informations sur l'annonce
+                </h5>
+            </div>
+            <div class="card-body card-body-cascade text-center px-3 pt-2 pb-3">
+                <ul class="list-unstyled list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div class="text-dark">
+                            <i class="fas fa-eye mr-1"></i> Nombres de vue
+                        </div>
+                        <div class="text-primary font-weight-bold">{{ advert.reads|length }}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div class="text-dark">
+                            <i class="fas fa-image mr-1"></i> Nombres de photos
+                        </div>
+                        <div class="text-primary font-weight-bold">{{ advert.images|length }}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div class="text-dark">
+                            <i class="fas fa-heart mr-1"></i> Nombres de favoris
+                        </div>
+                        <div class="text-primary font-weight-bold">{{ advert.favorites|length }}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div class="text-dark">
+                            <i class="fas fa-calendar mr-1"></i> Création
+                        </div>
+                        <div class="text-primary font-weight-bold">{{ advert.createdAt|date('d/m/Y à H:i')}}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div class="text-dark">
+                            <i class="fas fa-calendar-alt mr-1"></i> Modification
+                        </div>
+                        <div class="text-primary font-weight-bold">{{ advert.updatedAt|date('d/m/Y à H:i')}}</div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div class="text-dark">
+                            <i class="fas fa-calendar-check mr-1"></i> Validation
+                        </div>
+                        <div class="text-primary font-weight-bold">{{ advert.validatedAt|date('d/m/Y à H:i')}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 advert-option-detail">
+        <div class="card card-cascade narrower mb-4">
+            <div class="view view-cascade gradient-card-header bg-primary z-depth-0">
+                <h5 class="mb-0 font-weight-normal h5-responsive">Ajouter des options</h5>
+            </div>
+            <div class="card-body card-body-cascade text-center px-3 pt-2 pb-3">
+
+                {% set has_option_header = app_has_option(advert, 1) %}
+                {% set has_option_urgent = app_has_option(advert, 2) %}
+                {% set has_option_gallery = app_has_option(advert, 3) %}
+                {% set has_option_featured = app_has_option(advert, 4) %}
+
+                <ul class="list-unstyled list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div>
+                            <a href="{{ path('app_option_header_index', {'id': advert.id}) }}">
+                                <i class="fas fa-sort-numeric-up mr-1"></i> Annonce en tête
+                            </a>
+                        </div>
+                        {% if has_option_header %}<div><i class="fas fa-check text-success small-9"></i></div>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div>
+                            <a href="{{ path('app_option_gallery_index', {'id': advert.id}) }}">
+                                <i class="fas fa-house-damage mr-1"></i> Galerie accueil
+                            </a>
+                        </div>
+                        {% if has_option_gallery %}<div><i class="fas fa-check text-success small-9"></i></div>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div>
+                            <a href="{{ path('app_option_urgent_index', {'id': advert.id}) }}">
+                                <i class="fas fa-bullhorn mr-1"></i> Logo urgent
+                            </a>
+                        </div>
+                        {% if has_option_urgent %}<div><i class="fas fa-check text-success small-9"></i></div>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between border-0 px-1 pb-0">
+                        <div>
+                            <a href="{{ path('app_option_featured_index', {'id': advert.id}) }}">
+                                <i class="far fa-minus-square mr-1"></i> Annonce en vedette
+                            </a>
+                        </div>
+                        {% if has_option_featured %}<div><i class="fas fa-check text-success"></i></div>{% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="row advert-advertiser">
+    <div class="col-12">
+        <div class="card card-cascade narrower mb-4">
+            <div class="view view-cascade gradient-card-header bg-primary z-depth-0 px-3">
+                <h5 class="mb-0 font-weight-normal">
+                    Contacter {{ advert.owner.firstname }} {{ advert.owner.lastname }}
+                </h5>
+            </div>
+            <div class="card-body card-body-cascade px-3 pt-2 pb-3 advert-message-form-bulk">
+                <div class="small bg-danger text-white font-weight-stone-500 error-label">
+                    Soyez vigilant, refusez les transferts d'argent ou le versement d'acompte.
+                </div>
+
+                {% if settings.activeThread %}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        {{ include('site/advert/show/__messageForm.html.twig') }}
+                    {% else %}
+                        <div class="mt-4">
+                            <a class="btn btn-primary btn-md z-depth-0 btn-block btn-message-no-connection" onclick="toastr.info('Vous devez vous connecter avant de pour envoyer un message');">
+                                <i class="fas fa-envelope mr-2"></i>
+                                Contacter par message
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if not is_granted('created', advert) %}
+                    <div class="text-right mt-2">
+                        <a href="" class="small font-weight-stone-600 report" data-toggle="modal" data-target="#advert-report-modal">
+                            <i class="fas fa-flag"></i> Signalez cette annonce
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-4 advert-user-data">
+        <div class="card">
+            <div class="card-body px-3 pt-2 pb-3">
+                <div>
+                    <ul class="list-unstyled">
+                        <li>
+                            <i class="fas fa-audio-description"></i>
+                            Annonceur particulier
+                        </li>
+                        <li>
+                            <i class="far fa-calendar-minus"></i>
+                            Membre de <strong class="font-weight-bold text-dark">{{ config.name }}</strong> {{ advert.owner.createdAt|ago('depuis') }}
+                        </li>
+                        <li>
+                            <i class="fas fa-clipboard-check"></i>
+                            <a href="{{ path('app_user_profil_index', {'id': advert.owner.id}) }}" class="link">
+                                {% if advert_number == 1 %}
+                                    Afficher son unique annonce
+                                {% else %}
+                                    Afficher ces {{ advert_number }} annonces
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {{ include('site/advert/show/__phoneContact.html.twig') }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+

@@ -1,0 +1,153 @@
+{% set has_option = app_has_option(advert, 3) %}
+
+<section class="container-fluid mt-2 mb-5 advert-option-open">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center mb-3">
+                Votre annonce pourra être vue des milliers de fois par jour
+            </h1>
+            <div class="font-weight-stone-500 text-center">
+                L’option <span class="text-primary font-weight-bold">galerie de la page d'accueil</span>
+                publie une deuxième copie de votre annonce sur la page d’accueil, vous aidant ainsi à atteindre
+                le plus grand nombre d’acheteurs dans votre communauté.
+            </div>
+        </div>
+        {% if has_option %}
+            <div class="col-12 text-center mb-2">
+                <div class="option-state">
+                    <div class="data">
+                        Une option de ce type est déjà active sur cette annonce.<br>
+                        Expiration: <span>{{ advert.optionAdvertHomeGalleryEndAt|date('d/m/Y') }}</span>.
+                    </div>
+                    <div class="help">
+                        Pour prolonger la durée, veuillez acheter une nouvelle formule de cette option. <br>
+                        La nouvelle durée sera ajouter à la durée actuelle.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row mt-3 mb-5">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center mb-3">Choisir une formule</h1>
+        </div>
+        <div class="col-12 text-center">
+            {{ form_start(form) }}
+
+            <div class="form-row my-2 d-flex justify-content-center">
+                {% for option in options %}
+                    <div class="col-12 col-md-4 col-lg-3 mb-3">
+                        <div class="option-item text-center">
+                            <div class="label">
+                                <span class="title">Galerie de la page d'accueil</span> pendant
+                                <span class="day">{{ option.days }} jours</span> à
+                                <span class="price">{{ option.price|format_currency('XOF') }}</span>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input with-gap" id="option-item-{{ option.id }}" value="{{ option.id }}" name="option" />
+                                <label class="form-check-label" for="option-item-{{ option.id }}"></label>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {{ form_row(form.option) }}
+            {{ form_widget(form._token) }}
+
+            <div>
+                <button class="btn btn-primary z-depth-0 option-submit" type="submit" disabled>
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center mb-3">Pourquoi choisir cette option</h1>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    La page d’accueil est vue par tous les acheteurs, pas uniquement ceux d’une catégorie spécifique
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Deux emplacements garantissent une meilleure visibilité, et jusqu’à 3 plus de vues qu’une annonce classique.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Idéal pour promouvoir de multiples produits dans une même annonce.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center my-3">Avantages pour le vendeur</h1>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Vous apparaissez en page d’accueil - votre annonce sera la star de {{ config.name }}.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Vous attirez les acheteurs pressés.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Les annonces sur la page d’accueil ont les photos les plus vues sur l’ensemble du site.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center my-3">Comment ça marche ?</h1>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-3">
+                    <ul class="font-weight-stone-500 px-3 py-0 mb-0">
+                        <li class="mb-2">
+                            Votre annonce apparaît dans le haut de la page d’accueil de {{ config.name }},
+                            pour un maximum de visibilité.
+                        </li>
+                        <li class="mb-2">
+                            La <span class="text-primary font-weight-stone-600">galerie de la page d’accueil</span> ne
+                            change pas la position de votre annonce parmi le classement des annonces de sa catégorie.
+                        </li>
+                        <li class="mb-2">
+                            La <span class="text-primary font-weight-stone-600">galerie de la page d’accueil</span>
+                            peut afficher jusqu’à seize annonces à la fois. Pour en voir plus, il suffit de
+                            rafraîchir la page ou cliquer sur la flèche à droite des annonces pour en voir d’autres.
+                        </li>
+                        <li class="mb-2">
+                            Attirez les acheteurs potentiels dès qu’ils arrivent sur le site.
+                        </li>
+                        <li class="mb-2">
+                            Avec des milliers de vues tirées de la page d’accueil en plus des vues tirées de
+                            l’emplacement habituel de votre annonce, vous êtes assurés d’avoir plus de réponses
+                            de la part d’acheteurs potentiels qu’avec une annonce standard.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

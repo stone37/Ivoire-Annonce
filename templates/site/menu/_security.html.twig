@@ -1,0 +1,76 @@
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% set settings = config.settings %}
+
+    {{ include('site/menu/_wallet.html.twig') }}
+    {{ render(controller('App\\Controller\\NotificationWidgetController::show')) }}
+
+    <li class="nav-item dropdown avatar d-none d-lg-block">
+        {% if vich_uploader_asset(app.user, 'file') %}
+            <a class="nav-link dropdown-toggle py-0" id="navbarDropdownUserMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <img src="{{ image_url(app.user, 110, 110) }}" class="rounded-circle" alt="avatar image">
+            </a>
+        {% else %}
+            <a class="nav-link dropdown-toggle py-0" id="navbarDropdownUserMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <span class="user-prefix d-inline-block rounded-circle">{{ userPrefixName(app.user) }}</span>
+            </a>
+        {% endif %}
+
+        <div class="dropdown-menu dropdown-primary dropdown-menu-right" aria-labelledby="navbarDropdownUserMenuLink">
+            {% if is_granted("ROLE_ADMIN") %}
+                <a class="dropdown-item" href="{{ path('app_admin_index') }}">
+                    <i class="fas fa-user-secret mr-2"></i>
+                    Administration
+                </a>
+            {% else %}
+                <a class="dropdown-item" href="{{ path('app_user_index') }}">
+                    <i class="fas fa-th-large mr-2"></i>
+                    Tableau de bord
+                </a>
+                <a class="dropdown-item" href="{{ path('app_user_advert_validated_index') }}">
+                    <i class="fas fa-clipboard-list mr-2"></i>
+                    Mes annonces
+                </a>
+
+                {% if settings.activeThread %}
+                    <a class="dropdown-item" href="{{ path('app_user_thread_index') }}">
+                        <i class="fas fa-comments mr-2"></i>
+                        Mes messages
+                    </a>
+                {% endif %}
+
+                {% if settings.activeAlert %}
+                    <a class="dropdown-item" href="{{ path('app_user_alert_enabled_index') }}">
+                        <i class="far fa-bell mr-2"></i>
+                        Mes alertes
+                    </a>
+                {% endif %}
+
+                {% if settings.activeAdFavorite %}
+                    <a class="dropdown-item" href="{{ path('app_user_favorite_index') }}">
+                        <i class="far fa-heart mr-2"></i>
+                        Mes favoris
+                    </a>
+                {% endif %}
+
+                <a class="dropdown-item" href="{{ path('app_user_profil_edit') }}">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    Profil
+                </a>
+            {% endif %}
+            <a class="dropdown-item" href="{{ path('app_logout') }}">
+                <i class="fas fa-power-off mr-2"></i>
+                Déconnexion
+            </a>
+        </div>
+    </li>
+{% else %}
+    <li class="nav-item mr-2 d-none d-lg-block">
+        <a href="{{ path('app_register') }}" type="button" class="btn btn-primary btn-sm z-depth-0">S'inscrire</a>
+    </li>
+    <li class="nav-item d-none d-lg-block">
+        <a href="{{ path('app_login') }}" type="button" class="btn btn-sm btn-outline-primary z-depth-0">Se connecter</a>
+    </li>
+{% endif %}
+

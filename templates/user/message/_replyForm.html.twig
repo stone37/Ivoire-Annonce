@@ -1,0 +1,23 @@
+<form action="{{ path('app_user_thread_reply', {'id': thread.id}) }}" method="POST" id="advert-message-form" class="advert-message-form">
+    <div id="advert-message-form-error"></div>
+    <div class="form-row">
+        <div class="col-12">
+            <div class="md-form md-outline mt-4">
+                <textarea id="content" class="md-textarea form-control" name="content" rows="5"></textarea>
+                <label for="content">Votre message</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <input type="hidden" id="message-token" name="_token" value="{{ csrf_token('advert-message') }}">
+            <input type="hidden" class="app-recaptchaToken" name="recaptchaToken" value="">
+        </div>
+        <div class="col-12">
+            <div class="text-center">
+                <button type="submit" class="btn btn-md btn-primary z-depth-0">
+                    Envoyer votre message
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ThreadMessage;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,25 @@ class ThreadMessageRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return ThreadMessage[] Returns an array of ThreadMessage objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?ThreadMessage
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function getNbUnreadMessageByParticipant(User $user): int
+    {
+        $qb = $this->createQueryBuilder('tm')
+            ->select('count(tm.id)')
+            ->innerJoin('tm.metadata', 'mm')
+            ->innerJoin('mm.participant', 'p')
+            ->andWhere('tm.sender != :sender')
+            ->setParameter('sender', $user->getId())
+            ->andWhere('mm.isRead = 0');
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

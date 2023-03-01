@@ -1,0 +1,39 @@
+{% extends 'site/advert/baseForm.html.twig' %}
+
+{% block app_advert_detail %}
+    <div class="form-row">
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.marque) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.model) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.autoType) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.autoYear) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.boiteVitesse) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.typeCarburant) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.autoColor) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.nombrePorte) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.nombrePlace) }}
+        </div>
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.autreInformation.vars.label }}</div>
+                {{ form_widget(form.autreInformation) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

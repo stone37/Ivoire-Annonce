@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: SettingsRepository::class)]
 class Settings
 {
@@ -67,49 +68,49 @@ class Settings
     private ?string $linkedinAddress = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeThread = null;
+    private ?int $advertActivatedDays = 90;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeAdFavorite = null;
+    private ?bool $activeThread = false;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeAlert = null;
+    private ?bool $activeAdFavorite = true;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeAdvertSimilar = null;
+    private ?bool $activeAlert = false;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeCredit = null;
+    private ?bool $activeAdvertSimilar = false;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeCardPayment = null;
+    private ?bool $activeCredit = false;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeVignette = null;
+    private ?bool $activeCardPayment = false;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activePub = null;
+    private ?bool $activePack = false;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeParrainage = null;
+    private ?bool $activeParrainage = false;
 
     #[ORM\Column(nullable: true)]
-    private ?int $numberAdvertPerPage = null;
+    private ?bool $activeRegisterDrift = false;
 
     #[ORM\Column(nullable: true)]
-    private ?int $numberUserAdvertPerPage = null;
+    private ?int $numberAdvertPerPage = 15;
 
     #[ORM\Column(nullable: true)]
-    private ?int $numberUserAdvertFavoritePerPage = null;
+    private ?int $numberUserAdvertPerPage = 15;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numberUserAdvertFavoritePerPage = 15;
 
     #[ORM\Column(nullable: true)]
     private ?int $parrainCreditOffer = null;
 
-    #[ORM\Column]
-    private ?int $fioleCreditOffer = null;
-
     #[ORM\Column(nullable: true)]
-    private ?bool $activeRegisterDrift = null;
+    private ?int $fioleCreditOffer = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $registerDriftCreditOffer = null;
@@ -127,7 +128,15 @@ class Settings
         mimeType: 'fileMimeType',
         originalName: 'fileOriginalName'
     )]
-    private ?File $file;
+    private ?File $file = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Currency $baseCurrency = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Locale $defaultLocale = null;
 
     public function getId(): ?int
     {
@@ -290,6 +299,18 @@ class Settings
         return $this;
     }
 
+    public function getAdvertActivatedDays(): ?int
+    {
+        return $this->advertActivatedDays;
+    }
+
+    public function setAdvertActivatedDays(?int $advertActivatedDays): self
+    {
+        $this->advertActivatedDays = $advertActivatedDays;
+
+        return $this;
+    }
+
     public function isActiveThread(): ?bool
     {
         return $this->activeThread;
@@ -362,26 +383,14 @@ class Settings
         return $this;
     }
 
-    public function isActiveVignette(): ?bool
+    public function isActivePack(): ?bool
     {
-        return $this->activeVignette;
+        return $this->activePack;
     }
 
-    public function setActiveVignette(?bool $activeVignette): self
+    public function setActivePack(?bool $activePack): self
     {
-        $this->activeVignette = $activeVignette;
-
-        return $this;
-    }
-
-    public function isActivePub(): ?bool
-    {
-        return $this->activePub;
-    }
-
-    public function setActivePub(?bool $activePub): self
-    {
-        $this->activePub = $activePub;
+        $this->activePack = $activePack;
 
         return $this;
     }
@@ -451,7 +460,7 @@ class Settings
         return $this->fioleCreditOffer;
     }
 
-    public function setFioleCreditOffer(int $fioleCreditOffer): self
+    public function setFioleCreditOffer(?int $fioleCreditOffer): self
     {
         $this->fioleCreditOffer = $fioleCreditOffer;
 
@@ -489,7 +498,7 @@ class Settings
 
     public function setParrainageNumberAdvertRequired(?int $parrainageNumberAdvertRequired): self
     {
-        $this->parrainageNumbreAdvertRequiere = $parrainageNumberAdvertRequired;
+        $this->parrainageNumberAdvertRequired = $parrainageNumberAdvertRequired;
 
         return $this;
     }
@@ -518,6 +527,30 @@ class Settings
         if (null !== $file) {
             $this->updatedAt = new DateTime();
         }
+
+        return $this;
+    }
+
+    public function getBaseCurrency(): ?Currency
+    {
+        return $this->baseCurrency;
+    }
+
+    public function setBaseCurrency(Currency $baseCurrency): self
+    {
+        $this->baseCurrency = $baseCurrency;
+
+        return $this;
+    }
+
+    public function getDefaultLocale(): ?Locale
+    {
+        return $this->defaultLocale;
+    }
+
+    public function setDefaultLocale(Locale $defaultLocale): self
+    {
+        $this->defaultLocale = $defaultLocale;
 
         return $this;
     }

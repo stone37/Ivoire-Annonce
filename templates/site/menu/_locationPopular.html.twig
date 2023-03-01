@@ -1,0 +1,13 @@
+{% if cities|length > 0 %}
+    {% for city in cities %}
+        <li class="d-flex content-item" data-country="{{ city.country }}" data-city="{{ city.name }}">
+            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="data">
+                <div class="city">{{ city.name }}</div>
+                <div class="country">{{ city.country|country_name }}</div>
+            </div>
+        </li>
+    {% endfor %}
+{% else %}
+    <span class="d-block my-2"></span>
+{% endif %}

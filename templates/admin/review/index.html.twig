@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Avis clients | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/review/index/_header.html.twig' %}
+
+    {% include 'admin/review/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+

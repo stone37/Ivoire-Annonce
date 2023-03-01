@@ -1,0 +1,52 @@
+{% form_theme form 'Ui/Form/theme.html.twig' %}
+
+<section class="container-fluid">
+    <div class="row mb-5 d-flex justify-content-center">
+        <div class="col-12">
+            <div class="font-weight-bold text-dark text-center mb-4">
+                Vous avez des idées a nous proposez pour améliorer notre site ? Proposer les nous.
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-body p-3">
+                    <h2 class="h2-responsive text-center font-weight-bold text-dark">
+                        Proposez une idée
+                    </h2>
+
+                    {{ include('ui/_flashes_message.html.twig') }}
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-suggestion'}}) }}
+                        <P class="text-danger my-0">{{ form_errors(form) }}</P>
+
+                        <div class="form-row">
+                            <div class="col-12">
+                                {{ form_row(form.subject) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.name) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.email) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_widget(form.comment) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_row(form.recaptchaToken) }}
+                            </div>
+                        </div>
+
+                        {{ form_widget(form._token) }}
+
+                        <div class="d-flex justify-content-center mt-3">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary z-depth-0">Envoyer votre suggestion</button>
+                            </div>
+                        </div>
+                    {{ form_end(form, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

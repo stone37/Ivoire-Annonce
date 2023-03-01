@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Invitation;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,34 @@ class InvitationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Invitation[] Returns an array of Invitation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?Invitation
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findByUser(User $user): ?Invitation
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->where('i.owner = :user')
+            ->setParameter('user', $user);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findByCode(string $code)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->where('i.code = :code')
+            ->setParameter('code', $code);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 }

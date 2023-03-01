@@ -1,0 +1,45 @@
+<section class="payment-info">
+    <div class="card mb-4">
+        <div class="card-body p-3">
+            <h5 class="font-weight-stone-600 h5-responsive text-dark mb-3">Détails de votre achat</h5>
+            <div>
+                {% for item in commande.commande.items %}
+                    <div class="d-flex justify-content-between">
+                        <div class="title font-weight-stone-500 small-9">{{ app_product_name(item.product) }}</div>
+                        <div class="data font-weight-stone-600 text-dark">{{ item.amount|format_currency('XOF') }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body px-3 pt-3 pb-1">
+            <div>
+                <h5 class="font-weight-stone-600 h5-responsive text-dark mb-3">Récapitulatif du montant</h5>
+                <div class="d-flex justify-content-between font-weight-stone-500 small-9 mb-2">
+                    <div>Total HT</div>
+                    <div class="font-weight-stone-600">{{ commande.amountBeforeDiscount|format_currency('XOF') }}</div>
+                </div>
+
+                {% if commande.discount %}
+                    <div class="d-flex justify-content-between font-weight-stone-500 small-9 mb-2">
+                        <div>Reduction</div>
+                        <div class="font-weight-stone-600">{{ commande.discount|format_currency('XOF') }}</div>
+                    </div>
+                {% endif %}
+
+                <div class="d-flex justify-content-between font-weight-stone-500 small-9 mb-2">
+                    <div>Total des taxes</div>
+                    <div class="font-weight-stone-600">{{ commande.taxeAmount|format_currency('XOF') }}</div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="d-flex align-items-center justify-content-between mb-0">
+                    <div class="font-weight-bold text-dark price-title">Total TTC</div>
+                    <div class="font-weight-bold text-danger text-right price">{{ commande.amountPaid|format_currency('XOF') }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

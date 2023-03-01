@@ -1,0 +1,22 @@
+{% if currencies|length > 1 %}
+    <li class="nav-item dropdown currency d-none d-lg-block">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownCurrencyMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-credit-card"></i> {{ active }} <i class="fas fa-angle-down"></i>
+        </a>
+        <div class="dropdown-menu dropdown-primary dropdown-menu-right" aria-labelledby="navbarDropdownCurrencyMenuLink">
+            {% for code in currencies %}
+                {% if code is not same as(active) %}
+                    <a class="dropdown-item" href="{{ path('app_switch_currency', {'code': code}) }}">{{ code }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </li>
+
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a class="nav-link px-0" id="navbar-currency-menu-link">
+            <i class="fas fa-credit-card mr-1"></i> {{ active }}
+        </a>
+    </li>
+{% endif %}
+

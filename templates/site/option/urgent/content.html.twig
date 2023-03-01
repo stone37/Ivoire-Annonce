@@ -1,0 +1,161 @@
+{% set has_option = app_has_option(advert, 2) %}
+
+<section class="container-fluid mt-2 mb-5 advert-option-open">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center mb-3">Si c’est urgent, faites-le savoir</h1>
+            <div class="font-weight-stone-500 text-center">
+                L’option <span class="text-primary font-weight-stone-600">logo urgent</span>
+                est idéale pour des ventes rapides. Elle ajoute un bandeau et des bordure rouge
+                à votre annonce qui permet aux acheteurs de la trouver rapidement et facilement.
+            </div>
+        </div>
+        {% if has_option %}
+            <div class="col-12 text-center mb-2">
+                <div class="option-state">
+                    <div class="data">
+                        Une option de ce type est déjà active sur cette annonce.<br>
+                        Expiration: <span>{{ advert.optionAdvertUrgentEndAt|date('d/m/Y') }}</span>.
+                    </div>
+                    <div class="help">
+                        Pour prolonger la durée, veuillez acheter une nouvelle formule de cette option. <br>
+                        La nouvelle durée sera ajouter à la durée actuelle.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row mt-3 mb-5">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center mb-3">Choisir une formule</h1>
+        </div>
+        <div class="col-12 text-center">
+            {{ form_start(form) }}
+
+            <div class="form-row my-2 d-flex justify-content-center">
+                {% for option in options %}
+                    <div class="col-12 col-md-4 col-lg-3 mb-3">
+                        <div class="option-item text-center">
+                            <div class="label">
+                                <span class="title">Logo urgent</span> pendant
+                                <span class="day">{{ option.days }} jours</span> à
+                                <span class="price">{{ option.price|format_currency('XOF') }}</span>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input with-gap" id="option-item-{{ option.id }}" value="{{ option.id }}" name="option" />
+                                <label class="form-check-label" for="option-item-{{ option.id }}"></label>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {{ form_row(form.option) }}
+            {{ form_widget(form._token) }}
+
+            <div>
+                <button class="btn btn-primary z-depth-0 option-submit" type="submit" disabled>
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center mb-3">Pourquoi choisir cette option</h1>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Vendre plus rapidement.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Vendre à prix réduit ou négociable.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Idéal pour vendre rapidement avant un déménagement.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center my-3">Avantages pour le vendeur</h1>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Le bandeau et les bordures rouge rend votre annonce plus visible.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Les annonces urgentes sont vues jusqu’à 2 fois plus souvent et obtiennent davantage
+                    de réponses que les annonces classiques.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Pour de meilleurs résultats, ajoutez l’option
+                    <span class="text-primary font-weight-stone-600">logo urgent</span> dès que vous
+                    publiez votre annonce.
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    Les acheteurs peuvent filtrer directement les annonces
+                    <span class="text-primary font-weight-stone-600">logo urgent</span> dans leur
+                    recherche pour trouver une bonne affaire ou les prix les plus flexibles
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark text-center my-3">Comment ça marche ?</h1>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-3">
+                    <ul class="font-weight-stone-500 px-3 py-0 mb-0">
+                        <li class="mb-2">
+                            Le bandeau et les bordures rouge <span class="text-primary font-weight-stone-600">logo urgent</span>
+                            permet à votre annonce de se démarquer du lot.
+                        </li>
+                        <li class="mb-2">
+                            L’option <span class="text-primary font-weight-stone-600">logo urgent</span> ne change pas la
+                            position de votre annonce dans le classement d’une catégorie.
+                        </li>
+                        <li class="mb-2">
+                            Les ventes sont plus rapides grâce à une annonce qui attire les acheteurs pressés.
+                        </li>
+                        <li class="mb-2">
+                            Comme les acheteurs filtrent les annonces urgentes et les annonces d’articles réduits,
+                            vous recevez jusqu’à 3 fois plus de réponses pertinentes qu’avec une annonce classiques.
+                        </li>
+                        <li class="mb-2">
+                            L’option <span class="text-primary font-weight-stone-600">annonce en tête de liste</span> changera la
+                            date de mise en ligne de votre annonce, mais elle ne prolongera pas sa durée.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,28 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}
+    Nouvelle option
+    {% if option == 1 %}annonce en tete de liste
+    {% elseif option == 2 %}annonce logo urgente
+    {% elseif option == 3 %}annonce galerie accueil
+    {% else %}annonce en vedette{% endif %} |
+    {% if option == 1 %}Annonces en tete de liste
+    {% elseif option == 2 %}Annonces logo urgente
+    {% elseif option == 3 %}Annonces galerie accueil
+    {% else %}Annonces en vedette{% endif %}
+    | {{ parent() }}{% endblock %}
+{% block app_body %}
+    {% include 'admin/option/create/_header.html.twig' %}
+
+    {% include 'admin/option/create/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/admin/create.js'} %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<section class="container mb-5">
+    {% if favorites|length > 0 %}
+        <div class="row advert-list">
+            {% for favorite in favorites %}
+                <div class="col-12 col-md-6">
+                    {{ include('user/favorite/_box.html.twig') }}
+                </div>
+            {% endfor %}
+            <div class="col-12 d-flex justify-content-center mt-2">
+                {{ knp_pagination_render(favorites, 'ui/_pagination.html.twig') }}
+            </div>
+        </div>
+    {% else %}
+        <div class="row d-flex justify-content-center mb-5">
+            <div class="col-12 col-md-8 text-center mt-5 mt-md-5">
+                <h4 class="h4-responsive font-weight-bold text-dark">
+                    Vous n'avez aucune annonce.
+                </h4>
+                <p>C'est ici que vous verrez toutes vos annonces favoris.</p>
+            </div>
+        </div>
+    {% endif %}
+</section>

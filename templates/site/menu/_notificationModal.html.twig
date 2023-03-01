@@ -1,0 +1,40 @@
+<div class="modal fade notification" id="navbar-notification-menu-modal" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+    <div class="modal-dialog modal-mobile" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h5 class="heading font-weight-stone-600 text-dark">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #bdbdbd !important">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body py-1">
+                <div id="notification-bulk-sm" class="notification-bulk">
+                    {% if notifications|length > 0 %}
+                        <ul class="list-group list-group-flush">
+                            {% for notification in notifications %}
+                                <li class="list-group-item">
+                                    <a class="d-flex justify-content-start" href="{{ notification.url }}">
+                                        <div class="content text-left">
+                                            <div class="data">{{ notification.message|raw }}</div>
+                                            <div class="time">{{ notification.createdAt|date('d/m/Y à H:i') }}</div>
+                                        </div>
+                                        {% if not notification.read %}
+                                            <div class="icon-notification ml-auto d-flex align-items-center pl-3"><i class="fas fa-circle"></i></div>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="my-4 text-center grey-text not-notification-bulk">
+                            <div><i class="far fa-bell fa-3x"></i></div>
+                            <div class="font-weight-stone-500 mt-3">Vous n'avez aucune notification</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

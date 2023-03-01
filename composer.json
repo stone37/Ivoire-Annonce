@@ -55,13 +55,16 @@
         "symfony/validator": "6.1.*",
         "symfony/web-link": "6.1.*",
         "symfony/yaml": "6.1.*",
+        "symfonycasts/verify-email-bundle": "^1.13",
         "twig/cssinliner-extra": "^3.4",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.4",
         "twig/markdown-extra": "^3.4",
         "twig/string-extra": "^3.4",
         "twig/twig": "^2.12|^3.0",
-        "vich/uploader-bundle": "^1.20"
+        "vich/uploader-bundle": "^1.20",
+        "ext-http": "*",
+        "ext-pdo": "*"
     },
     "config": {
         "allow-plugins": {

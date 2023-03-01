@@ -6,11 +6,12 @@ use App\Entity\Traits\PositionTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\AdvertPictureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: AdvertPictureRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(repositoryClass: AdvertPictureRepository::class)]
 class AdvertPicture
 {
     use PositionTrait;
@@ -29,13 +30,13 @@ class AdvertPicture
 
     #[Assert\File(
         maxSize: '8000k',
-        maxSizeMessage: 'Le fichier excède 8000Ko',
         mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+        maxSizeMessage: 'Le fichier excède 8000Ko',
         mimeTypesMessage: 'Format non autorisés. Formats autorisés: png, jpeg, jpg, gif'
     )]
-    private ?File $file;
+    private ?File $file = null;
 
-    private ?string $tempFilename;
+    private ?string $tempFilename = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $principale = false;
@@ -58,12 +59,9 @@ class AdvertPicture
     {
         $this->file = $file;
 
-        // On vérifie si on avait déjà un fichier pour cette entité
         if (null !== $this->extension) {
-            // On sauvegarde l'extension du fichier pour le supprimer plus tard
             $this->tempFilename = $this->extension;
 
-            // On réinitialise les valeurs des attributs url et alt
             $this->extension = null;
             $this->name = null;
         }
@@ -129,12 +127,12 @@ class AdvertPicture
     /**
      * Retourne le chemin relatif vers l'image pour le code PHP
      */
-    protected function getUploadRootDir(): string
+    #[Pure] protected function getUploadRootDir(): string
     {
         return __DIR__ . '/../../public/' . $this->getUploadDir();
     }
 
-    public function getWebPath()
+    #[Pure] public function getWebPath()
     {
         return $this->getUploadDir() . '/' . $this->getId() . '.' . $this->getExtension();
     }

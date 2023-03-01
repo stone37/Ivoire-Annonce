@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Édition d'une catégorie | Catégories | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/category/edit/_header.html.twig' %}
+
+    {% include 'admin/category/edit/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/admin/create.js'} %}
+{% endblock %}

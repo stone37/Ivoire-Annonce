@@ -1,0 +1,33 @@
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a href="{{ path('app_user_invoice_index') }}" class="nav-link px-0">
+            <i class="fas fa-file-invoice mr-1"></i>
+            Mes factures
+        </a>
+    </li>
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a href="" class="nav-link px-0">
+            <i class="far fa-comments mr-1"></i>
+            Mes avis
+        </a>
+    </li>
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a id="navbar-notification-menu-link" href="" class="nav-link px-0">
+            <i class="far fa-bell mr-1"></i>
+            <i class="fas fa-circle {% if not app_notification_nb_unread() %}d-none{% endif %}"></i>
+            Mes notifications
+        </a>
+    </li>
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a href="" class="nav-link px-0">
+            <i class="far fa-life-ring mr-1"></i>
+            Aide
+        </a>
+    </li>
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a href="{{ path('app_logout') }}" class="nav-link px-0">
+            <i class="fas fa-power-off mr-1"></i>
+            Déconnexion
+        </a>
+    </li>
+{% endif %}

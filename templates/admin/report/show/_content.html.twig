@@ -1,0 +1,33 @@
+{% import 'Ui/Macro/buttons.html.twig' as buttons %}
+
+<div class="row app-user mt-5">
+    <div class="col-12">
+        <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+            <tbody>
+            <tr>
+                <td class="table-dark text-center font-weight-normal">Id</td>
+                <td class="text-center font-weight-normal">{{ report.id }}</td>
+                <td class="table-dark text-center font-weight-normal">Email</td>
+                <td class="text-center font-weight-normal">{{ report.email }}</td>
+                <td class="table-dark text-center font-weight-normal">Raison</td>
+                <td class="text-center font-weight-normal">{{ report.reason }}</td>
+            </tr>
+            <tr>
+                <td class="table-dark text-center font-weight-normal">Commentaire</td>
+                <td colspan="7" class="text-center font-weight-normal">{{ report.content|raw }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-end mt-4 mb-5">
+            <div class="text-center mr-3">{{ buttons.default(path('app_admin_report_index'), 'Retour à la liste', 'app-entity-list-btn', 'fas fa-angle-left', 'btn-outline-primary') }}</div>
+        </div>
+    </div>
+</div>
+
+
+

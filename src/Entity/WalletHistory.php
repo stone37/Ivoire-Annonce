@@ -11,9 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: WalletHistoryRepository::class)]
 class WalletHistory
 {
-    const TYPE_INCOME = 1;
-    const TYPE_SALARY = 2;
-    const TYPE_RECLAMATION = 3;
+    const TYPE_INCOME = 1; // revenu
+    const TYPE_SALARY = 2; // SALAIRE
+    const TYPE_RECLAMATION = 3; // RÉCLAMATION
 
     use TimestampableTrait;
 
@@ -40,6 +40,22 @@ class WalletHistory
     #[ORM\ManyToOne(inversedBy: 'histories')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Wallet $wallet = null;
+
+    /**
+     * @throws WrongWalletHistoryTypeException
+     */
+    public function __construct($type = null)
+    {
+        $types = [self::TYPE_INCOME, self::TYPE_SALARY, self::TYPE_RECLAMATION];
+
+        if (null !== $type) {
+            if (false === array_key_exists($type, array_flip($types))) {
+                throw new WrongWalletHistoryTypeException;
+            }
+
+            $this->setType($type);
+        }
+    }
 
     public function getId(): ?int
     {

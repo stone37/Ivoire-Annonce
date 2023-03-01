@@ -7,13 +7,14 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use geertw\IpAnonymizer\IpAnonymizer;
 
 #[ORM\Entity(repositoryClass: ContactRequestRepository::class)]
 class ContactRequest
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column()]
+    #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -52,6 +53,13 @@ class ContactRequest
     public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function setRawIp(?string $ip): ContactRequest
+    {
+        $this->ip = (new IpAnonymizer())->anonymize($ip);
 
         return $this;
     }

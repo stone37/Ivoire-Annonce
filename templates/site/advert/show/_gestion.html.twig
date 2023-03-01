@@ -1,0 +1,42 @@
+{% set settings = config.settings %}
+{% set url = app.request.getSchemeAndHttpHost() ~ '' ~ app.request.requestUri %}
+{% set subject = 'Voici ma dernière trouvaille sur ' ~ settings.name ~ ': ' ~ advert.title %}
+
+<section class="row mb-3 advert-gestion">
+    <div class="col-12">
+        <div class="d-flex justify-content-end">
+            <div class="dropdown">
+                <a class="btn btn-primary btn-md dropdown-toggle z-depth-0" id="advertShareMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-share-alt mr-1"></i> Partager
+                </a>
+                <div class="dropdown-menu dropdown-primary" aria-labelledby="advertShareMenu">
+                    <a class="dropdown-item" data-sharer="facebook" data-hashtag="{{ settings.name|slug('')|lower }}" data-url="{{ url }}">
+                        <i class="fab fa-facebook-f mr-2"></i> Facebook
+                    </a>
+                    <a class="dropdown-item" data-sharer="whatsapp" data-url="{{ url }}">
+                        <i class="fab fa-whatsapp mr-2"></i> Whatsapp
+                    </a>
+                    <a class="dropdown-item" data-sharer="twitter" data-hashtags="{{ settings.name|slug('')|lower }}" data-url="{{ url }}">
+                        <i class="fab fa-twitter mr-2"></i> Twitter
+                    </a>
+                    <a class="dropdown-item" data-sharer="email" data-url="{{ url }}"
+                       data-subject="{{ subject }}" data-to="" data-title="">
+                        <i class="fas fa-envelope mr-2"></i> Envoyer à un ami
+                    </a>
+                </div>
+            </div>
+            <div class="ml-2">
+                {% if settings.activeAdFavorite and (not is_granted('created', advert)) %}
+                    {% set has_favoris = app_has_favoris(advert) %}
+                    <a data-id="{{ advert.id }}" class="btn btn-unique btn-md z-depth-0 advert-favorite-btn
+                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}connected{% endif %}
+                         {% if has_favoris %}activated{% endif %}">
+                        <i class="{% if has_favoris %}fas{% else %}far{% endif %} fa-heart mr-1"></i>
+                        {% if has_favoris %}Retirer des favoris{% else %}Ajouter au favoris{% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-body pb-1">
+        <p class="lead mb-2">
+            <strong class="font-weight-600 text-default">{{ review.name }}</strong>
+        </p>
+        <p class="text-primary">
+            {% if review.note == 5 %}
+                {% for item in 1..(review.note) %}
+                    <i class="fas fa-star"> </i>
+                {% endfor %}
+            {% else %}
+                {% for item in 1..(review.note) %}
+                    <i class="fas fa-star"> </i>
+                {% endfor %}
+
+                {% for item in (review.note+1)..5 %}
+                    <i class="far fa-star"> </i>
+                {% endfor %}
+            {% endif %}
+        </p>
+        <p class="text-muted font-weight-light mb-4">{{ review.description }}</p>
+    </div>
+</div>

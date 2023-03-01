@@ -1,0 +1,41 @@
+{% if categories|length > 0 %}
+    <div class="menu-container-sm d-block d-lg-none">
+        <nav>
+            <ul>
+                {% for category in categories %}
+                    {% if category.parent|length > 0 %}
+                        {% set path = path('app_advert_index_s', {'category_slug': category.parent.slug, 'sub_category_slug': category.slug}) %}
+                    {% else %}
+                        {% set path = path('app_advert_index', {'category_slug': category.slug}) %}
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ path }}" class="text-center">
+                            <div class="image-bulk">
+                                {% if category.filename %}
+                                    <img src="{{ vich_uploader_asset(category, 'file') }}" class="img-fluid z-depth-1" alt="Category image" >
+                                {% else %}
+                                    <img src="{{ asset('assets/img/no_image.png') }}" class="img-fluid z-depth-1" alt="Category image">
+                                {% endif %}
+                            </div>
+                            <div class="title">{{ category.name }}</div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+{% else %}
+    <div class="d-block d-lg-none container bc">
+        {% if request.attributes.has('sub_category_slug') %}
+            {% set path = path('app_advert_index', {'category_slug': request.attributes.get('category_slug')}) %}
+        {% else %}
+            {% set path = path('app_home') %}
+        {% endif %}
+
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default btn-sm btn-back z-depth-0 mt-3">
+            <i class="fas fa-long-arrow-alt-left mr-2"></i>
+            Retour
+        </a>
+    </div>
+{% endif %}

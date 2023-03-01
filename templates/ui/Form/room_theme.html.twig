@@ -1,0 +1,258 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{%- block form_errors %}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <div class="red-text font-weight-stone-500 small mb-1 form-error-message">
+                {{ error.message }}
+            </div>
+        {%- endfor -%}
+    {%- endif -%}
+{%- endblock %}
+
+{% block form_help -%}
+    {%- if help is not empty -%}
+        {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' help-text form-text text-muted')|trim}) -%}
+        <small id="{{ id }}_help"{% with { attr: help_attr } %}{{ block('attributes') }}{% endwith %}>
+            {%- if translation_domain is same as(false) -%}
+                {%- if help_html is same as(false) -%}
+                    {{- help -}}
+                {%- else -%}
+                    {{- help|raw -}}
+                {%- endif -%}
+            {%- else -%}
+                {%- if help_html is same as(false) -%}
+                    {{- help|trans(help_translation_parameters, translation_domain) -}}
+                {%- else -%}
+                    {{- help|trans(help_translation_parameters, translation_domain)|raw -}}
+                {%- endif -%}
+            {%- endif -%}
+        </small>
+    {%- endif -%}
+{%- endblock form_help %}
+
+{% macro service_template(fields) %}
+    {{ form_widget(fields.file) }}
+{% endmacro %}
+
+{%- block choice_widget_collapsed -%}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+        {% set required = false %}
+    {%- endif -%}
+
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+
+    <div class="d-flex flex-wrap">
+        <div class="select-outline position-relative w-100 {% if errorState %}invalid{% endif %}">
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+                {%- if placeholder is not none -%}
+                    <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+                {%- endif -%}
+                {%- if preferred_choices|length > 0 -%}
+                    {% set options = preferred_choices %}
+                    {% set render_preferred_choices = true %}
+                    {{- block('choice_widget_options') -}}
+                    {%- if choices|length > 0 and separator is not none -%}
+                        <option disabled="disabled">{{ separator }}</option>
+                    {%- endif -%}
+                {%- endif -%}
+                {%- set options = choices -%}
+                {%- set render_preferred_choices = false -%}
+                {{- block('choice_widget_options') -}}
+            </select>
+            <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+                {%- if translation_domain is same as(false) -%}
+                    {%- if label_html is same as(false) -%}
+                        {{- label -}}
+                    {%- else -%}
+                        {{- label|raw -}}
+                    {%- endif -%}
+                {%- else -%}
+                    {%- if label_html is same as(false) -%}
+                        {{- label|trans(label_translation_parameters, translation_domain) -}}
+                    {%- else -%}
+                        {{- label|trans(label_translation_parameters, translation_domain)|raw -}}
+                    {%- endif -%}
+                {%- endif -%}
+            </{{ element|default('label') }}>
+        </div>
+    </div>
+    <div class="form-select-error-bulk">
+        {%- if errors|length > 0 -%}
+            {%- for error in errors -%}
+                <div class="red-text font-weight-stone-500 small mb-1 form-error-message">
+                    {{ error.message }}
+                </div>
+            {%- endfor -%}
+        {%- endif -%}
+    </div>
+    {% if not errorState %}
+        <div class="form-select-help-bulk">
+            {%- if help is not empty -%}
+                {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' help-text form-text text-muted')|trim}) -%}
+                <small id="{{ id }}_help"{% with { attr: help_attr } %}{{ block('attributes') }}{% endwith %}>
+                    {%- if translation_domain is same as(false) -%}
+                        {%- if help_html is same as(false) -%}
+                            {{- help -}}
+                        {%- else -%}
+                            {{- help|raw -}}
+                        {%- endif -%}
+                    {%- else -%}
+                        {%- if help_html is same as(false) -%}
+                            {{- help|trans(help_translation_parameters, translation_domain) -}}
+                        {%- else -%}
+                            {{- help|trans(help_translation_parameters, translation_domain)|raw -}}
+                        {%- endif -%}
+                    {%- endif -%}
+                </small>
+            {%- endif -%}
+        </div>
+    {% endif %}
+{%- endblock choice_widget_collapsed -%}
+
+{%- block textarea_widget -%}
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+
+    <div class="md-form md-outline {% if errorState %}invalid{% endif %}">
+        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+            {%- if translation_domain is same as(false) -%}
+                {%- if label_html is same as(false) -%}
+                    {{- label -}}
+                {%- else -%}
+                    {{- label|raw -}}
+                {%- endif -%}
+            {%- else -%}
+                {%- if label_html is same as(false) -%}
+                    {{- label|trans(label_translation_parameters, translation_domain) -}}
+                {%- else -%}
+                    {{- label|trans(label_translation_parameters, translation_domain)|raw -}}
+                {%- endif -%}
+            {%- endif -%}
+        </{{ element|default('label') }}>
+    </div>
+    <div class="form-select-error-bulk">
+        {%- if errors|length > 0 -%}
+            {%- for error in errors -%}
+                <div class="red-text font-weight-stone-500 small mb-1 form-error-message">
+                    {{ error.message }}
+                </div>
+            {%- endfor -%}
+        {%- endif -%}
+    </div>
+    {% if not errorState %}
+        <div class="form-select-help-bulk">
+            {%- if help is not empty -%}
+                {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' help-text form-text text-muted')|trim}) -%}
+                <small id="{{ id }}_help"{% with { attr: help_attr } %}{{ block('attributes') }}{% endwith %}>
+                    {%- if translation_domain is same as(false) -%}
+                        {%- if help_html is same as(false) -%}
+                            {{- help -}}
+                        {%- else -%}
+                            {{- help|raw -}}
+                        {%- endif -%}
+                    {%- else -%}
+                        {%- if help_html is same as(false) -%}
+                            {{- help|trans(help_translation_parameters, translation_domain) -}}
+                        {%- else -%}
+                            {{- help|trans(help_translation_parameters, translation_domain)|raw -}}
+                        {%- endif -%}
+                    {%- endif -%}
+                </small>
+            {%- endif -%}
+        </div>
+    {% endif %}
+{%- endblock textarea_widget -%}
+
+{% block _room_taxes_widget %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {% set render_preferred_choices = true %}
+            {{- block('choice_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {%- set render_preferred_choices = false -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+    <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+    {%- if translation_domain is same as(false) -%}
+        {%- if label_html is same as(false) -%}
+            {{- label -}}
+        {%- else -%}
+            {{- label|raw -}}
+        {%- endif -%}
+    {%- else -%}
+        {%- if label_html is same as(false) -%}
+            {{- label|trans(label_translation_parameters, translation_domain) -}}
+        {%- else -%}
+            {{- label|trans(label_translation_parameters, translation_domain)|raw -}}
+        {%- endif -%}
+    {%- endif -%}
+    </{{ element|default('label') }}>
+{% endblock %}
+
+{% block _room_area_row %}
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+    <div class="input-group md-form md-outline append mb-1 {% if errorState %}invalid{% endif %}">
+        {{- form_widget(form, {'attr': {'class': 'form-control form-control-app'}}) -}}
+        <div class="input-group-append">
+            <div class="input-group-text">m²</div>
+        </div>
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {% if not errorState %}{{ form_help(form) }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block _room_price_row %}
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+    <div class="input-group md-form md-outline append mb-1 {% if errorState %}invalid{% endif %}">
+        {{- form_widget(form, {'attr': {'class': 'form-control form-control-app'}}) -}}
+        <div class="input-group-append">
+            <div class="input-group-text">{{ app_locale_currency_code(app.request.locale) }} par nuit</div>
+        </div>
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {% if not errorState %}{{ form_help(form) }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block _room_perfectName_row %}
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+    <div class="md-form md-outline mb-1 {% if errorState %}invalid{% endif %}">
+        {{- form_widget(form, {'attr': {'class': 'form-control form-control-app'}}) -}}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {% if not errorState %}{{ form_help(form) }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block _room_roomNumber_row %}
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+    <div class="md-form md-outline mb-1 {% if errorState %}invalid{% endif %}">
+        {{- form_widget(form, {'attr': {'class': 'form-control form-control-app'}}) -}}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {% if not errorState %}{{ form_help(form) }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block _room_occupant_row %}
+    {% set errorState = (not compound or force_error|default(false)) and not valid %}
+    <div class="md-form md-outline mb-1 {% if errorState %}invalid{% endif %}">
+        {{- form_widget(form, {'attr': {'class': 'form-control form-control-app'}}) -}}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {% if not errorState %}{{ form_help(form) }}{% endif %}
+    </div>
+{% endblock %}
+

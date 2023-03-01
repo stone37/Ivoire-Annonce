@@ -1,0 +1,20 @@
+{{ include('site/advert/show/_header.html.twig') }}
+
+<section class="container-fluid mb-5">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {{ include('site/advert/show/_gestion.html.twig') }}
+            {{ include('site/advert/show/_images.html.twig') }}
+            {{ include('site/advert/show/_detail.html.twig') }}
+            {{ include('site/advert/show/_description.html.twig') }}
+        </div>
+        <div class="col-12 col-md-4">
+            {{ include('site/advert/show/_advertiser.html.twig') }}
+        </div>
+    </div>
+</section>
+
+{{ include('site/advert/show/__report.html.twig') }}
+
+{{ render(controller('App\\Controller\\AdvertSimilarController::index', {'advert': advert})) }}
+

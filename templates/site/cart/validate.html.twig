@@ -1,0 +1,52 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Valider mon panier' %}
+
+{% block meta %}
+    {% set content = '' %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_intro %}
+    <section class="bc container">
+        <div>
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default btn-sm z-depth-0 mt-lg-3">
+                <i class="fas fa-long-arrow-alt-left mr-2"></i>
+                Retour
+            </a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/cart/validate/content.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let $payment_method_bulk = $('.payment-bulk .payment-method-item'),
+                $payment_btn = $('.payment-bulk button.payment-btn');
+
+            $payment_method_bulk.click(function () {
+                let $this = $(this), $input = $this.find('input.with-gap');
+
+                $payment_method_bulk.removeClass('active');
+
+                $input.prop('checked', true);
+
+                $this.addClass('active');
+                $payment_btn.removeClass('disabled');
+            });
+        });
+    </script>
+{% endblock %}
+

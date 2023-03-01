@@ -1,0 +1,43 @@
+<div class="mega-menu-container d-none d-lg-block">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary second py-3">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+            <div class="scroller scroller-left z-depth-1"><i class="fas fa-arrow-left"></i></div>
+            <div class="scroller scroller-right z-depth-1"><i class="fas fa-arrow-right"></i></div>
+            <ul class="navbar-nav mr-auto">
+                {% for category in categories %}
+                    {% set path = path('app_advert_index', {'category_slug': category.slug}) %}
+                    {% set has_child = category.children|length > 0 %}
+
+                    <li class="nav-item {% if has_child %}children{% endif %} {% if request.attributes.has('category_slug') and request.attributes.get('category_slug') == category.slug %}active{% endif %}">
+                        <a {% if has_child %} class="nav-link navbar-link" {% else%} href="{{ path }}" class="nav-link" {% endif %}>
+                            {{ category.name }}
+                        </a>
+                        {% if has_child %}
+                            <div class="content" data-url="{{ vich_uploader_asset(category, 'file') }}">
+                                <div class="row sub-menu">
+                                    <div class="col-12">
+                                        <h6><a href="{{ path }}">Tout afficher dans <strong>{{ category.name|lower }}</strong></a></h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            {% for child in category.children %}
+                                                <div class="col-md-3">
+                                                    <a href="{{ path('app_advert_index_s', {'category_slug': category.slug, 'sub_category_slug': child.slug}) }}" class="item">
+                                                        <i class="fas fa-long-arrow-alt-right mr-1"></i> {{ child.name }}
+                                                    </a>
+                                                </div>
+                                            {% endfor %}    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+    <div id="mega-content" class="mega-content d-none"></div>
+</div>
+
+

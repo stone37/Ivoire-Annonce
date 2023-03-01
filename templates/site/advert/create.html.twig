@@ -1,0 +1,38 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Passé une annonce gratuite' %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_intro %}
+    <section class="bc container">
+        <div>
+            <a href="{{ path('app_switch_category') }}" class="btn btn-default btn-sm btn-back z-depth-0 mt-3">
+                <i class="fas fa-long-arrow-alt-left mr-2"></i>
+                Retour
+            </a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block app_body %}
+   {{ include('site/advert/create/content.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/jquery.dm-uploader.min.js'} %}
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/data.js'} %}
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/site/advert_create.js'} %}
+{% endblock %}
+
+

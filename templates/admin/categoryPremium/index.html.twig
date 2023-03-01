@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Catégories premium | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/categoryPremium/index/_header.html.twig' %}
+
+    {% include 'admin/categoryPremium/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

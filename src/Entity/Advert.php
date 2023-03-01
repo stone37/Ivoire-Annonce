@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
@@ -19,8 +20,15 @@ class Advert
 {
     const TYPE_OFFER = 1;
     const TYPE_RESEARCH = 2;
-    const TYPE_EXCHANGE = 3;
-    const TYPE_DON = 4;
+    const TYPE_LOCATION = 3;
+    const TYPE_EXCHANGE = 4;
+    const TYPE_DON = 5;
+
+    public const DELIVERY_PROCESSING = 1;
+    public const SHIPMENT_PROCESSING = 2;
+
+    public const TYPE_DATA = ['Offre', 'Recherche', 'Location', 'Troc', 'Don'];
+    public const PROCESSING_DATA = ['Livraison possible', 'Expédition possible'];
 
     use PositionTrait;
     use TimestampableTrait;
@@ -44,7 +52,6 @@ class Advert
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
@@ -59,27 +66,27 @@ class Advert
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $reference = null;
 
-    #[Assert\NotBlank(groups: ['VOITURE_OCCASION', 'LOCATION_VOITURE', 'MOTOCROSS', 'MOTO_SPORT', 'ROUTIERE', 'VEDETTE_BATEAU', 'JETSKI'])]
+    #[Assert\NotBlank(groups: ['VOITURE', 'LOCATION_VOITURE', 'MOTO', 'BATEAUX'])]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $marque = null;
 
-    #[Assert\NotBlank(groups: ['VOITURE_OCCASION', 'LOCATION_VOITURE'])]
+    #[Assert\NotBlank(groups: ['VOITURE', 'LOCATION_VOITURE'])]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $model = null;
 
-    #[Assert\NotBlank(groups: ['VOITURE_OCCASION', 'LOCATION_VOITURE', 'MOTOCROSS', 'MOTO_SPORT', 'ROUTIERE', 'CAMION'])]
+    #[Assert\NotBlank(groups: ['VOITURE', 'LOCATION_VOITURE'])]
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $autoYear = null;
 
-    #[Assert\NotBlank(groups: ['VOITURE_OCCASION', 'LOCATION_VOITURE'])]
+    #[Assert\NotBlank(groups: ['VOITURE', 'LOCATION_VOITURE'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $autoType = null;
 
-    #[Assert\NotBlank(groups: ['VOITURE_OCCASION', 'MOTOCROSS', 'MOTO_SPORT', 'ROUTIERE'])]
+    #[Assert\NotBlank(groups: ['VOITURE', 'MOTO'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $autoState = null;
 
-    #[Assert\NotBlank(groups: ['VOITURE_OCCASION', 'MOTOCROSS', 'MOTO_SPORT', 'ROUTIERE', 'CAMION'])]
+    #[Assert\NotBlank(groups: ['VOITURE'])]
     #[ORM\Column(nullable: true)]
     private ?int $kilometrage = null;
 
@@ -107,26 +114,26 @@ class Advert
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $autreInformation = [];
 
-    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'CHAMBRE', 'VILLA', 'DUPLEX', 'STUDIO', 'STUDIO_AMERICAIN', 'TERRAIN', 'COLOCATION', 'ESPACE_COMMERCIAUX', 'PARKING'])]
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'CHAMBRE', 'COLOCATION', 'VILLA', 'STUDIO', 'TERRAIN', 'ESPACE_COMMERCIAUX'])]
     #[ORM\Column(nullable: true)]
     private ?int $surface = null;
 
-    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA', 'DUPLEX'])]
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nombrePiece = null;
 
-    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA', 'DUPLEX'])]
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA'])]
     #[ORM\Column(nullable: true)]
     private ?int $nombreChambre = null;
 
-    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA', 'DUPLEX'])]
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA'])]
     #[ORM\Column(nullable: true)]
     private ?int $nombreSalleBain = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $surfaceBalcon = null;
 
-    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'CHAMBRE', 'VILLA', 'DUPLEX', 'STUDIO', 'STUDIO_AMERICAIN', 'COLOCATION', 'ESPACE_COMMERCIAUX'])]
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'CHAMBRE', 'COLOCATION', 'VILLA', 'STUDIO', 'ESPACE_COMMERCIAUX'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $immobilierState = null;
 
@@ -157,13 +164,16 @@ class Advert
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $proximite = [];
 
-    #[Assert\NotBlank(groups: ['ACHAT_VENTE'])]
+    #[Assert\NotBlank(groups: ['ACHAT'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $state = null;
 
-    #[Assert\NotBlank(groups: ['IPAD_TABLETTE', 'ORDINATEUR_BUREAU', 'ORDINATEUR_PORTABLE'])]
+    #[Assert\NotBlank(groups: ['TABLETTE', 'TELEPHONE', 'ORDINATEUR_BUREAU', 'ORDINATEUR_PORTABLE', 'JV'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $brand = null;
+
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $processing = [];
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sex = null;
@@ -187,7 +197,7 @@ class Advert
     private ?DateTimeImmutable $optionAdvertHomeGalleryEndAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $optionAdvertVedetteEndAt = null;
+    private ?DateTimeImmutable $optionAdvertFeaturedEndAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -196,10 +206,8 @@ class Advert
     #[ORM\ManyToOne]
     private ?Category $subCategory = null;
 
-    #[ORM\ManyToOne]
-    private ?Category $subDivision = null;
-
     #[ORM\OneToMany(mappedBy: 'advert', targetEntity: AdvertPicture::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['principale' => 'desc'])]
     private Collection $images;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -222,8 +230,7 @@ class Advert
     #[ORM\OneToMany(mappedBy: 'advert', targetEntity: Commande::class)]
     private Collection $commandes;
 
-
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->reads = new ArrayCollection();
@@ -693,6 +700,18 @@ class Advert
         return $this;
     }
 
+    public function getProcessing(): ?array
+    {
+        return $this->processing;
+    }
+
+    public function setProcessing(?array $processing): self
+    {
+        $this->processing = $processing;
+
+        return $this;
+    }
+
     public function getSex(): ?string
     {
         return $this->sex;
@@ -777,14 +796,14 @@ class Advert
         return $this;
     }
 
-    public function getOptionAdvertVedetteEndAt(): ?DateTimeImmutable
+    public function getOptionAdvertFeaturedEndAt(): ?DateTimeImmutable
     {
-        return $this->optionAdvertVedetteEndAt;
+        return $this->optionAdvertFeaturedEndAt;
     }
 
-    public function setOptionAdvertVedetteEndAt(?DateTimeImmutable $optionAdvertVedetteEndAt): self
+    public function setOptionAdvertFeaturedEndAt(?DateTimeImmutable $optionAdvertFeaturedEndAt): self
     {
-        $this->optionAdvertVedetteEndAt = $optionAdvertVedetteEndAt;
+        $this->optionAdvertFeaturedEndAt = $optionAdvertFeaturedEndAt;
 
         return $this;
     }
@@ -809,18 +828,6 @@ class Advert
     public function setSubCategory(?Category $subCategory): self
     {
         $this->subCategory = $subCategory;
-
-        return $this;
-    }
-
-    public function getSubDivision(): ?Category
-    {
-        return $this->subDivision;
-    }
-
-    public function setSubDivision(?Category $subDivision): self
-    {
-        $this->subDivision = $subDivision;
 
         return $this;
     }

@@ -1,0 +1,37 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% if isActive('app_admin_advert_validated_index') %}
+    {% set data = "Annonces validées" %}
+    {% set type = 2 %}
+{% elseif isActive('app_admin_advert_refused_index') %}
+    {% set data = "Annonces refusées" %}
+    {% set type = 3 %}
+{% elseif isActive('app_admin_advert_archive_index') %}
+    {% set data = "Annonces expirées" %}
+    {% set type = 4 %}
+{% elseif isActive('app_admin_advert_remove_index') %}
+    {% set data = "Annonces retirées" %}
+    {% set type = 5 %}
+{% elseif isActive('app_admin_advert_user') %}
+    {% set data = "Annonces d'un utilisateur" %}
+    {% set type = 6 %}
+{% else %}
+    {% set data = "Nouvelles annonces" %}
+    {% set type = 1 %}
+{% endif %}
+
+{% block title %}{{ data }} | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/advert/index/_header.html.twig' %}
+
+    {% include 'admin/advert/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

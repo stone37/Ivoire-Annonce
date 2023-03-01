@@ -1,0 +1,88 @@
+.skin-light .dropdown-menu {
+    min-width: 5rem;
+    border-radius:.375rem;
+}
+
+.skin-light .navbar.dashboard-navbar {
+    background-color: #067195 !important;
+    min-height: 30px !important;
+    border-bottom: none !important;
+}
+
+.skin-light .navbar.dashboard-navbar .navbar-nav .nav-item {
+    margin-right: 0;
+    margin-left: 0;
+    min-width: 150px;
+    text-align: center;
+}
+
+.skin-light .navbar.dashboard-navbar .navbar-nav .nav-item .nav-link {
+    color: #FFFFFF;
+    font-weight: 400 !important;
+    font-size: .9rem;
+    padding: 12px 30px !important;
+}
+
+.skin-light .navbar.dashboard-navbar .navbar-nav .nav-item.active .nav-link {
+    background-color: #fafafa;
+    color: #067195;
+    font-weight: 500 !important;
+}
+
+.skin-light .navbar.dashboard-navbar .navbar-nav .nav-item .nav-link:hover,
+.skin-light .navbar.dashboard-navbar .navbar-nav .nav-item .nav-link:focus,
+.skin-light .navbar.dashboard-navbar .navbar-nav .nav-item .nav-link:active {
+    background-color: #fafafa;
+    color: #067195 !important;
+    font-weight: 500 !important;
+    -webkit-transition:all .2s ease-in-out;
+    transition:all .2s ease-in-out
+}
+
+.skin-light .user-info .card.promoting-card .card-body .user-name-created {
+    position: relative;
+    font-size: 0.88rem;
+}
+
+
+
+
+
+
+
+
+.skin-light .booking-list .card {
+    border: 2px solid #067195;
+    background-color: #FFFFFF;
+}
+
+.skin-light .booking-list .card .card-body .content {
+    position: relative;
+    bottom: 2px;
+}
+
+.skin-light .booking-list .card .card-body .room-select .data-room span {
+    font-size: 0.72rem;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.skin-light .booking-list .card .card-body .booking-number {
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 7px 4px 5px 4px;
+}
+
+.skin-light .booking-list .card .card-body .booking-number i {
+    cursor: pointer;
+    font-size: 0.9rem;
+    position: relative;
+    bottom: 2px;
+}
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+<div id="advert-search-request-form" class="advert-search-request-form {#d-none#} d-lg-block">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'advert-search-request-data-form', 'id': 'advert-search-request-data-form'}}) }}
+    <div class="row advert-search-form-bulk d-flex align-content-center">
+        <div class="col-10 advert-search-form-item">
+            <div class="md-form md-outline form-lg input-with-pre-icon">
+                <i class="fas fa-search input-prefix"></i>
+                {{ form_widget(form.data) }}
+            </div>
+            <div id="navbarDropdownData" class="content-dropdown d-none">
+                <div class="d-block d-lg-none mobile-bulk">
+                    <div class="header d-flex">
+                        <h5 class="font-weight-stone-500 text-dark">Indiquez votre destination</h5>
+                        <div class="icon"><i class="fas fa-times"></i></div>
+                    </div>
+                    <div class="md-form md-outline form-lg input-with-pre-icon">
+                        <i class="fas fa-map-marker-alt input-prefix grey-text"></i>
+                        <i class="fas fa-times input-prefix d-none"></i>
+                        <input type="text" placeholder="Où allez-vous ?" id="mobile-booking-data-location-input" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if category %}<input type="hidden" name="category" value="{{ category.id }}"/>{% endif %}
+
+        <div class="col-2 advert-search-form-btn-bulk">
+            <div class="advert-search-btn">
+                <button type="submit" class="btn btn-primary advert-search-form-btn z-depth-0">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
+
+

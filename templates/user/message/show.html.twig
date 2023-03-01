@@ -1,0 +1,23 @@
+{% extends "user/layout.html.twig" %}
+
+{% block title 'Messagerie | Conversation #'~ index %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    <section class="container my-lg-3 mt-md-2 mb-4 bc">
+        <div>
+            <a href="{{ path('app_user_thread_index') }}" class="btn btn-default btn-sm btn-back z-depth-0 mb-3">
+                <i class="fas fa-long-arrow-alt-left mr-2"></i>
+                Retour
+            </a>
+        </div>
+        <h3 class="h3-responsive font-weight-stone-600 text-dark">Conversation #{{ index }}</h3>
+    </section>
+
+    {{ include('user/message/show/content.html.twig') }}
+{% endblock %}

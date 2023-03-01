@@ -1,0 +1,131 @@
+{% import 'site/advert/form/macro/radio.html.twig' as radio %}
+
+<section class="px-md-3 form mt-2">
+    <div class="form-row mb-3">
+        <div class="col-12">
+            <div class="h5-responsive title">
+                <div class="badge badge-primary d-inline-block z-depth-0 mr-1">1</div>
+                <div class="text-primary d-inline-block font-weight-stone-500">Détails de l'annonce</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col-12">
+            <div class="text-dark font-weight-stone-600 mb-1">Catégorie</div>
+            <div class="font-weight-stone-500 dark-grey-text category">
+                {{ advert.category.name }}
+                {% if advert.subCategory|length > 0 %}<i class="fas fa-long-arrow-alt-right small-9 mx-1"></i>{{ advert.subCategory.name}}{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row mb-2">
+        <div class="col-12">
+            {{ radio.item(form.type, advert.type) }}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-12 col-md-8">{{ form_row(form.title) }}</div>
+    </div>
+    <div class="form-row">
+        <div class="col-12 col-md-8">
+            {{ form_widget(form.description) }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_row(form.price) }}
+        </div>
+        <div class="col-12 col-md-7 col-lg-8">
+            <div class="switch stone-switch mt-0 mt-md-4 pt-md-2">
+                <label for="{{ form.priceState.vars.id }}">
+                    <input type="checkbox" id="{{ form.priceState.vars.id }}"
+                           name="{{ form.priceState.vars.full_name }}"
+                           value="{{ form.priceState.vars.value }}"
+                           {% if advert.priceState %}checked{% endif %} />
+                    <span class="lever"></span>
+                    {{ form.priceState.vars.label }}
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    {% block app_advert_detail %}{% endblock %}
+    {% block app_advert_processing %}{% endblock %}
+
+    <div class="form-row mt-3 mb-2">
+        <div class="col-12">
+            <div class="h5-responsive title">
+                <div class="badge badge-primary d-inline-block z-depth-0 mr-1">2</div>
+                <div class="text-primary d-inline-block font-weight-stone-500">Médias</div>
+            </div>
+        </div>
+    </div>
+
+    {% if advert.id %}
+        {{ include('user/advert/media/_image.html.twig') }}
+    {% else %}
+        {{ include('site/advert/media/_image.html.twig') }}
+    {% endif %}
+
+
+    <div class="form-row my-3">
+        <div class="col-12">
+            <div class="h5-responsive title">
+                <div class="badge badge-primary d-inline-block z-depth-0 mr-1">3</div>
+                <div class="text-primary d-inline-block font-weight-stone-500">Emplacement</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12 col-md-6 col-lg-4">
+            {{ form_widget(form.location.city) }}
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col-12 col-md-6 col-lg-4">
+            {{ form_row(form.location.town) }}
+        </div>
+    </div>
+
+    <div class="form-row my-3">
+        <div class="col-12">
+            <div class="h5-responsive title">
+                <div class="badge badge-primary d-inline-block z-depth-0 mr-1">4</div>
+                <div class="text-primary d-inline-block font-weight-stone-500">Coordonnées</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="md-form md-outline input-with-pre-icon mb-0">
+                <i class="fas fa-phone-alt input-prefix"></i>
+                <input type="text" id="app-advert-user-phone" class="form-control" value="{{ advert.owner.phone }}" disabled />
+                <label for="app-advert-user-phone">Numéro de telephone</label>
+            </div>
+            <small class="help-text form-text text-muted">
+                Votre numéro de telephone apparaîtra dans votre annonce
+            </small>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="md-form md-outline input-with-pre-icon mb-0">
+                <i class="fas fa-envelope input-prefix"></i>
+                <input type="text" id="app-advert-user-email" class="form-control" value="{{ advert.owner.email }}" disabled />
+                <label for="app-advert-user-email">Adresse e-mail</label>
+            </div>
+            <small class="help-text form-text text-muted">
+                Votre adresse e-mail ne sera pas communiquée à des tiers.
+            </small>
+        </div>
+    </div>
+
+    {% if not advert.id %}
+        {{ render(controller('App\\Controller\\OptionController::index')) }}
+    {% endif %}
+</section>
+
+

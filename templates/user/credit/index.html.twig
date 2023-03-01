@@ -1,0 +1,18 @@
+{% extends "user/layout.html.twig" %}
+
+{% block title 'Acheter des crédits' %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    <section class="container my-lg-4 mt-2 mb-4 d-lg-flex justify-content-lg-between align-items-center">
+        <h3 class="h3-responsive font-weight-stone-600 text-dark">Acheter des crédits</h3>
+    </section>
+
+    {{ include('user/credit/index/content.html.twig') }}
+{% endblock %}
+

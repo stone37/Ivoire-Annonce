@@ -1,0 +1,33 @@
+{% for message in thread.messages %}
+    {% set message_state = (app.user.id == message.sender.id) %}
+
+    <div class="mt-2">
+        <div class="d-flex align-items-center {% if message_state %}justify-content-end{% else %}justify-content-start{% endif %}">
+            {% if not message_state %}
+                <div class="avatar white mr-1">
+                    <a href="{{ path('app_user_profil_index', {'id': message.sender.id}) }}" data-toogle="tooltip" title="Voir le profil">
+                        {% if vich_uploader_asset(message.sender, 'file') %}
+                            <img src="{{ image_url(message.sender, 110, 110) }}" class="rounded-circle" alt="user avatar">
+                        {% else %}
+                            <div class="user-prefix d-inline-block rounded-circle">
+                                {{ userPrefixName(message.sender) }}
+                            </div>
+                        {% endif %}
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="message-bulk">
+                <div class="text-left {% if message_state %}message-data{% else %}message-in{% endif %}">
+                    <div id="message_{{ message.id }}" class="message">{{ message.body|nl2br }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex message-info
+            {% if message_state %}justify-content-end message-data{% else %}justify-content-start message-in{% endif %}
+            {% if not loop.last %}mb-2{% endif %}">
+            {{ message.createdAt|format_datetime(pattern="EE dd MMM yyyy") }} . {{ message.createdAt|date('H:i') }}
+        </div>
+    </div>
+{% endfor %}
+

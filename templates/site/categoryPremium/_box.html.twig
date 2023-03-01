@@ -1,0 +1,27 @@
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between header mb-2">
+        <h5 class="h5-responsive font-weight-bold text-dark">Apprécié dans {{ premium.name|lower }}</h5>
+        <div class="d-none d-md-block">
+            <a href="{{ path('app_advert_index', {'category_slug': premium.categories[0].parent.slug}) }}" class="font-weight-stone-500">
+                Voir tout <i class="fas fa-long-arrow-alt-right ml-1"></i>
+            </a>
+        </div>
+    </div>
+    {% for category in premium.categories %}
+        <div class="col-md-4 col-6 content">
+            <a href="{{ path('app_advert_index_s', {'category_slug': category.parent.slug, 'sub_category_slug': category.slug}) }}">
+                <div class="view wow fadeInRight z-depth-0">
+                    {% if category.filename %}
+                        <img src="{{ vich_uploader_asset(category, 'file') }}" class="img-fluid" alt="Category image" >
+                    {% else %}
+                        <img src="{{ asset('assets/img/no_image.png') }}" class="img-fluid" alt="Category image">
+                    {% endif %}
+                    <div class="mask flex-center text-center">
+                        <div class="text-center z-depth-2 mx-2">{{ category.name }}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+

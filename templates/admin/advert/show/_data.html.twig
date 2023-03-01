@@ -1,0 +1,356 @@
+{% if advert.category.slug == 'autos-et-vehicules' or advert.category.slug == 'immobilier' or
+      advert.category.slug == 'electronique' or advert.category.slug == 'electroménager' or
+      advert.category.slug == 'maison-et-jardin' or advert.category.slug == 'mode-et-accessoires' or
+      advert.category.slug == 'bebes-et-enfants' or advert.category.slug == 'sports-et-loisirs' or
+      advert.category.slug == 'animaux' %}
+    <div class="row app-user mt-3 mb-4">
+        <div class="col-12">
+            <div class="h5-responsive title">
+                <div class="text-primary d-inline-block font-weight-stone-600">Information supplémentaire</div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if advert.category.slug == 'autos-et-vehicules' %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+                <tbody>
+                    <tr>
+                        <td class="table-dark text-center font-weight-normal">Marque</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.marque %}
+                                {{ advert.marque }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Modèle</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.model %}
+                                {{ advert.model }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Type véhicule</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.autoType %}
+                                {{ advert.autoType }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">État de véhicule</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.autoState %}
+                                {{ advert.autoState }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Année</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.autoYear %}
+                                {{ advert.autoYear }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-dark text-center font-weight-normal">Kilométrage</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.kilometrage %}
+                                {{ advert.kilometrage }} km
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Boite à vitesse</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.boiteVitesse %}
+                                {{ advert.boiteVitesse }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Transmission</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.transmission %}
+                                {{ advert.transmission }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Type de carburant</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.typeCarburant %}
+                                {{ advert.typeCarburant }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Cylindrée</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.cylindre %}
+                                {{ advert.cylindre }} cm3
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-dark text-center font-weight-normal">Couleur</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.autoColor %}
+                                {{ advert.autoColor }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Nombre de portes</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.nombrePorte %}
+                                {{ advert.nombrePorte }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Nombre de places</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.nombrePlace %}
+                                {{ advert.nombrePlace }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Autres informations</td>
+                        <td colspan="3" class="text-center font-weight-normal">
+                            {% if advert.autreInformation|length > 0 %}
+                                {% for element in advert.autreInformation %}
+                                    {{ element }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+
+{% if advert.category.slug == 'immobilier' %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+                <tbody>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Surface ou Superficie</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.surface %}
+                            {{ advert.surface }} (m² ou ha)
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Nombre de pièces</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.nombrePiece %}
+                            {{ advert.nombrePiece }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Nombre de chambre(s)</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.nombreChambre %}
+                            {{ advert.nombreChambre }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Nombre de salle(s) de bain</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.nombreSalleBain %}
+                            {{ advert.nombreSalleBain }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">État</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.immobilierState %}
+                            {{ advert.immobilierState }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Surface du balcon</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.surfaceBalcon %}
+                            {{ advert.surfaceBalcon }} m²
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Nombre de placard(s)</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.nombrePlacard %}
+                            {{ advert.nombrePlacard }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Date de construction</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.dateConstruction %}
+                            {{ advert.dateConstruction }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Cuisine</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.cuisine %}
+                            {{ advert.cuisine }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Standing</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.standing %}
+                            {{ advert.standing }} cm3
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Accès</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.access|length > 0 %}
+                            {% for element in advert.access %}
+                                {{ element }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Services inclus</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.serviceInclus|length > 0 %}
+                            {% for element in advert.serviceInclus %}
+                                {{ element }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Extérieures</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.exterior|length > 0 %}
+                            {% for element in advert.exterior %}
+                                {{ element }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Intérieur</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.interior|length > 0 %}
+                            {% for element in advert.interior %}
+                                {{ element }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Proximité</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.proximite|length > 0 %}
+                            {% for element in advert.proximite %}
+                                {{ element }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+
+{% if advert.category.slug == 'electronique' or advert.category.slug == 'electroménager' or
+    advert.category.slug == 'maison-et-jardin' or advert.category.slug == 'mode-et-accessoires' or
+    advert.category.slug == 'bebes-et-enfants' or advert.category.slug == 'sports-et-loisirs' %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+                <tbody>
+                <tr>
+                    <td class="table-dark text-center font-weight-normal">Marque</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.brand %}
+                            {{ advert.brand }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">État du produit</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.state %}
+                            {{ advert.state }}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-dark text-center font-weight-normal">Traitement</td>
+                    <td class="text-center font-weight-normal">
+                        {% if advert.processing|length > 0 %}
+                            {% for element in advert.processing %}
+                                {{ element|app_advert_processing }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge badge-grey">Aucun</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+
+{% if advert.category.slug == 'animaux' %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+                <tbody>
+                    <tr>
+                        <td class="table-dark text-center font-weight-normal">Sexe</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.sex %}
+                                {{ advert.sex }}
+                            {% else %}
+                                <span class="badge badge-grey">Aucun</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+

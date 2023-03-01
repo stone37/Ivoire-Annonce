@@ -23,10 +23,6 @@ class ThreadMessageMetadata
     #[ORM\JoinColumn(nullable: false)]
     private ?ThreadMessage $message = null;
 
-    #[ORM\ManyToOne(inversedBy: 'metadata')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Thread $thread = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -64,18 +60,6 @@ class ThreadMessageMetadata
     public function setMessage(?ThreadMessage $message): self
     {
         $this->message = $message;
-
-        return $this;
-    }
-
-    public function getThread(): ?Thread
-    {
-        return $this->thread;
-    }
-
-    public function setThread(?Thread $thread): self
-    {
-        $this->thread = $thread;
 
         return $this;
     }

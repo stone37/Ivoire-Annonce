@@ -1,0 +1,15 @@
+{% set option = products[0].options %}
+{% set data = app_advert_option_data(option) %}
+
+<div class="carousel-item text-center {% if state %}active{% endif %}">
+    <h5 class="h5-responsive font-weight-bold text-dark mb-3">{{ data.name }}</h5>
+    <div class="image-bulk mb-3">
+        <img src="{{ asset('assets/img/option/' ~ option ~ '.png') }}" class="img-fluid z-depth-3" alt="">
+    </div>
+    <div class="small-9 mb-3">{{ data.description|raw }}</div>
+    <div class="mx-4">
+        <a class="btn btn-primary btn-sm btn-block btn-option" id="advert-option-carousel-{{ option }}" data-option="{{ option }}">
+            Ajouter au panier
+        </a>
+    </div>
+</div>

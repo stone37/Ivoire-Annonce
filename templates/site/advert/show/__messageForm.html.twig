@@ -1,0 +1,32 @@
+<form action="{{ path('app_message_thread_new', {'id': advert.id}) }}" method="POST" id="advert-message-form" class="advert-message-form">
+    <div id="advert-message-form-error"></div>
+
+    <div class="form-row">
+        <div class="col-12">
+            <div class="md-form md-outline mt-3 mb-0">
+                <textarea id="content" class="md-textarea form-control " name="content" rows="5"></textarea>
+                <label for="content">Votre message</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <input type="hidden" id="message-token" name="_token" value="{{ csrf_token('advert-message') }}">
+            <input type="hidden" class="app-recaptchaToken" name="recaptchaToken" value="">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-block btn-md btn-primary z-depth-0 mt-2">
+                Envoyer <i class="fas fa-paper-plane ml-2"></i>
+            </button>
+        </div>
+        <div class="col-12">
+            <div class="small font-weight-stone-500 dark-grey-text mt-3">
+                A fin de prévenir et de détecter d'éventuelles fraudes ou comportements
+                suspects, nous nous réservons le droit de surveiller vos conversations. En envoyant
+                ce message, vous acceptez nos
+                <a href="{{ path('app_cgu') }}" class="link font-weight-stone-600">Conditions d'utilisation</a>
+                et notre
+                <a href="{{ path('app_confidentialite') }}" class="link font-weight-stone-600">politique de confidentialité</a>.
+            </div>
+        </div>
+    </div>
+</form>
+

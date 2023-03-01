@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ThreadRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
+use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ThreadRepository::class)]
 class Thread
@@ -20,10 +25,10 @@ class Thread
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessageMetadata::class, orphanRemoval: true, cascade: ['ALL'])]
+    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMetadata::class, cascade: ['persist', 'remove'])]
     private Collection $metadata;
 
-    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class, cascade: ['ALL'])]
+    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class, cascade: ['persist', 'remove'])]
     private Collection $messages;
 
     #[ORM\ManyToOne(inversedBy: 'threads')]
@@ -34,8 +39,11 @@ class Thread
     #[ORM\JoinColumn(nullable: false)]
     private ?Advert $advert = null;
 
-    public function __construct()
+    protected User|Collection|null $participants = null;
+
+    #[Pure] public function __construct()
     {
+        $this->createdAt = new DateTime();
         $this->metadata = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
@@ -58,14 +66,14 @@ class Thread
     }
 
     /**
-     * @return Collection<int, ThreadMessageMetadata>
+     * @return Collection<int, ThreadMetadata>
      */
     public function getMetadata(): Collection
     {
         return $this->metadata;
     }
 
-    public function addMetadata(ThreadMessageMetadata $metadata): self
+    public function addMetadata(ThreadMetadata $metadata): self
     {
         if (!$this->metadata->contains($metadata)) {
             $this->metadata[] = $metadata;
@@ -75,7 +83,7 @@ class Thread
         return $this;
     }
 
-    public function removeMetadata(ThreadMessageMetadata $metadata): self
+    public function removeMetadata(ThreadMetadata $metadata): self
     {
         if ($this->metadata->removeElement($metadata)) {
             // set the owning side to null (unless already changed)
@@ -139,5 +147,106 @@ class Thread
         $this->advert = $advert;
 
         return $this;
+    }
+
+    public function getFirstMessage()
+    {
+        return $this->getMessages()->first();
+    }
+
+    public function getLastMessage()
+    {
+        return $this->getMessages()->last();
+    }
+
+    public function isDeletedByParticipant(User|UserInterface $user): bool
+    {
+        if ($meta = $this->getMetadataForParticipant($user)) {
+            return $meta->getIsDeleted();
+        }
+
+        return false;
+    }
+
+    public function setIsDeletedByParticipant(User $user, $isDeleted)
+    {
+        if (!$meta = $this->getMetadataForParticipant($user)) {
+            throw new InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $user->getId()));
+        }
+
+        $meta->setIsDeleted($isDeleted);
+
+        if ($isDeleted) {
+            // also mark all thread messages as read
+            foreach ($this->getMessages() as $message) {
+                $message->setIsReadByParticipant($user, true);
+            }
+        }
+    }
+
+    public function setIsDeleted($isDeleted)
+    {
+        foreach ($this->getParticipants() as $participant) {
+            $this->setIsDeletedByParticipant($participant, $isDeleted);
+        }
+    }
+
+    public function isReadByParticipant(User|UserInterface $user): bool
+    {
+        foreach ($this->getMessages() as $message) {
+            if (!$message->isReadByParticipant($user)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function setIsReadByParticipant(User $user, $isRead): void
+    {
+        foreach ($this->getMessages() as $message) {
+            $message->setIsReadByParticipant($user, $isRead);
+        }
+    }
+
+    public function addParticipant(User $user): void
+    {
+        if (!$this->isParticipant($user)) {
+            $this->getParticipantsCollection()->add($user);
+        }
+    }
+
+    public function getParticipants(): array
+    {
+        return $this->getParticipantsCollection()->toArray();
+    }
+
+    public function getMetadataForParticipant(User $user)
+    {
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $user->getId()) {
+                return $meta;
+            }
+        }
+
+        return null;
+    }
+
+    public function isParticipant(User $user): bool
+    {
+        return $this->getParticipantsCollection()->contains($user);
+    }
+
+    protected function getParticipantsCollection(): ArrayCollection|Collection|User
+    {
+        if (null === $this->participants) {
+            $this->participants = new ArrayCollection();
+
+            foreach ($this->metadata as $data) {
+                $this->participants->add($data->getParticipant());
+            }
+        }
+
+        return $this->participants;
     }
 }

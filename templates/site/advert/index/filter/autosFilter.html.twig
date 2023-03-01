@@ -1,0 +1,62 @@
+{{ include('site/advert/index/filter/_type.html.twig') }}
+{{ include('site/advert/index/filter/_urgent.html.twig') }}
+
+{% if category.slug == 'voitures' or category.slug == 'motos-et-scooters' or
+      category.slug == 'locations-de-vehicules' or category.slug == 'bateaux-et-vehicules-marins' %}
+    <div class="form-row mb-3">
+        <div class="col-12 col-md-6">
+            {{ form_widget(form.marque) }}
+        </div>
+
+        {% if category.slug == 'voitures' or category.slug == 'locations-de-vehicules' %}
+            <div class="col-12 col-md-6">
+                {{ form_widget(form.model) }}
+            </div>
+        {% endif %}
+
+        {% if category.slug == 'voitures' or category.slug == 'locations-de-vehicules' %}
+            <div class="col-12 col-md-6">
+                {{ form_widget(form.typeCarburant) }}
+            </div>
+        {% endif %}
+
+        {% if category.slug == 'voitures' or category.slug == 'motos-et-scooters' %}
+            <div class="col-12 col-md-6">
+                {{ form_widget(form.autoState) }}
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if category.slug == 'voitures' or category.slug == 'motos-et-scooters' %}
+    <div class="form-row kilo-field mb-2">
+        <div class="col-12">
+            <h6 class="font-weight-bold text-dark kilo-title">Kilométrage</h6>
+        </div>
+        <div class="col-12 d-flex align-items-center">
+            {{ form_row(form.kilo.min_kilo) }}
+            <span class="text-muted"> - </span>
+            {{ form_row(form.kilo.max_kilo) }}
+        </div>
+    </div>
+{% endif %}
+
+{% if category.slug == 'voitures' or category.slug == 'motos-et-scooters' or
+      category.slug == 'locations-de-vehicules' or
+      category.slug == 'bateaux-et-vehicules-marins' %}
+    <div class="form-row year-field">
+        <div class="col-12">
+            <h6 class="font-weight-bold text-dark year-title">Année</h6>
+        </div>
+        <div class="col-12 d-flex align-items-center">
+            {{ form_widget(form.autoYear.min_year) }}
+            <span class="text-muted"> - </span>
+            {{ form_widget(form.autoYear.max_year) }}
+        </div>
+    </div>
+{% endif %}
+
+{{ include('site/advert/index/filter/_price.html.twig') }}
+{{ include('site/advert/index/filter/_location.html.twig') }}
+
+

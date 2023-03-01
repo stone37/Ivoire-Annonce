@@ -1,0 +1,21 @@
+<div class="row app-user mt-3 mb-4">
+    <div class="col-12">
+        <div class="h5-responsive title">
+            <div class="text-primary d-inline-block font-weight-stone-600">Images</div>
+        </div>
+    </div>
+</div>
+
+{% if advert.images|length > 0 %}
+    <div class="row admin-advert-images">
+        {% for image in advert.images %}
+            <div class="col-4 col-md-3 col-lg-2 mb-2">
+                <a href="{{ asset(image.webPath) }}" target="_blank" class="z-depth-1">
+                    <img src="{{ asset(image.webPath) }}" alt="{{ image.name }}" class="img-fluid img-thumbnail">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-dark">Aucune photo</div>
+{% endif %}

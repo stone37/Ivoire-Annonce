@@ -42,6 +42,9 @@ class Category
     #[ORM\Column(length: 100)]
     private ?string $slug = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $icon = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -67,7 +70,7 @@ class Category
         mimeType: 'fileMimeType',
         originalName: 'fileOriginalName'
     )]
-    private $file;
+    private ?File $file = null;
 
     #[Gedmo\TreeRoot]
     #[ORM\Column(nullable: true)]
@@ -106,6 +109,18 @@ class Category
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): self
+    {
+        $this->icon = $icon;
 
         return $this;
     }
@@ -252,11 +267,6 @@ class Category
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return (string) $this->name;
-    }
-
     public function getPremiums(): ?CategoryPremium
     {
         return $this->premiums;
@@ -267,5 +277,10 @@ class Category
         $this->premiums = $premiums;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->name;
     }
 }

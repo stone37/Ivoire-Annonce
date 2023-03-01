@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\EmailVerification;
+use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +41,28 @@ class EmailVerificationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return EmailVerification[] Returns an array of EmailVerification objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?EmailVerification
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findLastForUser(User $user): ?EmailVerification
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.author = :user')
+            ->setParameter('user', $user)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function clean(): int
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.createdAt < :date')
+            ->setParameter('date', new DateTime('-1 month'))
+            ->delete(EmailVerification::class, 'v')
+            ->getQuery()
+            ->execute();
+    }
 }

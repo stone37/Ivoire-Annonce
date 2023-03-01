@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Devises | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/currency/index/_header.html.twig' %}
+
+    {% include 'admin/currency/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

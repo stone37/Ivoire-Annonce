@@ -1,0 +1,195 @@
+{% set settings = config.settings %}
+<section class="sup-footer py-4 d-none d-lg-block">
+    <div class="row d-flex justify-content-center mx-md-5">
+        <div class="col-lg-8 text-center">
+            <a href="{{ path('app_switch_category') }}" class="btn btn-outline-white font-weight-stone-500 z-depth-0 mr-2">
+                Déposer une annonce gratuite <i class="fas fa-sign-in-alt ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<footer class="page-footer text-center text-md-left pt-3 mt-0">
+    <div class="container-fluid mt-5 mb-4 text-center text-md-left">
+        <div class="row">
+            <div class="col-md-3 col-lg-3 col-xl-3 mb-5 mb-lg-3">
+                <h6 class="spacing font-weight-stone-600 mb-3">
+                    <strong>
+                        {{ include('site/layout/_logo.html.twig', {'config': config}) }}
+                    </strong>
+                </h6>
+                <p>
+                    <a href="">À propos de {{ settings.name|lower }}</a>
+                </p>
+                <p>
+                    <a href="">Avantage de l'inscription</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_review_index') }}">Avis {{ settings.name|lower }}</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_suggestion_index') }}">Suggestion {{ settings.name|lower }}</a>
+                </p>
+            </div>
+
+            <div class="col-md-2 col-lg-3 col-xl-3 mx-auto mb-5 mb-lg-3">
+                <h6 class="spacing font-weight-stone-600 mb-3">
+                    <strong>Annonces</strong>
+                </h6>
+
+                <p>
+                    <a href="{{ path('app_switch_category') }}">Déposer une annonce gratuite</a>
+                </p>
+                {{ render(controller('App\\Controller\\CategoryController::index')) }}
+            </div>
+
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-5 mb-lg-3">
+                <h6 class="spacing font-weight-stone-600 mb-3">
+                    <strong>Liens utiles</strong>
+                </h6>
+                <p>
+                    <a href="{{ path('app_cgu') }}">Condition d'utilisation</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_confidentialite') }}">Politique de Confidentialité</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_cgr') }}">Mentions Légales</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_env') }}">Mentions Légales</a>
+                </p>
+                <p>
+                    <a href="" class="">Charte du bon annonceur</a>
+                </p>
+                <p>
+                    <a href="">Centre d'aide</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_contact') }}">Contact</a>
+                </p>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h6 class="spacing font-weight-stone-600 mb-3">
+                    <strong>Contact</strong>
+                </h6>
+                {% if settings.address %}
+                    <p>
+                        <i class="fas fa-home mr-2 text-primary"></i> {{ settings.address }}
+                    </p>
+                {% endif %}
+                <p>
+                    <i class="fas fa-envelope mr-2 text-primary"></i> {{ settings.email }}
+                </p>
+                <p>
+                    <i class="fas fa-phone-alt mr-2 text-primary"></i> {{ settings.phone }}
+                </p>
+
+                {% if settings.fax %}
+                    <p>
+                        <i class="fas fa-print mr-2 text-primary"></i> {{ settings.fax }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-copyright text-center pt-3">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p class="text-center text-md-left">
+                        © 2022 Copyright: <a href="{{ path('app_home') }}" target="_blank"> {{ settings.name }}</a>
+                        | Créer par <a href="https://octaix.com/" target="_blank">Octaix</a>, tous droits réservés
+                    </p>
+                </div>
+                <div class="col-md-5 col-lg-4 ml-lg-0">
+                    <div class="social-section text-center text-md-left">
+                        <ul class="list-unstyled list-inline">
+                            {% if settings.facebookAddress %}
+                                <li  class="list-inline-item mx-0">
+                                    <a target="_blank" href="{{ settings.facebookAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if settings.twitterAddress %}
+                                <li class="list-inline-item mx-0">
+                                    <a target="_blank" href="{{ settings.twitterAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if settings.youtubeAddress %}
+                                <li class="list-inline-item mx-0">
+                                    <a target="_blank" href="{{ settings.youtubeAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if settings.instagramAddress %}
+                                <li class="list-inline-item mx-0">
+                                    <a target="_blank" href="{{ settings.instagramAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if settings.linkedinAddress %}
+                                <li class="list-inline-item mx-0">
+                                    <a target="_blank" href="{{ settings.linkedinAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{#{% if settings.facebookAddress %}
+                    <p>
+                        <a href="{{ settings.facebookAddress }}">
+                            <i class="fab fa-facebook-square mr-2"></i> Facebook
+                        </a>
+                    </p>
+                {% endif %}
+
+                {% if settings.twitterAddress %}
+                    <p>
+                        <a href="{{ settings.twitterAddress }}">
+                            <i class="fab fa-twitter mr-2"></i> Twitter
+                        </a>
+                    </p>
+                {% endif %}
+
+                {% if settings.instagramAddress %}
+                    <p>
+                        <a href="{{ settings.instagramAddress }}">
+                            <i class="fab fa-instagram mr-2"></i> Instagram
+                        </a>
+                    </p>
+                {% endif %}
+
+                {% if settings.youtubeAddress %}
+                    <p>
+                        <a href="{{ settings.youtubeAddress }}">
+                            <i class="fab fa-youtube mr-2"></i> Youtube
+                        </a>
+                    </p>
+                {% endif %}
+
+                {% if settings.linkedinAddress %}
+                    <p>
+                        <a href="{{ settings.linkedinAddress }}">
+                            <i class="fab fa-linkedin-in mr-2"></i> Linkedin
+                        </a>
+                    </p>
+                {% endif %}#}

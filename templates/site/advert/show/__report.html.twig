@@ -1,0 +1,117 @@
+{% if not is_granted('created', advert) %}
+    <div class="modal fade advert-report-modal" id="advert-report-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary white-text pt-mt-4">
+                    <h4 class="font-weight-normal">
+                        <i class="fas fa-flag mr-1"></i> Signaler un abus
+                    </h4>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-left p-3">
+                    <form action="{{ path('app_advert_report_create', {'id': advert.id}) }}" method="POST" id="advert-report-form" class="advert-report-form">
+                        <div id="advert-report-form-error"></div>
+
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="small-9">
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason1"
+                                                   value="Le prix de l'annonce ne semble pas cohérent par rapport au marché." name="reason">
+                                            <label class="form-check-label font-weight-stone-500" for="reason1" style="padding-left: 22px;">
+                                                Le prix de l'annonce ne semble pas cohérent par rapport au marché.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason2"
+                                                   value="L'annonceur vous parait suspect. ex: demande un mandat cash, non joignable par téléphone..." name="reason">
+                                            <label class="form-check-label font-weight-stone-500" for="reason2" style="padding-left: 22px;">
+                                                L'annonceur vous parait suspect. ex: demande un mandat cash, non joignable par téléphone...
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason3"
+                                                   value="L'annonceur n'est pas un particulier mais un professionnel" name="reason">
+                                            <label class="form-check-label font-weight-stone-500" for="reason3" style="padding-left: 22px;">
+                                                L'annonceur n'est pas un particulier mais un professionnel.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason4"
+                                                   value="Le bien vous semble etre une contrefaçon ou correspond à une vente interdite" name="reason">
+                                            <label class="form-check-label font-weight-stone-500" for="reason4" style="padding-left: 22px;">
+                                                Le bien vous semble être une contrefaçon ou correspond à une vente interdite.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason5"
+                                                   value="Les photos ne correspondent pas au bien." name="reason">
+                                            <label class="form-check-label font-weight-stone-500" for="reason5" style="padding-left: 22px;">
+                                                Les photos ne correspondent pas au bien.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason6" name="reason"
+                                                   value="Cette annonce correspond à une atteinte à la vie privée ou au droit à l'image." >
+                                            <label class="form-check-label font-weight-stone-500" for="reason6" style="padding-left: 22px;">
+                                                Cette annonce correspond à une atteinte à la vie privée ou au droit à l'image.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-check pl-0">
+                                            <input type="radio" class="form-check-input with-gap" id="reason7" name="reason"
+                                                   value="Cette annonce n'est pas dans la bonne rubrique ou contient des informations erronées">
+                                            <label class="form-check-label font-weight-stone-500" for="reason7" style="padding-left: 22px;">
+                                                Cette annonce n'est pas dans la bonne rubrique ou contient des informations erronées.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                <div class="col-12">
+                                    <div class="md-form md-outline mb-0 mt-3">
+                                        <input type="email" id="reportEmail" name="reportEmail" class="form-control"/>
+                                        <label for="reportEmail">Votre email</label>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="col-12 col-md-12">
+                                <div class="md-form md-outline">
+                                <textarea id="reportContent" class="md-textarea form-control" name="reportContent"
+                                          rows="5" placeholder="Merci de nous préciser les détails de l'annonce vous amenant à signaler cette annonce"></textarea>
+                                    <label for="reportContent">Votre message</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <input type="hidden" id="report-token" name="_token" value="{{ csrf_token('advert-report') }}">
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-md z-depth-0">
+                                Envoyer <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

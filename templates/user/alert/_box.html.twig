@@ -1,0 +1,65 @@
+<div class="card mb-4 alert-list">
+    <div class="card-body p-2">
+        <div class="text-right small font-weight-bold text-muted mb-2">
+            <i class="fas fa-calendar mr-1"></i> le {{ alert.createdAt|format_datetime(pattern="EEEE dd MMM yyyy") }} . {{ alert.createdAt|date('H:i') }}
+        </div>
+        <div class="small-9 text-primary font-weight-stone-500 category mb-1">
+            <i class="fas fa-tag mr-1"></i> {{ alert.category.name }}
+            {% if alert.subCategory|length > 0 %}
+                <i class="fas fa-long-arrow-alt-right mx-1"></i> {{ alert.subCategory.name }}
+            {% endif %}
+        </div>
+        <div class="text-right">
+            <div class="dropdown">
+                <a data-toggle="dropdown" type="button" class="dropdown-toggle btn btn-primary btn-sm z-depth-0" >Gestion</a>
+                <div class="dropdown-menu dropdown-primary mt-0">
+                    <a href="{{ path('app_user_alert_change_state', {'id': alert.id}) }}" class="dropdown-item">
+                        <i class="fas fa-pencil-alt mr-1"></i> {% if alert.enabled %}Désactiver{% else %}Activer{% endif %}
+                    </a>
+                    <a class="dropdown-item advert-alert-delete" data-id="{{ alert.id }}">
+                        <i class="fas fa-trash mr-1 text-danger"></i> Supprimer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{#
+<div class="card mb-4 alert-list">
+    <div class="card-body p-3">
+        <div class="title small text-right text-muted font-weight-stone-500 mb-2">
+            <i class="fas fa-calendar mr-1"></i> le {{ alert.createdAt|format_datetime(pattern="EEEE dd MMM yyyy") }} . {{ alert.createdAt|date('H:i') }}
+        </div>
+        <div class="small-9 grey-text font-weight-stone-500 category">
+            <div class="mb-1">
+                <i class="fas fa-tags mr-1"></i> {{ alert.category.name }}
+                {% if alert.subCategory|length > 0 %}
+                    <i class="fas fa-long-arrow-alt-right mx-1"></i> {{ alert.subCategory.name }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <div class="d-flex align-items-end">
+                <div class="dropdown">
+                    #}
+{#<a class="dropdown-toggle btn btn-primary btn-sm" data-toggle="dropdown">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-primary">
+                        <a href="{{ path('app_user_alert_change_state', {'id': alert.id}) }}" class="dropdown-item">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            {% if alert.enabled %}Désactiver{% else %}Activer{% endif %}
+                        </a>
+                        <a class="dropdown-item advert-alert-delete" data-id="{{ alert.id }}">
+                            <i class="fas fa-trash mr-1 text-danger"></i> Supprimer
+                        </a>#}{#
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#}
+
+

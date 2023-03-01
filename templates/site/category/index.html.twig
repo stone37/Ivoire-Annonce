@@ -1,0 +1,7 @@
+{% if categories|length > 0 %}
+    {% for category in categories %}
+        <p>
+            <a href="{{ path('app_advert_index', {'category_slug': category.slug}) }}">{{ category.name }}</a>
+        </p>
+    {% endfor %}
+{% endif %}

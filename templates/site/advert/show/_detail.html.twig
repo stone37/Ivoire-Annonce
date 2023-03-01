@@ -1,0 +1,308 @@
+<section class="row advert-view-info mt-3">
+    {% if advert.type %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Type d'annonce</div>
+            <div class="content">{{ advert.type|app_advert_type }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.surface %}
+        <div class="col-6 col-md-4 col-lg-3">
+            {% if category.slug == 'terrains' or category.slug == 'terrains-agricoles' %}
+                <div class="title">Superficie</div>
+                <div class="content">{{ advert.surface }} ha</div>
+            {% else %}
+                <div class="title">Surface</div>
+                <div class="content">{{ advert.surface }} m²</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if advert.nombrePiece %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de pièces</div>
+            <div class="content">{{ advert.nombrePiece }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.immobilierState %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">État</div>
+            <div class="content">{{ advert.immobilierState }} m²</div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombreChambre %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de chambre(s)</div>
+            <div class="content">{{ advert.nombreChambre }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombreSalleBain %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de salle(s) de bain</div>
+            <div class="content">{{ advert.nombreSalleBain }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.surfaceBalcon %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Surface du balcon</div>
+            <div class="content">{{ advert.surfaceBalcon }} m²</div>
+        </div>
+    {% endif %}
+
+    {% if advert.access %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Accès</div>
+            <div class="content">
+                {% for data in advert.access %}
+                    {{ data }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.exterior %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Extérieures</div>
+            <div class="content">
+                {% for data in advert.exterior %}
+                    {{ data }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.dateConstruction %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Date de construction</div>
+            <div class="content">{{ advert.dateConstruction }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.standing %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Standing</div>
+            <div class="content">{{ advert.standing }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.cuisine %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Cuisine</div>
+            <div class="content">{{ advert.cuisine }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombrePlacard %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de placard(s)</div>
+            <div class="content">{{ advert.nombrePlacard }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.interior %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Intérieur</div>
+            <div class="content">
+                {% for data in advert.interior %}
+                    {{ data }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.proximite %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Proximité</div>
+            <div class="content">
+                {% for data in advert.proximite %}
+                    {{ data }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.serviceInclus %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Services inclus</div>
+            <div class="content">
+                {% for data in advert.serviceInclus %}
+                    {{ data }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.brand %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Marque</div>
+            <div class="content">
+                {{ advert.brand }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.state %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">État du produit</div>
+            <div class="content">
+                {{ advert.state }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.processing %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Traitement</div>
+            <div class="content">
+                {% for data in advert.processing %}
+                    {{ data|app_advert_processing }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.marque %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Marque</div>
+            <div class="content">
+                {{ advert.marque }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.model %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Modèle</div>
+            <div class="content">
+                {{ advert.model }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.autoYear %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Année</div>
+            <div class="content">
+                {{ advert.autoYear }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.autoType %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Type de véhicule</div>
+            <div class="content">
+                {{ advert.autoType }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.autoState %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">État du véhicule</div>
+            <div class="content">
+                {{ advert.autoState }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.kilometrage %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Kilométrage</div>
+            <div class="content">
+                {{ advert.kilometrage }} Km
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.boiteVitesse %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Boite à vitesse</div>
+            <div class="content">
+                {{ advert.boiteVitesse }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.transmission %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Transmission</div>
+            <div class="content">
+                {{ advert.transmission }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.autoColor %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Couleur</div>
+            <div class="content">
+                {{ advert.autoColor }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.typeCarburant %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Type de carburant</div>
+            <div class="content">
+                {{ advert.typeCarburant }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombrePorte %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de portes</div>
+            <div class="content">
+                {{ advert.nombrePorte }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombrePlace %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de places</div>
+            <div class="content">
+                {{ advert.nombrePlace }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.cylindre %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Cylindrée</div>
+            <div class="content">
+                {{ advert.cylindre }} Cm3
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.autreInformation %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Autres informations</div>
+            <div class="content">
+                {% for data in advert.autreInformation %}
+                    {{ data }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if advert.sex %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Sexe</div>
+            <div class="content">
+                {{ advert.sex }}
+            </div>
+        </div>
+    {% endif %}
+</section>
+
+
+
+

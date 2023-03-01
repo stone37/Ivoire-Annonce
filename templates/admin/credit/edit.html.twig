@@ -1,0 +1,21 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}
+    Édition d'un crédit | Achat de crédit | {{ parent() }}
+{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/credit/edit/_header.html.twig' %}
+
+    {% include 'admin/credit/edit/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/admin/create.js'} %}
+{% endblock %}

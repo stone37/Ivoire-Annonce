@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\CategoryPremium;
+use App\Model\Admin\CategorySearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,33 @@ class CategoryPremiumRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return CategoryPremium[] Returns an array of CategoryPremium objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?CategoryPremium
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getAdmins(CategorySearch $search): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('cp')
+            ->orderBy('cp.position', 'asc');
+
+        if ($search->isEnabled()) {
+            $qb->andWhere('cp.enabled = 1');
+        }
+
+        if ($search->getName()) {
+            $qb->andWhere('cp.name LIKE :name')->setParameter('name', '%'.$search->getName().'%');
+        }
+
+        return $qb;
+    }
+
+    public function getEnabled(): array
+    {
+        return $this->createQueryBuilder('cp')
+            ->where('cp.enabled = 1')
+            ->orderBy('cp.position', 'asc')
+            ->getQuery()->getResult();
+    }
+
 }

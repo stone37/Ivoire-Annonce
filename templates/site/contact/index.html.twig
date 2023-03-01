@@ -1,0 +1,42 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Contact' %}
+
+{% block meta %}
+    {% set content = "Contactez nous pour plus d'information ou pour des demandes spécifiques" %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_intro %}
+    <section class="bc container">
+        <div>
+            {{ wo_render_breadcrumbs({viewTemplate: '_breadcrumb.html.twig', listClass: 'breadcrumb',
+                itemClass: 'breadcrumb-item', separator: '>', separatorClass: 'fas fa-long-arrow-alt-right'}) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {% include 'site/contact/content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfSnr0UAAAAAGgVbAAZQdtn8UdJ6CAMTf79myG_"></script>
+    <script>
+        let route = '{{ path('app_contact') }}';
+
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LfSnr0UAAAAAGgVbAAZQdtn8UdJ6CAMTf79myG_', {action: route})
+                .then(function(token) {$('input.app-recaptchaToken').val(token);});
+        });
+    </script>
+{% endblock %}

@@ -26,7 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['phone'], message: 'Il existe déjà un compte avec cet numéro de téléphone.')]
-#[UniqueEntity(fields: ['email'], repositoryMethod: 'findByCaseInsensitive', message: 'Il existe déjà un compte avec cet e-mail.')]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet e-mail.', repositoryMethod: 'findByCaseInsensitive')]
 #[UniqueEntity(fields: ['username'], repositoryMethod: 'findByCaseInsensitive')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -58,13 +58,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 8, max: 4096, minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères')]
     #[SerializedName('password')]
     private $plainPassword;
 
-    #[Assert\NotBlank(message: "Entrez un nom d'utilisateur s'il vous plait.", groups: ['Registration', 'Profile'])]
-    #[Assert\Length(min: 2, max: 180, minMessage: "Le nom d'utilisateur est trop courte.", maxMessage: "Le nom d'utilisateur est trop longue.", groups: ['Registration', 'Profile'])]
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $username = null;
 
@@ -79,7 +75,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastname = null;
 
     #[Assert\NotBlank(message: "Entrez un numéro de téléphone s''il vous plait.", groups: ['Registration', 'Profile'])]
-    #[Assert\Length(min: 10, max: 25, minMessage: "Le numéro de téléphone est trop court.", maxMessage: "Le numéro de téléphone est trop long.", groups: ['Registration', 'Profile'])]
+    #[Assert\Length(min: 10, max: 20, minMessage: "Le numéro de téléphone est trop court.", maxMessage: "Le numéro de téléphone est trop long.", groups: ['Registration', 'Profile'])]
     #[ORM\Column(length: 25, nullable: true)]
     private ?string $phone = null;
 
@@ -139,6 +135,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $subscribedToNewsletter = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $confirmationToken;
 
     #[Assert\File(maxSize: '8M')]
     #[Vich\UploadableField(
@@ -550,6 +549,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(?string $confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
     public function getFile(): ?File
     {
         return $this->file;
@@ -762,5 +773,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password
+            ) = $data;
     }
 }

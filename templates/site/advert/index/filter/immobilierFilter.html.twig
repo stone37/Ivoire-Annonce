@@ -1,0 +1,132 @@
+{{ include('site/advert/index/filter/_type.html.twig') }}
+{{ include('site/advert/index/filter/_urgent.html.twig') }}
+
+{% if category.slug == 'villas' or category.slug == 'terrains' or
+      category.slug == 'terrains-agricoles' or category.slug == 'studios' or
+      category.slug == 'maisons' or category.slug == 'maisons-de-vacances' or
+      category.slug == 'espaces-commerciaux-et-bureaux' or category.slug == 'colocations' or
+      category.slug == 'chambres' or category.slug == 'appartements' or
+      category.slug == 'appartements-meubles' %}
+    <div class="form-row surface-field mt-2">
+        <div class="col-12">
+            {% if category.slug == 'terrains' or category.slug == 'terrains-agricoles' %}
+                <h6 class="font-weight-bold text-dark surface-title">Superficie (ha)</h6>
+            {% else %}
+                <h6 class="font-weight-bold text-dark surface-title">Surface (m²)</h6>
+            {% endif %}
+        </div>
+        <div class="col-12 d-flex align-items-center">
+            {{ form_row(form.surface.min_surface) }}
+            <span class="text-muted"> - </span>
+            {{ form_row(form.surface.max_surface) }}
+        </div>
+    </div>
+{% endif %}
+
+<div class="form-row">
+    {% if category.slug == 'villas' or category.slug == 'maisons' or
+          category.slug == 'maisons-de-vacances' or category.slug == 'colocations' or
+          category.slug == 'appartements' or category.slug == 'appartements-meubles' %}
+        <div class="col-12 col-md-6">
+            {{ form_widget(form.nombrePiece) }}
+        </div>
+    {% endif %}
+
+    {% if category.slug == 'villas' or category.slug == 'maisons' or
+          category.slug == 'maisons-de-vacances' or category.slug == 'colocations' or
+          category.slug == 'appartements' or category.slug == 'appartements-meubles' %}
+        <div class="col-12 col-md-6">
+            {{ form_widget(form.nombreChambre) }}
+        </div>
+    {% endif %}
+
+    {% if category.slug == 'villas' or category.slug == 'maisons' or
+          category.slug == 'maisons-de-vacances' or category.slug == 'colocations' or
+          category.slug == 'appartements' or category.slug == 'appartements-meubles' %}
+        <div class="col-12 col-md-6">
+            {{ form_widget(form.nombreSalleBain) }}
+        </div>
+    {% endif %}
+</div>
+
+{% if category.slug == 'villas' or category.slug == 'studios' or
+      category.slug == 'maisons' or category.slug == 'maisons-de-vacances' or
+      category.slug == 'espaces-commerciaux-et-bureaux' or category.slug == 'colocations' or
+      category.slug == 'chambres' or category.slug == 'appartements' or
+      category.slug == 'appartements-meubles' %}
+    <div class="form-row mt-3">
+        <div class="col-12 immobilier-state-field">
+            <h6 class="font-weight-stone-600 text-dark">{{ form.immobilierState.vars.label }}</h6>
+            <div class="btn-group" data-toggle="buttons">
+                {% for choices in form.immobilierState.vars.choices %}
+                    <label for="{{ form.immobilierState.vars.id }}_{{ loop.index0 }}" class="btn btn-sm btn-amber z-depth-0 form-check-label">
+                        <input class="form-check-input" type="radio" value="{{ choices.value }}"
+                               name="{{ form.immobilierState.vars.full_name }}" id="{{ form.immobilierState.vars.id }}_{{ loop.index0 }}" autocomplete="off"
+                               {% if app.request.query.has('immobilierState') %}{% if app.request.query.get('immobilierState') == choices.value %}checked{% endif %}{% endif %} >
+                        {{ choices.label }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if category.slug == 'studios' or category.slug == 'espaces-commerciaux-et-bureaux' or
+      category.slug == 'chambres' or category.slug == 'appartements' or
+      category.slug == 'appartements-meubles' %}
+    <div class="form-row">
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.access.vars.label }}</div>
+                {{ form_widget(form.access) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if category.slug == 'villas' or category.slug == 'studios' or
+      category.slug == 'maisons' or category.slug == 'maisons-de-vacances' or
+      category.slug == 'espaces-commerciaux-et-bureaux' or category.slug == 'colocations' or
+      category.slug == 'chambres' or category.slug == 'appartements' or
+      category.slug == 'appartements-meubles' %}
+    <div class="form-row">
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.interior.vars.label }}</div>
+                {{ form_widget(form.interior) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if category.slug == 'villas' or category.slug == 'studios' or
+      category.slug == 'maisons' or category.slug == 'maisons-de-vacances' or
+      category.slug == 'espaces-commerciaux-et-bureaux' or category.slug == 'colocations' or
+      category.slug == 'appartements' or category.slug == 'appartements-meubles' %}
+    <div class="form-row">
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.exterior.vars.label }}</div>
+                {{ form_widget(form.exterior) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if category.slug == 'villas' or category.slug == 'studios' or
+      category.slug == 'maisons' or category.slug == 'maisons-de-vacances' or
+      category.slug == 'espaces-commerciaux-et-bureaux' or category.slug == 'colocations' or
+      category.slug == 'chambres' or category.slug == 'appartements' or
+      category.slug == 'appartements-meubles' %}
+    <div class="form-row mb-2">
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.proximite.vars.label }}</div>
+                {{ form_widget(form.proximite) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{{ include('site/advert/index/filter/_price.html.twig') }}
+{{ include('site/advert/index/filter/_location.html.twig') }}

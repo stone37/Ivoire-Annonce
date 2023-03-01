@@ -1,0 +1,52 @@
+<div>
+    <a href="" class="btn btn-primary btn-md btn-block z-depth-0" data-toggle="modal" data-target="#advert-phone-contact-modal">
+        <i class="fas fa-phone-alt text-white mr-1"></i> Contacter par téléphone
+    </a>
+    <div class="modal fade advert-phone-contact-modal" id="advert-phone-contact-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary white-text pt-md-4">
+                    <h4 class="font-weight-normal">
+                        Contacter l'annonceur par téléphone
+                    </h4>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="font-weight-stone-500 d-md-flex justify-content-between advert-info">
+                        <div class="text-dark font-weight-stone-500 data">
+                            <span>{{ advert.type|app_advert_type }} de</span>
+                            <span>
+                                {% if advert.subCategory %}
+                                    {{ advert.subCategory.name|lower }}
+                                {% else %}
+                                    {{ advert.category.name|lower }}
+                                {% endif %}
+                                à {{ advert.location.city }}
+                            </span>
+                            <div class="advertiser">
+                                {{ advert.owner.firstname }} {{ advert.owner.lastname }} (PARTICULIER)
+                            </div>
+                        </div>
+                        <div class="text-danger price">
+                            <span>{{ advert.price|format_currency('XOF') }}</span>
+                        </div>
+                    </div>
+                    <div class="small-8 text-dark text-center font-weight-stone-500 mt-2">
+                        Appelez de la part de {{ settings.name }} (réf: {{ advert.reference }} )
+                    </div>
+                    <div class="text-center phone-number">
+                        <strong>{{ advert.owner.phone }}</strong>
+                        {% if not advert.owner.phoneState %}
+                            <span class="d-inline-block" data-toggle="tooltip" title="Cet numéro est sur whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

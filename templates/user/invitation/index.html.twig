@@ -1,0 +1,25 @@
+{% extends "user/layout.html.twig" %}
+
+{% block title 'Invitez vos amis sur ' ~ config.name %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    {{ include('user/invitation/index/content.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        window.advert['PARRAINAGE_LINK'] = '{{ absolute_url(path('app_register', {'code': invitation.code})) }}';
+    </script>
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+{% endblock %}

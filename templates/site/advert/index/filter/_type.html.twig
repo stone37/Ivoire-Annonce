@@ -1,0 +1,15 @@
+<div class="form-row">
+    <div class="col-12 type-field">
+        <h6 class="font-weight-stone-600 text-dark">{{ form.type.vars.label }}</h6>
+        <div class="btn-group" data-toggle="buttons">
+            {% for choices in form.type.vars.choices %}
+                <label for="{{ form.type.vars.id }}_{{ loop.index0 }}" class="btn btn-sm btn-amber z-depth-0 form-check-label">
+                    <input class="form-check-input" type="radio" value="{{ choices.value }}"
+                           name="{{ form.type.vars.full_name }}" id="{{ form.type.vars.id }}_{{ loop.index0 }}" autocomplete="off"
+                           {% if app.request.query.has('type') %}{% if app.request.query.get('type') == choices.value %}checked{% endif %}{% endif %} >
+                    {{ choices.label }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\LoginAttempt;
+use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +41,34 @@ class LoginAttemptRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return LoginAttempt[] Returns an array of LoginAttempt objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?LoginAttempt
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Compte le nombre de tentative de connexion pour un utilisateur.
+     */
+    public function countRecentFor(User $user, int $minutes): int
+    {
+        return $this->createQueryBuilder('l')
+            ->select('COUNT(l.id) as count')
+            ->where('l.owner = :user')
+            ->andWhere('l.createdAt > :date')
+            ->setParameter('date', new DateTime("-{$minutes} minutes"))
+            ->setParameter('user', $user)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function deleteAttemptsFor(User $user): void
+    {
+        $this->createQueryBuilder('a')
+            ->where('a.owner = :user')
+            ->setParameter('user', $user)
+            ->delete()
+            ->getQuery()
+            ->execute();
+    }
 }

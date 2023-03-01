@@ -1,0 +1,48 @@
+<div class="d-flex advert-option-bulk">
+    <div class="dropdown">
+        <button class="btn btn-deep-purple btn-sm z-depth-0 dropdown-toggle px-3" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Options
+        </button>
+        <div class="dropdown-menu menu dropdown-deep-purple">
+            {% set has_option_header = app_has_option(advert, 1) %}
+            {% set has_option_urgent = app_has_option(advert, 2) %}
+            {% set has_option_gallery = app_has_option(advert, 3) %}
+            {% set has_option_featured = app_has_option(advert, 4) %}
+
+            <a href="{{ path('app_option_header_index', {'id': advert.id}) }}" class="dropdown-item">
+                <i class="fas fa-sort-numeric-up mr-1"></i>
+                Annonce en tete {% if has_option_header %}<i class="fas fa-check text-success ml-1"></i>{% endif %}
+            </a>
+            <a href="{{ path('app_option_gallery_index', {'id': advert.id}) }}" class="dropdown-item">
+                <i class="fas fa-house-damage mr-1"></i>
+                Galerie accueil {% if has_option_gallery %}<i class="fas fa-check text-success ml-1"></i>{% endif %}
+            </a>
+            <a href="{{ path('app_option_urgent_index', {'id': advert.id}) }}" class="dropdown-item">
+                <i class="fas fa-bullhorn mr-1"></i>
+                Logo urgent {% if has_option_urgent %}<i class="fas fa-check text-success ml-1"></i>{% endif %}
+            </a>
+            <a href="{{ path('app_option_featured_index', {'id': advert.id}) }}" class="dropdown-item">
+                <i class="far fa-minus-square mr-1"></i>
+                Annonce en vedette {% if has_option_featured %}<i class="fas fa-check text-success ml-1"></i>{% endif %}
+            </a>
+        </div>
+    </div>
+    <div class="dropdown ml-1">
+        <button class="btn btn-primary btn-sm z-depth-0 dropdown-toggle px-3" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gestion
+        </button>
+        <div class="dropdown-menu menu dropdown-primary">
+            {% if advert.validatedAt %}
+                <a class="dropdown-item" href="{{ route }}">
+                    <i class="fas fa-eye mr-1"></i> Voir
+                </a>
+                <a class="dropdown-item" href="{{ path('app_user_advert_edit', {'category_slug': advert.category.slug, 'id': advert.id}) }}">
+                    <i class="fas fa-pen mr-1"></i> Modifier
+                </a>
+            {% endif %}
+            <a data-id="{{ advert.id }}" class="dropdown-item user-advert-delete">
+                <i class="fas fa-trash mr-1"></i> Supprimer
+            </a>
+        </div>
+    </div>
+</div>

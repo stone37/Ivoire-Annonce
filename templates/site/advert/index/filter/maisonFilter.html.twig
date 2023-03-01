@@ -1,0 +1,29 @@
+{{ include('site/advert/index/filter/_type.html.twig') }}
+{{ include('site/advert/index/filter/_urgent.html.twig') }}
+
+<div class="form-row mt-3">
+    <div class="col-12 state-field">
+        <h6 class="font-weight-stone-600 text-dark">{{ form.state.vars.label }}</h6>
+        <div class="btn-group" data-toggle="buttons">
+            {% for choices in form.state.vars.choices %}
+                <label for="{{ form.state.vars.id }}_{{ loop.index0 }}" class="btn btn-sm btn-amber z-depth-0 form-check-label">
+                    <input class="form-check-input" type="radio" value="{{ choices.value }}"
+                           name="{{ form.state.vars.full_name }}" id="{{ form.state.vars.id }}_{{ loop.index0 }}" autocomplete="off"
+                           {% if app.request.query.has('state') %}{% if app.request.query.get('state') == choices.value %}checked{% endif %}{% endif %} >
+                    {{ choices.label }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="form-row mb-3">
+    <div class="col-12">
+        <div class="checkbox-field-bulk state-field">
+            <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.processing.vars.label }}</div>
+            {{ form_widget(form.processing) }}
+        </div>
+    </div>
+</div>
+
+{{ include('site/advert/index/filter/_price.html.twig') }}
+{{ include('site/advert/index/filter/_location.html.twig') }}

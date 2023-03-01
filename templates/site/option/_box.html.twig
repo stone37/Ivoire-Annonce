@@ -1,0 +1,75 @@
+{% set settings = config.settings %}
+{% set photo_principale = app_advert_image_principale(advert.images) %}
+
+<div id="advert_{{ advert.id }}" class="card advert-bulk mb-4">
+    <div class="row no-gutters">
+        <div class="col-md-4 image-bulk pr-0 mr-0">
+            {% if photo_principale %}
+                <img src="{{ asset(photo_principale.webPath) }}" class="img-fluid advert-image" alt="{{ photo_principale.name }}" />
+            {% else %}
+                <img src="{{ asset('assets/img/no_image.png') }}" class="img-fluid advert-image" alt="" />
+            {% endif %}
+
+            {% if settings.activeAdFavorite and (not is_granted('created', advert)) %}
+                {% set has_favoris = app_has_favoris(advert) %}
+                <div data-id="{{ advert.id }}" class="advert-favorite-btn
+                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}connected{% endif %}
+                     {% if has_favoris %}activated{% endif %}">
+                    <i class="{% if has_favoris %}fas{% else %}far{% endif %} fa-heart"></i>
+                </div>
+            {% endif %}
+
+            <div class="nbr-photo">
+                <i class="fas fa-camera-retro"></i> {{ advert.images|length }}
+            </div>
+        </div>
+        <div class="col-md-8 data-bulk">
+            <div class="card-body py-2 pr-2">
+                <div class="header">
+                    <div class="d-flex justify-content-between align-content-center">
+                        <h4 class="h4-responsive font-weight-bold text-dark">{{ advert.title|u.truncate(25, '...') }}</h4>
+                        <div class="font-weight-stone-500 ad-type">
+                            <span>{{ advert.type|app_advert_type }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap mt-1">
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ advert.location.city }}
+                            {% if advert.location.town %}({{ advert.location.town|u.truncate(15, '...') }}){% endif %}
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </div>
+                        <div class="validate-at">
+                            <i class="fas fa-clock"></i> {{ advert.validatedAt|ago }}
+                        </div>
+                    </div>
+
+                    {{ include('site/advert/index/_data_info.html.twig') }}
+                </div>
+                <div class="footer d-md-flex align-items-start justify-content-md-between">
+                    <div class="advertiser">
+                        <div class="advertiser-data"><span>Particulier</span></div>
+                    </div>
+                    <div class="advert-price text-right">
+                        {% if advert.price %}
+                            {% if advert.priceState %}
+                                <div class="detail">
+                                    <div>à débattre</div>
+                                </div>
+                            {% endif %}
+                            <div class="price">
+                                {{ advert.price|format_currency('XOF') }}
+                            </div>
+                        {% else %}
+                            <div class="price">Sur demande</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

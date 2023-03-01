@@ -1,0 +1,29 @@
+{% extends "user/layout.html.twig" %}
+
+{% block title 'Annonces en ligne' %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    <section class="container my-lg-4 mt-2 mb-4 d-lg-flex justify-content-lg-between align-items-center">
+        <h3 class="h3-responsive font-weight-stone-600 text-dark">Annonces en ligne</h3>
+        <div>
+            <div class="btn-group title" role="group">
+                <a href="{{ path('app_user_advert_validated_index') }}"
+                   class="btn btn-sm btn-dark waves-effect z-depth-0 px-3 px-lg-4">
+                    <span>Annonces en ligne</span>
+                </a>
+                <a href="{{ path('app_user_advert_index') }}"
+                   class="btn btn-sm btn-grey waves-effect z-depth-0 px-3 px-lg-4">
+                    <span>Annonces inactif</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{ include('user/advert/enabled/content.html.twig') }}
+{% endblock %}

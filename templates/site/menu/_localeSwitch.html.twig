@@ -1,0 +1,21 @@
+{% if locales|length > 1 %}
+    <li class="nav-item dropdown language d-none d-lg-block">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownLanguageMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-globe-africa"></i> {{ active|language_name|capitalize }} <i class="fas fa-angle-down"></i>
+        </a>
+        <div class="dropdown-menu dropdown-primary dropdown-menu-right" aria-labelledby="navbarDropdownLanguageMenuLink">
+            {% for code in locales %}
+                {% if code is not same as(active) %}
+                    <a class="dropdown-item" href="{{ path('app_switch_locale', {'code': code}) }}">{{ code|language_name|capitalize }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </li>
+
+    <li class="nav-item d-block d-lg-none mx-0 mobile">
+        <a class="nav-link px-0" id="navbar-locale-menu-link">
+            <i class="fas fa-globe-africa mr-1"></i> {{ active|language_name|capitalize }}
+        </a>
+    </li>
+{% endif %}

@@ -1,0 +1,23 @@
+{% extends "user/layout.html.twig" %}
+
+{% block title 'Favoris' %}
+
+{% block meta %}
+    <meta name="google" content="nositelinkssearchbox">
+{% endblock %}
+
+{% block app_flashes %}{% endblock %}
+
+{% block app_body %}
+    <section class="container my-lg-4 mt-2 d-flex justify-content-between align-items-center">
+        <h3 class="h3-responsive font-weight-stone-600 text-dark">Favoris</h3>
+    </section>
+
+    {{ include('user/favorite/index/content.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/site/favoris.js'} %}
+{% endblock %}

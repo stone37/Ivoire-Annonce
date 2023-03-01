@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Alert;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,26 @@ class AlertRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Alert[] Returns an array of Alert objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?Alert
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getEnabledByUser(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.enabled = 1')
+            ->andWhere('a.owner = :owner')
+            ->setParameter('owner', $user)
+            ->orderBy('a.createdAt', 'desc');
+    }
+
+    public function getByUser(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.enabled = 0')
+            ->andWhere('a.owner = :owner')
+            ->setParameter('owner', $user)
+            ->orderBy('a.createdAt', 'desc');
+    }
 }

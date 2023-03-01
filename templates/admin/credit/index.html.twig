@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Achat de crédit | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {% include 'admin/credit/index/_header.html.twig' %}
+
+    {% include 'admin/credit/index/_content.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

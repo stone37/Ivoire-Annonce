@@ -27,6 +27,10 @@ class ThreadMetadata
     #[ORM\ManyToOne]
     private ?User $participant = null;
 
+    #[ORM\ManyToOne(targetEntity: Thread::class, inversedBy: 'metadata')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Thread $thread = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +80,18 @@ class ThreadMetadata
     public function setParticipant(?User $participant): self
     {
         $this->participant = $participant;
+
+        return $this;
+    }
+
+    public function getThread(): Thread
+    {
+        return $this->thread;
+    }
+
+    public function setThread(Thread $thread): self
+    {
+        $this->thread = $thread;
 
         return $this;
     }

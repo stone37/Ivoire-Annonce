@@ -1,0 +1,16 @@
+<section>
+    <div class="card">
+        <div class="card-body p-3">
+            {{ form_start(discount_form, {'attr': {'novalidate': 'novalidate', 'class': 'discount-form'}}) }}
+            <h5 class="font-weight-stone-600 h5-responsive text-dark mb-0">Ajouter un code de réduction</h5>
+            <div class="form-row">
+                <div class="col-12">
+                    {{ form_row(discount_form.discountCode) }}
+                </div>
+            </div>
+            {{ form_widget(discount_form._token) }}
+            <div><button type="submit" class="btn btn-primary btn-sm btn-block z-depth-0">Appliquer</button></div>
+            {{ form_end(discount_form, {'render_rest': false}) }}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,273 @@
+{#{% import 'ui/Macro/money.html.twig' as money %}#}
+
+<section class="row">
+    <div class="col-12">
+        <h4 class="h4-responsive font-weight-stone-600 text-dark mb-4">Annonces</h4>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left pl-4">
+                    <a href="{{ path('app_admin_advert_index') }}" type="button" class="btn-floating btn-lg blue ml-2">
+                        <i class="fas fa-clipboard" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold pr-3 text-dark">{{ advertNewNumber }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Nouvelle annonces</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left pl-4">
+                    <a href="{{ path('app_admin_advert_validated_index') }}" type="button"  class="btn-floating btn-lg success-color ml-2">
+                        <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ advertValidateNumber }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Annonces valider</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left pl-4">
+                    <a href="{{ path('app_admin_advert_refused_index') }}" type="button"  class="btn-floating btn-lg warning-color-dark ml-2">
+                        <i class="fas fa-clipboard" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ advertDeniedNumber }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Annonces refuser</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_advert_archive_index') }}" type="button"  class="btn-floating btn-lg amber ml-2">
+                        <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ advertArchiveNumber }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Anciennes annonces</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_advert_remove_index') }}" type="button"  class="btn-floating btn-lg danger-color ml-2">
+                        <i class="fas fa-clipboard" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ advertRemoveNumber }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Annonces retirer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row mt-md-4">
+    <div class="col-12">
+        <h4 class="h4-responsive font-weight-stone-600 text-dark mb-4">
+            Utilisateurs, newsletters, commandes, ...
+        </h4>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_user_index') }}" type="button" class="btn-floating btn-lg bg-primary ml-2">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5  class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ users }}</h5>
+                    <p class="font-small pr-3">Utilisateur(s)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_payment_index') }}" type="button" class="btn-floating btn-lg success-color-dark ml-2">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ orders }}</h5>
+                    <p class="font-small pr-3">Commande payée</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_emailing_newsletters') }}" type="button" class="btn-floating btn-lg grey ml-2">
+                        <i class="fas fa-newspaper" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ newsletterData }}</h5>
+                    <p class="font-small pr-3">Nombre total d'abonnés</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive font-weight-stone-600 text-center text-dark">Nouveaux clients</h5>
+                <div class="">
+                    {% if lastClients|length > 0 %}
+                        <ul class="list-group list-group-flush px-0">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="font-weight-600 grey-text">
+                                    Nom
+                                </div>
+                                <div class=""></div>
+                            </li>
+
+                            {% for user in lastClients %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="">{{ user.firstname ~' '~ user.lastname }}</div>
+                                        <div class="small grey-text font-weight-500">{{ user.email }}</div>
+                                    </div>
+                                    <div>
+                                        <a href="{{ path('app_admin_user_show', {'id': user.id, 'type': 1}) }}" class="btn btn-grey btn-sm">
+                                            <i class="fas fa-eye mr-1"></i> Lister
+                                        </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-center mt-4 mb-3 text-dark">Aucun client pour le moment</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Nouvelles commandes validées</h5>
+
+                {% if lastOrders|length > 0 %}
+                    <table class="table table-responsive-md btn-table">
+                        <thead>
+                            <tr>
+                                <th class="font-weight-stone-500">Commande</th>
+                                <th class="font-weight-stone-500">Produits</th>
+                                <th class="font-weight-stone-500">Total</th>
+                                <th class="font-weight-stone-500"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for payment in lastOrders %}
+                            <tr>
+                                <th scope="row">
+                                    <div>
+                                        {{ payment.commande.booking.firstname ~' '~ payment.commande.booking.lastname }}
+                                    </div>
+                                    <div class="small grey-text font-weight-500">{{ payment.commande.booking.email }}</div>
+                                </th>
+                                <td>{{ payment.commande.booking|length }}</td>
+                                <td>{{ payment.price }} CFA</td>
+                                <td>
+                                    <a href="{{ path('app_admin_commande_show', {'id': payment.commande.id}) }}" class="btn btn-grey btn-sm m-0">
+                                        <i class="fas fa-eye mr-1"></i> Lister
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="text-center mt-4 mb-3 text-dark">Aucune commande pour le moment</div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Commandes validées 30 derniers jours</h5>
+                <div class="my-4 px-2">
+                    <canvas id="orderDailyLineChart" style="width: 100% !important; height: 375px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Commandes validées 24 derniers mois</h5>
+                <div class="my-4 px-2">
+                    <canvas id="orderMonthlyLineChart" style="width: 100% !important; height: 375px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-4 mb-5">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center mb-4">Actions</h5>
+                    <div class="mt-3">
+                        <form action="{{ path('app_admin_cache_clean') }}" method="post">
+                            <button class="btn btn-small btn-danger"><i class="fas fa-trash mr-2"></i> Vider le cache</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title h5-responsive text-primary text-center mb-4">
+                        <a href="https://www.mail-tester.com/" rel="noreferrer" class="card-link">Tester les emails</a>
+                    </h5>
+
+                    <div class="mt-3">
+                        <form action="{{ path('app_admin_mailtest') }}" method="post" class="flex stretch">
+                            <div class="md-form md-outline form-lg input-with-pre-icon">
+                                <i class="fas fa-envelope input-prefix"></i>
+                                <input type="text" placeholder="Email" name="email" id="inputEmail"
+                                       class="form-control form-control-lg" required>
+                                <label for="inputEmail"></label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Envoyer <i class="fas fa-paper-plane ml-2"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

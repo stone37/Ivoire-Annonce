@@ -1,0 +1,45 @@
+{{ include('site/advert/index/_floating_btn.html.twig') }}
+
+<section class="container-fluid advert-list-header mb-4">
+    <div class="row">
+        <div class="col-12 category">
+            <h4 class="h4-responsive font-weight-bold mb-2 text-dark">Tous les catégorie</h4>
+            <div class="font-weight-stone-500">
+                {{ adverts.totalItemCount > 1 ? adverts.totalItemCount ~ ' annonces' : adverts.totalItemCount ~ ' annonce' }}
+                <span>Tous les catégorie</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container-fluid advert-list-filter mb-md-4 mb-3">
+    <div class="row">
+        <div class="col-md-4 filter">
+            {{ include('site/advert/searchResult/_filterForm.html.twig') }}
+        </div>
+        <div class="col-md-4">
+            {{ include('site/advert/searchResult/_sorting.html.twig') }}
+        </div>
+    </div>
+</section>
+<section class="container-fluid advert-list">
+    <div class="row">
+        <div class="col-12">
+            {% if adverts|length > 0 %}
+                <section class="row">
+                    {% for advert in adverts %}
+                        <div class="col-12 col-md-6">
+                            {{ include('site/advert/index/_box.html.twig') }}
+                        </div>
+                    {% endfor %}
+                </section>
+                <section class="row">
+                    <div class="col-12 d-flex justify-content-center my-4">
+                        {{ knp_pagination_render(adverts, 'ui/_pagination.html.twig') }}
+                    </div>
+                </section>
+            {% else %}
+                {{ include('site/advert/index/_no_data.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+</section>

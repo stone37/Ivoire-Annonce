@@ -1,0 +1,52 @@
+{% extends 'site/layout.html.twig' %}
+
+{% set settings = config.settings %}
+
+{% block title %}
+    {{ advert.title }} | {% if advert.subCategory %} {{ advert.subCategory }} | {% endif %} {{ advert.category }}
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ advert.description|raw|striptags }}"/>
+    <meta property="og:description" content="{{ advert.description|raw|striptags }}" />
+{% endblock %}
+
+{% block app_intro %}
+    {{ parent() }}
+
+    <section class="bc container-fluid px-lg-5 d-flex">
+        <div class="d-none d-lg-block">
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default btn-sm z-depth-0 mt-lg-3">
+                <i class="fas fa-long-arrow-alt-left mr-2"></i>
+                Retour
+            </a>
+        </div>
+        <div>
+            {{ wo_render_breadcrumbs({viewTemplate: '_breadcrumb.html.twig', listClass: 'breadcrumb pl-lg-3 pt-lg-4 mb-0',
+                itemClass: 'breadcrumb-item', separator: '>', separatorClass: 'fas fa-long-arrow-alt-right'}) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/advert/show/content.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'ui/_javascripts.html.twig' with {'path': 'assets/js/site/navbar.js'} %}
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/site/favoris.js'} %}
+    <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/site/advert_show.js'} %}
+    <script>$("#mdb-lightbox-ui").load("/assets/mdb-addons/mdb-lightbox-ui.html");</script>
+{% endblock %}
+
+
+
+
+

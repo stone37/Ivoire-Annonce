@@ -1,0 +1,55 @@
+{% extends 'site/advert/baseForm.html.twig' %}
+
+{% import 'site/advert/form/macro/radio.html.twig' as radio %}
+
+{% block app_advert_detail %}
+    <div class="form-row">
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_row(form.surface) }}
+        </div>
+        <div class="col-12 mt-2">
+            {{ radio.item(form.immobilierState, advert.immobilierState) }}
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+            {{ form_widget(form.dateConstruction) }}
+        </div>
+        <div class="col-12 mt-2">
+            {{ radio.item(form.standing, advert.standing) }}
+        </div>
+        <div class="col-12 mt-2">
+            {{ radio.item(form.cuisine, advert.cuisine) }}
+        </div>
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.access.vars.label }}</div>
+                {{ form_widget(form.access) }}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.serviceInclus.vars.label }}</div>
+                {{ form_widget(form.serviceInclus) }}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.interior.vars.label }}</div>
+                {{ form_widget(form.interior) }}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.exterior.vars.label }}</div>
+                {{ form_widget(form.exterior) }}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="checkbox-field-bulk">
+                <div class="font-weight-stone-600 text-dark mb-1 mt-3">{{ form.proximite.vars.label }}</div>
+                {{ form_widget(form.proximite) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

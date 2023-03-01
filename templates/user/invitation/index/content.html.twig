@@ -1,0 +1,95 @@
+{% set settings = config.settings %}
+{% set url = absolute_url(path('app_register', {'code': invitation.code})) %}
+{% set subject = 'Invitation sur ' ~ settings.name %}
+{% set sms = 'sms://;?body=' ~ url %}
+
+<section id="parrainage" class="container-fluid mt-lg-4 mb-5 parrainage">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 text-center">
+            <h2 class="h2-responsive font-weight-stone-600 text-dark mb-3">Invitez des amis et gagnez du crédits pour vous et vos amis !</h2>
+            <p class="mx-md-3 title font-weight-stone-500">
+                A chaque fois que l'un de vos amis <span class="font-weight-stone-600 text-default">s'inscrit et dépose des annonces</span>
+                sur {{ settings.name }} <i class="fas fa-question-circle dark-grey-text" data-toggle="modal" data-target="#parrainageInfo"></i>,
+                nous vous offrons du crédit à tous les deux.
+            </p>
+            <div id="parrainage-gestion" class="card parrainage-gestion my-2 mx-md-5 d-none">
+                <div class="card-body p-3">
+                    <h5 class="h5-responsive font-weight-bold text-dark mb-3">Partagez</h5>
+                    <div class="share-btn d-flex justify-content-center flex-wrap mb-4">
+                        <a class="btn btn-sm btn-fb z-depth-0 facebook" data-sharer="facebook" data-hashtag="{{ settings.name|slug('')|lower }}"
+                           data-url="{{ url }}" data-toggle="tooltip" title="Partagez sur Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="btn btn-sm btn-whatsapp z-depth-0 whatsapp" data-sharer="whatsapp" data-url="{{ url }}"
+                           data-toggle="tooltip" title="Partagez sur Whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a class="btn btn-sm btn-tw z-depth-0 twitter" data-sharer="twitter" data-hashtags="{{ settings.name|slug('')|lower }}"
+                           data-url="{{ url }}" data-toggle="tooltip" title="Partagez sur Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="btn btn-sm btn-deep-purple z-depth-0 sms" href="{{ sms }}" data-toggle="tooltip" title="Partagez par SMS">
+                            <i class="fas fa-sms"></i>
+                        </a>
+                        <a class="btn btn-sm btn-vk z-depth-0 mail" data-sharer="email" data-url="{{ url }}"
+                           data-subject="{{ subject }}" data-toggle="tooltip" title="Partagez par mail">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                    <h5 class="h5-responsive font-weight-bold text-dark">Copiez</h5>
+                    <div class="copie">
+                        <a id="parrainage-btn-link-copy" class="btn btn-sm btn-purple z-depth-0" data-toggle="tooltip" title="Copier le lien">
+                            Copier <i class="fas fa-copy"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="my-4 mx-md-3">
+                <a id="parrainage-btn-generate" class="btn btn-primary z-depth-0">Simple et gratuit, générez un lien</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade right" id="parrainageInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-full-height modal-right modal-notify modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="font-weight-stone-500 h4-responsive heading lead">Parrainage</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-3">
+                <p>
+                    Vous pouvez gagner des credits si votre ami(e) s'inscrit et dépose des annonces sur {{ settings.name }}
+                    <span class="text-primary font-weight-bold">via votre lien d'invitation</span>.
+                    Générez votre lien d'invitation en cliquant le bouton "Simple et gratuit, générez un lien".
+                </p>
+                <h4 class="h4-responsive font-weight-bold text-dark">Recompenses pour vous</h4>
+                <p>
+                    Les invitations sont réussies lorsque votre ami(e) s'<span class="font-weight-bold text-primary">inscrit</span>
+                    et <span class="font-weight-bold text-primary">dépose {{ settings.parrainageNumberAdvertRequired }} annonces valides</span>
+                    sur {{ settings.name }}. <br>
+                    Vous recevez en suite <span class="text-default font-weight-bold">{{ settings.parrainCreditOffer|format_currency('XOF') }}</span>
+                    de credit <span class="small">*</span>.
+                </p>
+
+                <h4 class="h4-responsive font-weight-bold text-dark mt-3">Recompenses pour votre ami(e)</h4>
+                <p>
+                    Votre ami(s) obtiendra également <span class="text-default font-weight-bold">{{ settings.fioleCreditOffer|format_currency('XOF') }}</span>
+                     de credit <span class="small">*</span> en <span class="font-weight-bold text-primary">dépose 3 annonces valides</span> sur {{ settings.name }}.
+                </p>
+
+                <div class="mt-3 small text-danger font-weight-stone-600">
+                    (*) les credits sont une monnaie virtuelle utilisable uniquement sur {{ settings.name }}.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
